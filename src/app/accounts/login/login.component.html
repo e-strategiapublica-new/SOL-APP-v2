@@ -1,0 +1,60 @@
+<div class="limiter">
+  <div class="container-login100 shadow py-0 py-sm-3">
+    <div class="wrap-login100 position-relative py-3 mx-4 mx-md-0">
+      <app-change-lang-auth backgroundColor="#FAFAFA" fontColor="#000"></app-change-lang-auth>
+      <form class="login100-form validate-form px-3 px-sm-5 pt-4 pb-4" [formGroup]="form" (ngSubmit)="onSubmit()">
+        <span class="login100-form-logo mt-2">
+          <img src="../../../assets/images/sol-azul-amarela.svg" style="max-height: 250px;" alt="IMG">
+        </span>
+        <div class="wrap-input100 validate-input mt-2" data-validate="Digite seu email de acesso">
+          <label for="email"
+          class="font-size-16 font-weight-medium text-dark mt-0 ms-0 me-0 mb-1"><b>E-mail</b></label>
+          <input class="input100 poppins" type="email" formControlName="email" placeholder="email@email.com" name="email" id="email"
+            src="../../../assets/img-co2/icon-email.svg" (keypress)="clearSpace($event)">
+          <div *ngIf="form.controls['email'].errors?.['required'] && isSubmit" class="div-msg-error mt-2 ">
+            <img src="../../../assets/images/icon-alert.svg" class="img-msg-error" alt>
+            <p class="font-poppins font-size-14 m-0 text-dark">{{"ERROR_MESSAGES.REQUIRED_EMAIL" | translate}}</p>
+          </div>
+
+          <div *ngIf="form.controls['email'].errors?.['email'] && isSubmit" class="div-msg-error mt-2">
+            <img src="../../../assets/images/icon-alert.svg" class="img-msg-error" alt>
+            <p class="font-poppins font-size-14 m-0 text-dark">{{"ERROR_MESSAGES.INVALID_EMAIL" | translate}}</p>
+          </div>
+          <span class="focus-input100 fa fa-user"></span>
+        </div>
+
+        <div class="wrap-input100 validate-input" data-validate="Digite sua senha de acesso">
+          <label for="senha"
+          class="font-size-16 font-weight-medium text-dark mt-0 ms-0 me-0 mb-1"><b>{{'SIGN-UP.PASSWORD' | translate}}</b></label>
+          <input class="input100 poppins" type="password" formControlName="password" id="senha" name="senha"
+            placeholder="{{'SIGN-UP.PASSWORD' | translate}}">
+          <span class="focus-input100"></span>
+          <div *ngIf="form.controls['password'].errors?.['required'] && isSubmit" class="div-msg-error mt-2">
+            <img src="../../../assets/images/icon-alert.svg" class="img-msg-error" alt>
+            <p class="font-poppins font-size-14 m-0 text-dark">{{"ERROR_MESSAGES.REQUIRED_PASSWORD" | translate}}</p>
+          </div>
+        </div>
+
+        <div class="container-login100-form-btn">
+          <button class="login100-form-btn" type="submit">
+            <span class="font-poppins text-white">{{"LOGIN.ACCESS_BUTTON" | translate}}</span>
+          </button>
+        </div>
+
+        <div class="text-center mt-3 p-t-90">
+          <a class="txt1 poppins fw-bold" [routerLink]="['/accounts/register-supplier']">{{"SIGN-UP.REGISTER_SUPPLIER" | translate}}
+          </a>
+        </div>
+
+        <div class="text-center mt-3 p-t-90">
+          <a class="txt1 poppins fw-bold" [routerLink]="['/accounts/primeiro-acesso']">{{"SIGN-UP.FIRST_ACCESS_BUTTON" | translate}}
+          </a>
+        </div>
+        <div class="text-center mt-2 p-t-90">
+          <a class="txt1 poppins fw-bold" [routerLink]="['/accounts/esqueceu-senha']">{{"SIGN-UP.FORGOT_PASSWORD" | translate}}
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,44 @@
+<section class="container-fluid">
+    <div class="row">
+        <div class="col-12 mt-5">
+            <h3 class="font-weight-bold">{{ "GENERAL_REPORTS.TITLE" | translate }}</h3>
+            <hr color="green">
+        </div>
+        <div class="col-12">
+            <div class="border rounded d-flex justify-content-between align-items-center p-4">
+                <div class="d-flex flex-column">
+                    <h4>{{ "GENERAL_REPORTS.TIME_1" | translate }}</h4>
+                    <span>{{ "GENERAL_REPORTS.TIME_2" | translate }}</span>
+                </div>
+                <button class="btn btn-outline-dark" (click)="submit('bidData')">{{ "REPORTS.DOWNLOAD_DATA" | translate }}</button>
+            </div>
+        </div>
+        <div class="col-12 mt-5">
+            <div class="border rounded d-flex justify-content-between align-items-center p-4">
+                <div class="d-flex flex-column">
+                    <h4>{{ "GENERAL_REPORTS.SIMILAR_1" | translate }}</h4>
+                    <span>{{ "GENERAL_REPORTS.SIMILAR_2" | translate }}</span>
+                </div>
+                <button class="btn btn-outline-dark" (click)="submit('itemsData')">{{ "REPORTS.DOWNLOAD_DATA" | translate }}</button>
+            </div>
+        </div>
+        <div class="col-12 mt-5">
+            <div class="border rounded d-flex justify-content-between align-items-center p-4">
+                <div class="d-flex flex-column">
+                    <h4>{{ "GENERAL_REPORTS.BIDDINGS_1" | translate }}</h4>
+                    <span>{{ "GENERAL_REPORTS.BIDDINGS_2" | translate }}</span>
+                </div>
+                <button class="btn btn-outline-dark" (click)="submit('supplierBid')">{{ "REPORTS.DOWNLOAD_DATA" | translate }}</button>
+            </div>
+        </div>
+        <div class="col-12 my-5">
+            <div class="border rounded d-flex justify-content-between align-items-center p-4">
+                <div class="d-flex flex-column">
+                    <h4>{{ "GENERAL_REPORTS.CONTRACTS_1" | translate }}</h4>
+                    <span>{{ "GENERAL_REPORTS.CONTRACTS_2" | translate }}</span>
+                </div>
+                <button class="btn btn-outline-dark" (click)="submit('supplierContract')">{{ "REPORTS.DOWNLOAD_DATA" | translate }}</button>
+            </div>
+        </div>
+    </div>
+</section>

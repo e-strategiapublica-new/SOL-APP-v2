@@ -1,0 +1,46 @@
+<div class="container mb-5">
+    <div class="row mt-5">
+        <div class="col-md-12">
+            <h1><strong>{{'ADMINISTRATION_BIDDING_DETAIL.CONTRACT_AGREEMENT'  | translate}}</strong></h1>
+            <hr class="bg-primary">
+        </div>
+        
+        <div class="row mt-1 mb-3 arrow">
+           <div class="col-12">
+               <i class="fa fa-arrow-left f-size-24 cursor-pointer" (click)="back()" aria-hidden="true"></i>
+           </div>
+        </div>
+
+        <div class="col-md-11 mt-2">
+            <input type="text" class="form-control h50 br-10 text-dark" placeholder="{{'BUTTON_TEXT.INPUT_SEARCH' | translate}}"/>
+        </div>
+    </div>
+
+    <div class="col-md-11 px-0 mt-4">
+        <table class="table table-hover">
+            <thead>
+              <tr>
+                <th class="bg-pattern text-light br-tabele" scope="col">{{'ADMINISTRATION_CONTRACTS.CONTRACT'  | translate}}<i class="bi ml-1 bi-caret-down-fill"></i></th>
+                <th class="bg-pattern text-light" scope="col">{{'SIDEBAR.BIDDING'  | translate}}</th>
+                <th class="bg-pattern text-light" scope="col">{{'SIDEBAR.SUPPLIER'  | translate}}</th>
+                <th class="bg-pattern text-light" scope="col">{{'ASSOCIATION_CONTRACTS.VALUE'  | translate}}</th>
+                <th class="bg-pattern text-light" scope="col">{{'ASSOCIATION_CONTRACTS.VALUE'  | translate}}</th>
+                <th class="bg-pattern text-light br-tabele2" scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border" *ngFor="let item of contract">
+                <td class="text-capitalize text-dark">{{item?.contract_number}}/{{item.createdAt | date:'yyyy'}}</td>
+                <td class="text-capitalize text-dark">{{item?.bid_number?.bid_count}}/{{item?.bid_number?.createdAt | date:'yyyy'}}</td>
+                <td class="text-capitalize text-dark">{{item?.supplier_id?.name}}</td>
+                <td class="text-capitalize text-dark">{{item?.value | currency: 'BRL'}}</td>
+                <td class="text-capitalize text-dark">{{handlerStatus(item.status)}}</td>
+                <td class="text-capitalize text-dark">
+                    <buton class="btn btn-dark w-100  br-10 text-center" type="button" (click)="goBackDetail(item?._id)"><strong>{{'ADMINISTRATION_BIDDING.DETAILS'  | translate}}</strong></buton>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+    </div>
+
+</div>

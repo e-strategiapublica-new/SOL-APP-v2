@@ -1,0 +1,572 @@
+<article *ngIf="authService.getAuthenticatedUser().type == 'administrador' 
+&& authService.getAuthenticatedUser().roles == 'geral' || authService.getAuthenticatedUser().type == 'administrador' 
+&& authService.getAuthenticatedUser().roles == 'visualizador' " class="bg-sidebar shadow py-4 font-size-14"
+  id="sidebar-wrapper" style="min-height: 100%">
+  <div>
+    <img src="../../../assets/images/Horizontal-Azul-amarelo-fonte-branca.svg" style="width: 180px; margin: 0 auto 30px"
+      alt="Logo" />
+  </div>
+  <section class="list-group mt-5 sidenav ">
+
+    <button (click)="hideSiderbar()" [routerLink]="['/pages/dashboard']" routerLinkActive="active" class="border-0 bg-transparent d-flex align-items-center list-group-item
+      list-group-item-action text-white">
+      <i class="fa fa-bars pr-2" aria-hidden="true" style="width: 28px"></i>
+      Dashboard
+    </button>
+
+    <button (click)="hideSiderbar()" [routerLink]="['/pages/associacao']" routerLinkActive="active" class="border-0 bg-transparent d-flex align-items-center list-group-item
+    list-group-item-action text-white">
+      <i class="bi bi-people mb-0 h4" aria-hidden="true" style="width: 28px"></i>&nbsp;
+      {{"SIDEBAR.ASSOCIATIONS" | translate}}
+    </button>
+
+    <button (click)="hideSiderbar()" [routerLink]="checkUser()?'/pages/projetos':''" routerLinkActive="active" class="border-0 bg-transparent d-flex align-items-center list-group-item
+    list-group-item-action text-white">
+      <i class="bi bi-clipboard-pulse mb-0 h4" aria-hidden="true" style="width: 28px"></i>&nbsp;
+      {{"SIDEBAR.PROJECTS" | translate}}
+    </button>
+
+    <button (click)="hideSiderbar()" [routerLink]="['/pages/convenios']" routerLinkActive="active" class="border-0 bg-transparent d-flex align-items-center list-group-item
+    list-group-item-action text-white">
+      <i class="bi bi-clipboard2-data mb-0 h4" aria-hidden="true" style="width: 28px"></i>&nbsp;
+      {{"SIDEBAR.AGREEMENTS" | translate}}
+    </button>
+
+    <button (click)="hideSiderbar()" [routerLink]="['/pages/fornecedor']" routerLinkActive="active" class="border-0 bg-transparent d-flex align-items-center list-group-item
+    list-group-item-action text-white">
+      <i class="bi bi-shop-window mb-0 h4" aria-hidden="true" style="width: 28px"></i>&nbsp;
+      {{"SIDEBAR.SUPPLIERS" | translate}}
+    </button>
+   
+    <div class="dropright">
+      <button routerLinkActive="active" (click)="Usertoggle('user')" id="dropdownMenuButton" aria-haspopup="true"
+        aria-expanded="false" class="border-0
+        bg-transparent list-group-item list-group-item-action text-white">
+        <div class="d-flex justify-content-between align-items-center">
+          <div>
+            <i class="bi bi-person h4 mb-0" aria-hidden="true" style="width: 28px"></i>&nbsp;{{"SIDEBAR.USERS" |
+            translate}}
+          </div>
+          <i [ngClass]="show ? 'fa-minus' : 'fa-plus'" class="fa fa" aria-hidden="true" style="width: 28px;">
+          </i>
+        </div>
+      </button>
+      <div class="bg-sidebar" *ngIf="show" aria-labelledby="dropdownMenuButton">
+        <a *ngIf="user.roles !== 'geral'"
+          class="border-0 bg-transparent d-flex ml-4 align-items-center list-group-item list-group-item-action text-white"
+          style="font-size: 15px;" (click)="hideSiderbar()"
+          [routerLink]="['/pages/controle-associacao']">{{"SIDEBAR.ASSOCIATION" |
+          translate}}</a>
+        <a class="border-0 bg-transparent d-flex ml-4 align-items-center list-group-item list-group-item-action text-white"
+          style="font-size: 15px;" (click)="hideSiderbar()"
+          [routerLink]="['/pages/controle-fornecedor']">{{"SIDEBAR.SUPPLIER" | translate}}</a>
+
+          <a class="border-0 bg-transparent d-flex ml-4 align-items-center list-group-item list-group-item-action text-white"
+          style="font-size: 15px;" (click)="hideSiderbar()"
+          [routerLink]="['/pages/controle-associacao']">{{'SIDEBAR.ASSOCIATIONS' | translate}}</a>
+
+        <a class="border-0 bg-transparent d-flex ml-4 align-items-center list-group-item list-group-item-action text-white"
+          style="font-size: 15px;" (click)="hideSiderbar()"
+          [routerLink]="['/pages/controle-admin']">{{"SIDEBAR.ADMINISTRATION" | translate}}</a>
+        <a class="border-0 bg-transparent d-flex ml-4 align-items-center list-group-item list-group-item-action text-white"
+          style="font-size: 15px;" (click)="hideSiderbar()"
+          [routerLink]="['/pages/controle-project-manager']">{{"SIDEBAR.ADM_PROJECTS" | translate}}</a>
+      </div>
+    </div>
+
+    <div class="dropright">
+      <button routerLinkActive="active" (click)="Usertoggle('item')" id="dropdownItens" aria-haspopup="true"
+        aria-expanded="false" class="border-0
+          bg-transparent list-group-item list-group-item-action text-white">
+        <div class="d-flex align-items-center justify-content-between">
+          <div class="d-flex align-items-center">
+            <i class="bi bi-currency-dollar mb-0 h4" aria-hidden="true" style="width: 28px"></i>&nbsp;{{"SIDEBAR.ITEMS"
+            | translate}}
+          </div>
+          <i [ngClass]="items ? 'fa-minus' : 'fa-plus'" class="fa fa" aria-hidden="true" style="width: 28px;"></i>
+        </div>
+      </button>
+      <div class="bg-sidebar" *ngIf="items" aria-labelledby="dropdownItens">
+        
+        <a class="border-0 bg-transparent d-flex ml-4 align-items-center list-group-item list-group-item-action text-white"
+          style="font-size: 15px;" (click)="hideSiderbar()" [routerLink]="['/pages/items']">{{"SIDEBAR.COST_ITEMS"
+          | translate}}</a>        
+        
+        <a class="border-0 bg-transparent d-flex ml-4 align-items-center list-group-item list-group-item-action text-white"
+          style="font-size: 15px;" (click)="hideSiderbar()" [routerLink]="['/pages/pdm']">PDM</a>
+        
+        <a class="border-0 bg-transparent d-flex ml-4 align-items-center list-group-item list-group-item-action text-white"
+          style="font-size: 15px;" (click)="hideSiderbar()" [routerLink]="['/pages/classes']">{{"SIDEBAR.CLASSES" |
+          translate}}</a>
+        <a class="border-0 bg-transparent d-flex ml-4 align-items-center list-group-item list-group-item-action text-white"
+          style="font-size: 15px;" (click)="hideSiderbar()" [routerLink]="['/pages/categorias']">{{"SIDEBAR.CATEGORIES"
+          | translate}}</a>
+      </div>
+    </div>
+
+    <button  (click)="hideSiderbar()" [routerLink]="['/pages/licitacoes']" routerLinkActive="active" class="border-0 bg-transparent d-flex align-items-center list-group-item
+    list-group-item-action text-white">
+      <i class="bi bi-clipboard-pulse mb-0 h4" aria-hidden="true" style="width: 28px"></i>&nbsp;
+      {{"SIDEBAR.BIDDINGS" | translate}}
+    </button>
+
+    <div class="dropright">
+      <button routerLinkActive="active" (click)="reportToggle()" id="dropdownMenuButton" aria-haspopup="true"
+        aria-expanded="false" class="border-0
+        bg-transparent list-group-item list-group-item-action text-white">
+        <div class="d-flex justify-content-between align-items-center">
+          <div class="d-flex align-items-center">
+            <i class="bi bi-list-check h4 mb-0" aria-hidden="true" style="width: 28px"></i>&nbsp;{{"SIDEBAR.REPORTS" |
+            translate}}
+          </div>
+          <i [ngClass]="showReport ? 'fa-minus' : 'fa-plus'" class="fa fa" aria-hidden="true" style="width: 28px;"></i>
+        </div>
+      </button>
+      <div class="bg-sidebar" *ngIf="showReport" aria-labelledby="dropdownMenuButton">
+        <a class="border-0 bg-transparent d-flex ml-4 align-items-center list-group-item list-group-item-action text-white"
+          style="font-size: 15px;" (click)="hideSiderbar()"
+          [routerLink]="['/pages/report-contracts']">{{"SIDEBAR.CONTRACTS" | translate}}</a>
+        <a class="border-0 bg-transparent d-flex ml-4 align-items-center list-group-item list-group-item-action text-white"
+          style="font-size: 15px;" (click)="hideSiderbar()"
+          [routerLink]="['/pages/relatorios-licitacao']">{{"SIDEBAR.BIDDINGS" | translate}}</a>
+        <a class="border-0 bg-transparent d-flex ml-4 align-items-center list-group-item list-group-item-action text-white"
+          style="font-size: 15px;" (click)="hideSiderbar()"
+          [routerLink]="['/pages/report-general']">{{"SIDEBAR.GENERAL_RELAT" | translate}}</a>
+        <a class="border-0 bg-transparent d-flex ml-4 align-items-center list-group-item list-group-item-action text-white"
+          style="font-size: 15px;" (click)="hideSiderbar()"
+          [routerLink]="['/pages/report-generated']">{{"SIDEBAR.GENERATED_RELAT" |
+          translate}}</a>
+      </div>
+    </div>
+
+    <!---->
+    <div class="dropright" *ngIf="user.roles === 'geral'">
+      <button routerLinkActive="active" (click)="admSystemToggle()" id="dropdownItens" aria-haspopup="true"
+        aria-expanded="false" class="border-0
+          bg-transparent  list-group-item list-group-item-action text-white">
+        <div class="d-flex align-items-center justify-content-between">
+          <div class="d-flex align-items-center">
+            <i class="bi  bi-gear mb-0 h4" aria-hidden="true" style="width: 28px;"></i>&nbsp;{{"SIDEBAR.ADMINISTER" |
+            translate}}
+          </div>
+          <i [ngClass]="admSystem ? 'fa-minus' : 'fa-plus'" class="fa fa" aria-hidden="true" style="width: 28px"></i>
+        </div>
+      </button>
+      <div class="bg-sidebar" *ngIf="admSystem" aria-labelledby="dropdownItens">
+        <a class="border-0 bg-transparent d-flex ml-4 align-items-center list-group-item list-group-item-action text-white"
+          style="font-size: 15px;" (click)="hideSiderbar()"
+          [routerLink]="['/pages/modelo-contratos']">{{"SIDEBAR.CONTRACT_MODELS" |
+          translate}}</a>
+        <a class="border-0 bg-transparent d-flex ml-4 align-items-center list-group-item list-group-item-action text-white"
+          style="font-size: 15px;" (click)="hideSiderbar()"
+          [routerLink]="['/pages/integracoes']">{{"SIDEBAR.INTEGRATIONS" | translate}}</a>
+        <a class="border-0 bg-transparent d-flex ml-4 align-items-center list-group-item list-group-item-action text-white"
+          style="font-size: 15px;" (click)="openRegisterTime()">{{'ADMINISTRATION_BIDDING.SET_SCHEDULES' |
+          translate}}</a>
+      </div>
+<!--       <div class="dropright">
+        <button routerLinkActive="active" (click)="reportToggle()" id="dropdownMenuButton" aria-haspopup="true"
+          aria-expanded="false" class="border-0
+          bg-transparent list-group-item list-group-item-action text-white">
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center">
+              <i class="bi bi-list-check h4 mb-0" aria-hidden="true" style="width: 28px"></i>&nbsp;{{"SIDEBAR.REPORTS" |
+              translate}}
+            </div>
+            <i [ngClass]="showReport ? 'fa-minus' : 'fa-plus'" class="fa fa" aria-hidden="true" style="width: 28px;"></i>
+          </div>
+        </button>
+        <div class="bg-sidebar" *ngIf="showReport" aria-labelledby="dropdownMenuButton">
+          <a class="border-0 bg-transparent d-flex ml-4 align-items-center list-group-item list-group-item-action text-white"
+            style="font-size: 15px;" (click)="hideSiderbar()"
+            [routerLink]="['/pages/report-contracts']">{{"SIDEBAR.CONTRACTS" | translate}}</a>
+          <a class="border-0 bg-transparent d-flex ml-4 align-items-center list-group-item list-group-item-action text-white"
+            style="font-size: 15px;" (click)="hideSiderbar()"
+            [routerLink]="['/pages/relatorios-licitacao']">{{"SIDEBAR.BIDDINGS" | translate}}</a>
+          <a class="border-0 bg-transparent d-flex ml-4 align-items-center list-group-item list-group-item-action text-white"
+            style="font-size: 15px;" (click)="hideSiderbar()"
+            [routerLink]="['/pages/report-general']">{{"SIDEBAR.GENERAL_RELAT" | translate}}</a>
+          <a class="border-0 bg-transparent d-flex ml-4 align-items-center list-group-item list-group-item-action text-white"
+            style="font-size: 15px;" (click)="hideSiderbar()"
+            [routerLink]="['/pages/report-generated']">{{"SIDEBAR.GENERATED_RELAT" |
+            translate}}</a>
+        </div>
+      </div> -->
+    </div>
+    <!---->
+
+    <!-- <button (click)="hideSiderbar()" [routerLink]="['/pages/integracoes']" routerLinkActive="active" style="padding: 0.75rem 1rem;"
+      class="text-white border-0 bg-transparent d-flex align-items-center list-group-item">
+      <i class="bi bi-diagram-2 mb-0 h3" aria-hidden="true" style="width: 28px"></i>&nbsp;{{"SIDEBAR.INTEGRATIONS" | translate}}</button> -->
+
+    <!-- <button (click)="hideSiderbar()" [routerLink]="['/pages/modelo-contratos']" routerLinkActive="active"
+      class="border-0 bg-transparent d-flex align-items-center list-group-item
+      list-group-item-action text-white">
+      <i class="bi bi-clipboard2-data mb-0 h4" aria-hidden="true" style="width: 28px"></i>&nbsp;{{"SIDEBAR.CONTRACT_MODELS" |
+      translate}}</button> -->
+
+  </section>
+</article>
+<article
+  *ngIf="authService.getAuthenticatedUser().type == 'administrador' && authService.getAuthenticatedUser().roles == 'revisor'"
+  class="bg-sidebar shadow py-4 font-size-14" id="sidebar-wrapper" style="min-height: 100%">
+  <div>
+    <img src="../../../assets/images/Horizontal-Azul-amarelo-fonte-branca.svg" style="width: 180px; margin: 0 auto 30px"
+      alt="Logo" />
+  </div>
+  <section class="list-group mt-5 sidenav ">
+    <button (click)="hideSiderbar()" [routerLink]="checkUser()?'/pages/dashboard':''" routerLinkActive="active" class="border-0 bg-transparent d-flex align-items-center list-group-item
+      list-group-item-action text-white">
+      <i class="fa fa-bars pr-2" aria-hidden="true" style="width: 28px"></i>Dashboard</button>
+    <button (click)="hideSiderbar()" [routerLink]="checkUser()?'/pages/agreement-proofreader':''"
+      routerLinkActive="active" class="border-0 bg-transparent d-flex align-items-center list-group-item
+      list-group-item-action text-white">
+      <i class="fa fa-users pr-2" aria-hidden="true" style="width: 28px"></i>{{"SIDEBAR.AGREEMENTS" |
+      translate}}</button>
+    <button (click)="hideSiderbar()" [routerLink]="checkUser()?'/pages/bids-proofreader':''" routerLinkActive="active"
+      class="border-0 bg-transparent d-flex align-items-center list-group-item
+      list-group-item-action text-white">
+      <i class="bi bi-clipboard-pulse mb-0 h4" aria-hidden="true" style="width: 28px"></i>&nbsp;{{"SIDEBAR.BIDDINGS" |
+      translate}}</button>
+      <div class="dropright">
+        <button routerLinkActive="active" (click)="reportToggle()" id="dropdownMenuButton" aria-haspopup="true"
+          aria-expanded="false" class="border-0
+          bg-transparent list-group-item list-group-item-action text-white">
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center">
+              <i class="bi bi-list-check h4 mb-0" aria-hidden="true" style="width: 28px"></i>&nbsp;{{"SIDEBAR.REPORTS" |
+              translate}}
+            </div>
+            <i [ngClass]="showReport ? 'fa-minus' : 'fa-plus'" class="fa fa" aria-hidden="true" style="width: 28px;"></i>
+          </div>
+        </button>
+        <div class="bg-sidebar" *ngIf="showReport" aria-labelledby="dropdownMenuButton">
+          <a class="border-0 bg-transparent d-flex ml-4 align-items-center list-group-item list-group-item-action text-white"
+            style="font-size: 15px;" (click)="hideSiderbar()"
+            [routerLink]="['/pages/report-contracts']">{{"SIDEBAR.CONTRACTS" | translate}}</a>
+          <a class="border-0 bg-transparent d-flex ml-4 align-items-center list-group-item list-group-item-action text-white"
+            style="font-size: 15px;" (click)="hideSiderbar()"
+            [routerLink]="['/pages/relatorios-licitacao']">{{"SIDEBAR.BIDDINGS" | translate}}</a>
+          <a class="border-0 bg-transparent d-flex ml-4 align-items-center list-group-item list-group-item-action text-white"
+            style="font-size: 15px;" (click)="hideSiderbar()"
+            [routerLink]="['/pages/report-general']">{{"SIDEBAR.GENERAL_RELAT" | translate}}</a>
+          <a class="border-0 bg-transparent d-flex ml-4 align-items-center list-group-item list-group-item-action text-white"
+            style="font-size: 15px;" (click)="hideSiderbar()"
+            [routerLink]="['/pages/report-generated']">{{"SIDEBAR.GENERATED_RELAT" |
+            translate}}</a>
+        </div>
+      </div>
+  </section>
+</article>
+
+<!-- userType = fornecedor -->
+
+<article *ngIf="authService.getAuthenticatedUser().type == 'fornecedor'" class="bg-sidebar shadow py-4 font-size-14"
+  id="sidebar-wrapper" style="min-height: 100%">
+  <div>
+    <img src="../../../assets/images/Horizontal-Azul-amarelo-fonte-branca.svg" style="width: 180px; margin: 0 auto 30px"
+      alt="Logo" />
+  </div>
+  <section class="list-group mt-5 sidenav ">
+    <button (click)="hideSiderbar()" [routerLink]="checkUser()?'/pages/dashboard':''" routerLinkActive="active" class="border-0 bg-transparent d-flex align-items-center list-group-item
+      list-group-item-action text-white">
+      <i class="fa fa-bars pr-2" aria-hidden="true" style="width: 28px"></i>Dashboard</button>
+    <button (click)="hideSiderbar()" [routerLink]="checkUser()?'/pages/fornecedor/licitacoes':''"
+      routerLinkActive="active" class="border-0 bg-transparent d-flex align-items-center list-group-item
+      list-group-item-action text-white">
+      <i class="fa fa-users pr-2" aria-hidden="true" style="width: 28px"></i>{{"SIDEBAR.BIDDINGS" | translate}}</button>
+    <button (click)="hideSiderbar()" [routerLink]="checkUser()?'/pages/fornecedor/contratos':''"
+      routerLinkActive="active" class="border-0 bg-transparent d-flex align-items-center list-group-item
+      list-group-item-action text-white">
+      <i class="fa fa-shopping-basket pr-2" aria-hidden="true" style="width: 28px"></i>{{"SIDEBAR.CONTRACTS" |
+      translate}}</button>
+    <button (click)="hideSiderbar()" [routerLink]="checkUser()?'/pages/fornecedor/map-fornecedor':''"
+      routerLinkActive="active" class="border-0 bg-transparent d-flex align-items-center list-group-item
+      list-group-item-action text-white">
+      <i class="fa fa-money pr-2" aria-hidden="true" style="width: 28px"></i>{{"SIDEBAR.MAP" | translate}}</button>
+  </section>
+  <div class="dropright" *ngIf="authService.getAuthenticatedUser().type == !'fornecedor'">
+    <button routerLinkActive="active" (click)="Usertoggle('item')" id="dropdownItens" aria-haspopup="true"
+      aria-expanded="false" class="border-0
+        bg-transparent list-group-item list-group-item-action text-white">
+      <div class="d-flex align-items-center justify-content-between">
+        <div class="d-flex align-items-center">
+          <i class="bi bi-currency-dollar mb-0 h4" aria-hidden="true" style="width: 28px"></i>&nbsp;{{"SIDEBAR.ITEMS"
+          | translate}}
+        </div>
+        <i [ngClass]="items ? 'fa-minus' : 'fa-plus'" class="fa fa" aria-hidden="true" style="width: 28px;"></i>
+      </div>
+    </button>    
+    
+  </div>
+  <div class="dropright">
+    <button routerLinkActive="active" (click)="reportToggle()" id="dropdownMenuButton" aria-haspopup="true"
+      aria-expanded="false" class="border-0
+      bg-transparent list-group-item list-group-item-action text-white">
+      <div class="d-flex justify-content-between align-items-center">
+        <div class="d-flex align-items-center">
+          <i class="bi bi-list-check h4 mb-0" aria-hidden="true" style="width: 28px"></i>&nbsp;{{"SIDEBAR.REPORTS" |
+          translate}}
+        </div>
+        <i [ngClass]="showReport ? 'fa-minus' : 'fa-plus'" class="fa fa" aria-hidden="true" style="width: 28px;"></i>
+      </div>
+    </button>
+    <div class="bg-sidebar" *ngIf="showReport" aria-labelledby="dropdownMenuButton">
+      <a class="border-0 bg-transparent d-flex ml-4 align-items-center list-group-item list-group-item-action text-white"
+        style="font-size: 15px;" (click)="hideSiderbar()"
+        [routerLink]="['/pages/report-contracts']">{{"SIDEBAR.CONTRACTS" | translate}}</a>
+      <a class="border-0 bg-transparent d-flex ml-4 align-items-center list-group-item list-group-item-action text-white"
+        style="font-size: 15px;" (click)="hideSiderbar()"
+        [routerLink]="['/pages/relatorios-licitacao']">{{"SIDEBAR.BIDDINGS" | translate}}</a>
+      <a class="border-0 bg-transparent d-flex ml-4 align-items-center list-group-item list-group-item-action text-white"
+        style="font-size: 15px;" (click)="hideSiderbar()"
+        [routerLink]="['/pages/report-general']">{{"SIDEBAR.GENERAL_RELAT" | translate}}</a>
+      <a class="border-0 bg-transparent d-flex ml-4 align-items-center list-group-item list-group-item-action text-white"
+        style="font-size: 15px;" (click)="hideSiderbar()"
+        [routerLink]="['/pages/report-generated']">{{"SIDEBAR.GENERATED_RELAT" |
+        translate}}</a>
+    </div>
+  </div>
+</article>
+
+<article *ngIf="authService.getAuthenticatedUser().type == 'associacao'" class="bg-sidebar shadow py-4 font-size-14"
+  id="sidebar-wrapper" style="min-height: 100%">
+  <div>
+    <img src="../../../assets/images/Horizontal-Azul-amarelo-fonte-branca.svg" style="width: 180px; margin: 0 auto 30px"
+      alt="Logo" />
+  </div>
+  <section class="list-group mt-5 sidenav ">
+    <button (click)="hideSiderbar()" [routerLink]="checkUser()?'/pages/dashboard':''" routerLinkActive="active" class="border-0 bg-transparent d-flex align-items-center list-group-item
+      list-group-item-action text-white">
+      <i class="fa fa-bars pr-2" aria-hidden="true" style="width: 28px"></i>Dashboard</button>
+      <button (click)="hideSiderbar()" [routerLink]="checkUser()?'/pages/projetos':''" routerLinkActive="active" class="border-0 bg-transparent d-flex align-items-center list-group-item
+      list-group-item-action text-white">
+      <i class="bi bi-clipboard-pulse mb-0 h4" aria-hidden="true" style="width: 28px"></i>&nbsp;
+      {{"SIDEBAR.PROJECTS" | translate}}
+    </button>
+    <button (click)="hideSiderbar()" [routerLink]="checkUser()?'/pages/associacao/convenios':''"
+      routerLinkActive="active" class="border-0 bg-transparent d-flex align-items-center list-group-item
+      list-group-item-action text-white">
+      <i class="fa fa-users pr-2" aria-hidden="true" style="width: 28px"></i>{{"SIDEBAR.AGREEMENTS" |
+      translate}}</button>
+    <button (click)="hideSiderbar()" [routerLink]="checkUser()?'/pages/associacao/contratos':''"
+      routerLinkActive="active" class="border-0 bg-transparent d-flex align-items-center list-group-item
+      list-group-item-action text-white">
+      <i class="fa fa-shopping-basket pr-2" aria-hidden="true" style="width: 28px"></i>{{"SIDEBAR.CONTRACTS" |
+      translate}}</button>
+    <button (click)="hideSiderbar()" [routerLink]="checkUser()?'/pages/associacao/licitacoes':''"
+      routerLinkActive="active"
+      class="border-0 bg-transparent d-flex align-items-center list-group-item list-group-item-action text-white">
+      <i class="fa fa-money pr-2" aria-hidden="true" style="width: 28px"></i>{{"SIDEBAR.BIDDINGS" | translate}}</button>
+    <button (click)="hideSiderbar()" [routerLink]="checkUser()?'/pages/associacao/map-associacao':''"
+      routerLinkActive="active" class="border-0 bg-transparent d-flex align-items-center list-group-item
+      list-group-item-action text-white">
+      <i class="fa fa-money pr-2" aria-hidden="true" style="width: 28px"></i>{{"SIDEBAR.MAP" | translate}}</button>
+      <div class="dropright">
+        <button routerLinkActive="active" (click)="reportToggle()" id="dropdownMenuButton" aria-haspopup="true"
+          aria-expanded="false" class="border-0
+          bg-transparent list-group-item list-group-item-action text-white">
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center">
+              <i class="bi bi-list-check h4 mb-0" aria-hidden="true" style="width: 28px"></i>&nbsp;{{"SIDEBAR.REPORTS" |
+              translate}}
+            </div>
+            <i [ngClass]="showReport ? 'fa-minus' : 'fa-plus'" class="fa fa" aria-hidden="true" style="width: 28px;"></i>
+          </div>
+        </button>
+        <div class="bg-sidebar" *ngIf="showReport" aria-labelledby="dropdownMenuButton">
+          <a class="border-0 bg-transparent d-flex ml-4 align-items-center list-group-item list-group-item-action text-white"
+            style="font-size: 15px;" (click)="hideSiderbar()"
+            [routerLink]="['/pages/report-contracts']">{{"SIDEBAR.CONTRACTS" | translate}}</a>
+          <a class="border-0 bg-transparent d-flex ml-4 align-items-center list-group-item list-group-item-action text-white"
+            style="font-size: 15px;" (click)="hideSiderbar()"
+            [routerLink]="['/pages/relatorios-licitacao']">{{"SIDEBAR.BIDDINGS" | translate}}</a>
+          <a class="border-0 bg-transparent d-flex ml-4 align-items-center list-group-item list-group-item-action text-white"
+            style="font-size: 15px;" (click)="hideSiderbar()"
+            [routerLink]="['/pages/report-general']">{{"SIDEBAR.GENERAL_RELAT" | translate}}</a>
+          <a class="border-0 bg-transparent d-flex ml-4 align-items-center list-group-item list-group-item-action text-white"
+            style="font-size: 15px;" (click)="hideSiderbar()"
+            [routerLink]="['/pages/report-generated']">{{"SIDEBAR.GENERATED_RELAT" |
+            translate}}</a>
+        </div>
+      </div>
+      <!-- <div class="dropright">
+        <button routerLinkActive="active" (click)="Usertoggle('item')" id="dropdownItens" aria-haspopup="true"
+          aria-expanded="false" class="border-0
+            bg-transparent list-group-item list-group-item-action text-white">
+          <div class="d-flex align-items-center justify-content-between">
+            <div class="d-flex align-items-center">
+              <i class="bi bi-currency-dollar mb-0 h4" aria-hidden="true" style="width: 28px"></i>&nbsp;{{"SIDEBAR.ITEMS"
+              | translate}}
+            </div>
+            <i [ngClass]="items ? 'fa-minus' : 'fa-plus'" class="fa fa" aria-hidden="true" style="width: 28px;"></i>
+          </div>
+        </button>
+        <div class="bg-sidebar" *ngIf="items" aria-labelledby="dropdownItens">
+          <a class="border-0 bg-transparent d-flex ml-4 align-items-center list-group-item list-group-item-action text-white"
+            style="font-size: 15px;" (click)="hideSiderbar()" [routerLink]="['/pages/itens-custo']">{{"SIDEBAR.COST_ITEMS"
+            | translate}}</a>
+          <a class="border-0 bg-transparent d-flex ml-4 align-items-center list-group-item list-group-item-action text-white"
+            style="font-size: 15px;" (click)="hideSiderbar()" [routerLink]="['/pages/produtos']">{{"SIDEBAR.PRODUCTS" |
+            translate}}</a>
+          <a class="border-0 bg-transparent d-flex ml-4 align-items-center list-group-item list-group-item-action text-white"
+            style="font-size: 15px;" (click)="hideSiderbar()" [routerLink]="['/pages/categorias']">{{"SIDEBAR.CATEGORIES"
+            | translate}}</a>
+        </div>
+      </div> -->
+  </section>
+</article>
+
+<!-- userType = project_manager -->
+
+<article *ngIf="authService.getAuthenticatedUser().type == 'project_manager'"
+  class="bg-sidebar shadow py-4 font-size-14" id="sidebar-wrapper" style="min-height: 100%">
+
+  <div>
+    <img src="../../../assets/images/Horizontal-Azul-amarelo-fonte-branca.svg" style="width: 180px; margin: 0 auto 30px"
+      alt="Logo" /> 
+  </div>
+
+  <section class="list-group mt-5 sidenav">
+    
+    <button (click)="hideSiderbar()" [routerLink]="checkUser()?'/pages/dashboard':''" routerLinkActive="active" class="border-0 bg-transparent d-flex align-items-center list-group-item
+    list-group-item-action text-white">
+    <i class="fa fa-bars pr-2" aria-hidden="true" style="width: 28px"></i>Dashboard</button>
+
+    <button (click)="hideSiderbar()" [routerLink]="['/pages/associacao']" routerLinkActive="active" class="border-0 bg-transparent d-flex align-items-center list-group-item
+    list-group-item-action text-white">
+      <i class="bi bi-people mb-0 h4" aria-hidden="true" style="width: 28px"></i>&nbsp;
+      {{"SIDEBAR.ASSOCIATIONS" | translate}}
+    </button>
+
+
+
+    <button (click)="hideSiderbar()" [routerLink]="checkUser()?'/pages/projetos':''" routerLinkActive="active" class="border-0 bg-transparent d-flex align-items-center list-group-item
+    list-group-item-action text-white">
+    <i class="bi bi-clipboard-pulse mb-0 h4" aria-hidden="true" style="width: 28px"></i>&nbsp;
+    {{"SIDEBAR.PROJECTS" | translate}}
+    </button>
+
+    <button (click)="hideSiderbar()" [routerLink]="['/pages/convenios']" routerLinkActive="active" class="border-0 bg-transparent d-flex align-items-center list-group-item
+    list-group-item-action text-white">
+      <i class="bi bi-clipboard2-data mb-0 h4" aria-hidden="true" style="width: 28px"></i>&nbsp;
+      {{"SIDEBAR.AGREEMENTS" | translate}}
+    </button>
+   
+    <div class="dropright">
+      <button routerLinkActive="active" (click)="Usertoggle('bid')" id="dropdownItens" aria-haspopup="true"
+        aria-expanded="false" class="border-0
+          bg-transparent list-group-item list-group-item-action text-white">
+        <div class="d-flex align-items-center justify-content-between">
+          <div class="d-flex align-items-center">
+            <i class="fa fa-money pr-2" aria-hidden="true" style="width: 28px"></i>&nbsp;{{"SIDEBAR.BIDDINGS" | translate}}
+          </div>
+          <i [ngClass]="showBids ? 'fa-minus' : 'fa-plus'" class="fa fa" aria-hidden="true" style="width: 28px;"></i>
+        </div>
+      </button>
+      <div class="bg-sidebar" *ngIf="showBids" aria-labelledby="dropdownItens">
+        <a class="border-0 bg-transparent d-flex ml-4 align-items-center list-group-item list-group-item-action text-white"
+          style="font-size: 15px;" (click)="hideSiderbar()" [routerLink]="['/pages/licitacoes/gestor-revisor-licitacao']">{{"ASSOCIATION_BIDDING.REVIEW" | translate}}</a>
+          
+        <a class="border-0 bg-transparent d-flex ml-4 align-items-center list-group-item list-group-item-action text-white"
+          style="font-size: 15px;" (click)="hideSiderbar()" [routerLink]="['/pages/licitacoes/gestor-visualizacao-licitacao']">{{"ASSOCIATION_BIDDING.VIEWER" | translate}}</a>
+
+      </div>
+    </div>
+
+    <button (click)="hideSiderbar()" [routerLink]="['/pages/fornecedor']" routerLinkActive="active" class="border-0 bg-transparent d-flex align-items-center list-group-item
+    list-group-item-action text-white">
+      <i class="bi bi-shop-window mb-0 h4" aria-hidden="true" style="width: 28px"></i>&nbsp;
+      {{"SIDEBAR.SUPPLIERS" | translate}}
+    </button>
+
+    <div class="dropright">
+      <button routerLinkActive="active" (click)="Usertoggle('user')" id="dropdownMenuButton" aria-haspopup="true"
+        aria-expanded="false" class="border-0
+        bg-transparent list-group-item list-group-item-action text-white">
+        <div class="d-flex justify-content-between align-items-center">
+          <div>
+            <i class="bi bi-person h4 mb-0" aria-hidden="true" style="width: 28px"></i>&nbsp;{{"SIDEBAR.USERS" |
+            translate}}
+          </div>
+          <i [ngClass]="show ? 'fa-minus' : 'fa-plus'" class="fa fa" aria-hidden="true" style="width: 28px;">
+          </i>
+        </div>
+      </button>
+      <div class="bg-sidebar" *ngIf="show" aria-labelledby="dropdownMenuButton">
+        <a *ngIf="user.roles !== 'geral'"
+          class="border-0 bg-transparent d-flex ml-4 align-items-center list-group-item list-group-item-action text-white"
+          style="font-size: 15px;" (click)="hideSiderbar()"
+          [routerLink]="['/pages/controle-associacao']">{{"SIDEBAR.ASSOCIATION" |
+          translate}}</a>
+        <a class="border-0 bg-transparent d-flex ml-4 align-items-center list-group-item list-group-item-action text-white"
+          style="font-size: 15px;" (click)="hideSiderbar()"
+          [routerLink]="['/pages/controle-fornecedor']">{{"SIDEBAR.SUPPLIER" | translate}}</a>
+    
+      </div>
+    </div>
+
+
+    <div class="dropright">
+      <button routerLinkActive="active" (click)="Usertoggle('item')" id="dropdownItens" aria-haspopup="true"
+        aria-expanded="false" class="border-0
+          bg-transparent list-group-item list-group-item-action text-white">
+        <div class="d-flex align-items-center justify-content-between">
+          <div class="d-flex align-items-center">
+            <i class="bi bi-currency-dollar mb-0 h4" aria-hidden="true" style="width: 28px"></i>&nbsp;{{"SIDEBAR.ITEMS"
+            | translate}}
+          </div>
+          <i [ngClass]="items ? 'fa-minus' : 'fa-plus'" class="fa fa" aria-hidden="true" style="width: 28px;"></i>
+        </div>
+      </button>
+      
+      <div class="bg-sidebar" *ngIf="items" aria-labelledby="dropdownItens">
+        
+        <a class="border-0 bg-transparent d-flex ml-4 align-items-center list-group-item list-group-item-action text-white"
+          style="font-size: 15px;" (click)="hideSiderbar()" [routerLink]="['/pages/items']">{{"SIDEBAR.COST_ITEMS"
+          | translate}}</a>        
+        
+        <a class="border-0 bg-transparent d-flex ml-4 align-items-center list-group-item list-group-item-action text-white"
+          style="font-size: 15px;" (click)="hideSiderbar()" [routerLink]="['/pages/pdm']">PDM</a>
+        
+        <a class="border-0 bg-transparent d-flex ml-4 align-items-center list-group-item list-group-item-action text-white"
+          style="font-size: 15px;" (click)="hideSiderbar()" [routerLink]="['/pages/classes']">{{"SIDEBAR.CLASSES" |
+          translate}}</a>
+        <a class="border-0 bg-transparent d-flex ml-4 align-items-center list-group-item list-group-item-action text-white"
+          style="font-size: 15px;" (click)="hideSiderbar()" [routerLink]="['/pages/categorias']">{{"SIDEBAR.CATEGORIES"
+          | translate}}</a>
+      </div>
+
+    </div>
+
+
+      <div class="dropright">
+        <button routerLinkActive="active" (click)="reportToggle()" id="dropdownMenuButton" aria-haspopup="true"
+          aria-expanded="false" class="border-0
+          bg-transparent list-group-item list-group-item-action text-white">
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center">
+              <i class="bi bi-list-check h4 mb-0" aria-hidden="true" style="width: 28px"></i>&nbsp;{{"SIDEBAR.REPORTS" |
+              translate}}
+            </div>
+            <i [ngClass]="showReport ? 'fa-minus' : 'fa-plus'" class="fa fa" aria-hidden="true" style="width: 28px;"></i>
+          </div>
+        </button>
+        <div class="bg-sidebar" *ngIf="showReport" aria-labelledby="dropdownMenuButton">
+          <a class="border-0 bg-transparent d-flex ml-4 align-items-center list-group-item list-group-item-action text-white"
+            style="font-size: 15px;" (click)="hideSiderbar()"
+            [routerLink]="['/pages/report-contracts']">{{"SIDEBAR.CONTRACTS" | translate}}</a>
+          <a class="border-0 bg-transparent d-flex ml-4 align-items-center list-group-item list-group-item-action text-white"
+            style="font-size: 15px;" (click)="hideSiderbar()"
+            [routerLink]="['/pages/relatorios-licitacao']">{{"SIDEBAR.BIDDINGS" | translate}}</a>
+          <a class="border-0 bg-transparent d-flex ml-4 align-items-center list-group-item list-group-item-action text-white"
+            style="font-size: 15px;" (click)="hideSiderbar()"
+            [routerLink]="['/pages/report-general']">{{"SIDEBAR.GENERAL_RELAT" | translate}}</a>
+          <a class="border-0 bg-transparent d-flex ml-4 align-items-center list-group-item list-group-item-action text-white"
+            style="font-size: 15px;" (click)="hideSiderbar()"
+            [routerLink]="['/pages/report-generated']">{{"SIDEBAR.GENERATED_RELAT" |
+            translate}}</a>
+        </div>
+      </div>
+  </section>
+</article>

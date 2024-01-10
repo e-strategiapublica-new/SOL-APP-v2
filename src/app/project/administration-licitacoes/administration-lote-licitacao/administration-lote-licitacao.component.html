@@ -1,0 +1,94 @@
+<div class="container mb-5">
+  <div class="row mt-5">
+    <div class="col-md-12">
+      <h1><strong>{{'ADMINISTRATION_AGREEMENTS_BIDDING.AGREEMENTS_BID' | translate}}</strong></h1>
+      <hr class="bg-primary">
+    </div>
+  </div>
+
+  <div class="row mt-1">
+		<div class="col-12">
+			<i class="fa fa-arrow-left f-size-24 cursor-pointer" [routerLink]="['/pages/licitacoes/detalhes-licitacoes/' + biddingID]"
+				aria-hidden="true"></i>
+		</div>
+	</div>
+
+  <div class="col-md-12 border mt-3 br-10 py-3 ">
+    <div class="d-flex justify-content-between">
+      <div>
+        <h6 class="font-poppins f-size-14 text-secondary">{{'ADMINISTRATION_AGREEMENTS_BIDDING.NUMBER_BID' | translate}}</h6>
+        <h5 class="f-size-16">{{response.bid_count}}/{{response.createdAt | date:'yyyy'}}</h5>
+      </div>
+      <div>
+        <h6 class="font-poppins f-size-14 text-secondary">{{'ADMINISTRATION_BIDDING.START_AT' | translate}}</h6>
+        <h5 *ngIf="response.status ==='awaiting'" class="f-size-16 text-warning">{{'ADMINISTRATION_BIDDING.AWAITING' | translate}}</h5>
+        <h5 *ngIf="response.status ==='tiebreaker'" class="f-size-16 text-warning">{{'ADMINISTRATION_BIDDING.TIEBREAKER' | translate}}</h5>
+        <h5 *ngIf="response.status ==='analysis'" class="f-size-16 text-info">{{'ADMINISTRATION_BIDDING.ANALYSIS' | translate}}</h5>
+        <h5 *ngIf="response.status ==='deserted'" class="f-size-16 text-danger">{{'ADMINISTRATION_BIDDING.DESERTED' | translate}}</h5>
+        <h5 *ngIf="response.status ==='canceled'" class="f-size-16 text-danger">{{'ADMINISTRATION_BIDDING.CANCELED' | translate}}</h5>
+        <h5 *ngIf="response.status ==='failed'" class="f-size-16 text-danger">{{'ADMINISTRATION_BIDDING.FAILED' | translate}}</h5>
+        <h5 *ngIf="response.status ==='draft'" class="f-size-16 text-dark">{{'ADMINISTRATION_BIDDING.DRAFT' | translate}}</h5>
+        <h5 *ngIf="response.status ==='released'" class="f-size-16 text-success">{{'ADMINISTRATION_BIDDING.RELEASED' | translate}}</h5>
+        <h5 *ngIf="response.status ==='open'" class="f-size-16 text-success">{{'ADMINISTRATION_BIDDING.OPEN' | translate}}</h5>
+        <h5 *ngIf="response.status ==='completed'" class="f-size-16 text-success">{{'ADMINISTRATION_BIDDING.COMPLETED' | translate}}</h5>
+        <h5 *ngIf="response.status ==='reopened'" class="f-size-16 text-success">{{'ADMINISTRATION_BIDDING.REOPENED' | translate}}</h5>
+        <h5 *ngIf="response.status ==='returned'" class="f-size-16 text-info">{{"CREATE_BIDDING_STATUS.RETURNED" | translate}}</h5>
+      </div>
+
+    </div>
+  </div>
+  <div class="col-12 border mt-3 br-10 py-3" *ngFor="let item of response.add_allotment">
+    <div class="px-2 d-flex justify-content-between">
+      <div class="col-md-6">
+        <h6 class="font-poppins f-size-14 text-secondary">{{'ADMINISTRATION_AGREEMENTS_BIDDING.NAME_AGREEMENT' | translate}}</h6>
+        <h5 class="mb-0 text-dark">{{item.allotment_name}}</h5>
+      </div>
+
+      <div class="col-md-2 text-capitalize">
+        <h6 class="font-poppins f-size-14 text-secondary">Status</h6>
+        <h5 *ngIf="response.status ==='awaiting'" class="f-size-16 text-warning">{{'ADMINISTRATION_BIDDING.AWAITING' | translate}}</h5>
+        <h5 *ngIf="response.status ==='tiebreaker'" class="f-size-16 text-warning">{{'ADMINISTRATION_BIDDING.TIEBREAKER' | translate}}</h5>
+        <h5 *ngIf="response.status ==='analysis'" class="f-size-16 text-info">{{'ADMINISTRATION_BIDDING.ANALYSIS' | translate}}</h5>
+        <h5 *ngIf="response.status ==='deserted'" class="f-size-16 text-danger">{{'ADMINISTRATION_BIDDING.DESERTED' | translate}}</h5>
+        <h5 *ngIf="response.status ==='canceled'" class="f-size-16 text-danger">{{'ADMINISTRATION_BIDDING.CANCELED' | translate}}</h5>
+        <h5 *ngIf="response.status ==='failed'" class="f-size-16 text-danger">{{'ADMINISTRATION_BIDDING.FAILED' | translate}}</h5>
+        <h5 *ngIf="response.status ==='draft'" class="f-size-16 text-dark">{{'ADMINISTRATION_BIDDING.DRAFT' | translate}}</h5>
+        <h5 *ngIf="response.status ==='released'" class="f-size-16 text-success">{{'ADMINISTRATION_BIDDING.RELEASED' | translate}}</h5>
+        <h5 *ngIf="response.status ==='open'" class="f-size-16 text-success">{{'ADMINISTRATION_BIDDING.OPEN' | translate}}</h5>
+        <h5 *ngIf="response.status ==='completed'" class="f-size-16 text-success">{{'ADMINISTRATION_BIDDING.COMPLETED' | translate}}</h5>
+        <h5 *ngIf="response.status ==='reopened'" class="f-size-16 text-success">{{'ADMINISTRATION_BIDDING.REOPENED' | translate}}</h5>
+        <h5 *ngIf="response.status ==='returned'" class="f-size-16 text-info">{{"CREATE_BIDDING_STATUS.RETURNED" | translate}}</h5>
+      </div>
+      <div class="col-md-4 d-flex align-items-center flex-column">
+        <h6 class="font-poppins f-size-14 text-secondary">{{'ADMINISTRATION_AGREEMENTS_BIDDING.QUANTITY_ITEMS' | translate}}</h6>
+        <h5 class="mb-0 text-dark">{{item.add_item.length}}</h5>
+      </div>
+    </div>
+    <div class="px-0 mt-3 mx-2">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th class="bg-pattern text-light br-tabele" scope="col">{{'ADMINISTRATION_AGREEMENTS_BIDDING.LIST_ITEMS' | translate}}</th>
+            <th class="bg-pattern text-light br-tabele3" scope="col">{{'ADMINISTRATION_AGREEMENTS_BIDDING.GROUPS_AGREEMENTS' | translate}}</th>
+            <th class="bg-pattern text-light br-tabele3" scope="col">{{'ADMINISTRATION_AGREEMENTS_BIDDING.QUANTITY' | translate}}</th>
+            <th class="bg-pattern text-light br-tabele2" scope="col">{{"COST_ITEMS.UNIT_TITLE" | translate}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="border" *ngFor="let ele of item.add_item">
+            <td class="text-capitalize text-dark" scope="row">{{ele.item}}</td>
+            <td class="text-capitalize text-dark" scope="row">{{ele.group}}</td>
+            <td class="text-capitalize textdark">{{ele.quantity}}</td>
+            <td class="text-capitalize textdark">{{ele.unitMeasure}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-md-11">
+      <!-- <div class="d-flex justify-content-end">
+        <button (click)="open('proposal')" class="br-10 h50 border border-dark btn w3-white text-dark">Visualizar
+          Esclarecimentos</button>
+      </div> -->
+    </div>
+  </div>
+</div>

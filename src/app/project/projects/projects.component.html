@@ -1,0 +1,69 @@
+<div class="container-fluid">
+    <div class="row mt-5">
+        <div class="col-md-12">
+            <h1>{{'PROJECT.PROJECTS' | translate}}</h1>
+            <hr class="bg-primary">
+        </div>
+    </div>
+    <form [formGroup]="form">
+        <div class="row mt-4">
+            <div class="col-md-9 mt-2">
+                <input type="text" class="form-control text-secondary input-height-border" formControlName="search"
+                    placeholder="{{'PROJECT.INPUT_SEARCH' | translate}}">
+            </div>
+            <div class="col-md-3 mt-2" *ngIf="authService.getAuthenticatedUser().type !== 'project_manager' && authService.getAuthenticatedUser().type !== 'associacao'">
+                <button [routerLink]="['/pages/criar-projeto']" type="button"
+                    class="btn btn-dark btn-lg btn-block">{{'PROJECT.CREATE_PROJECT' |
+                    translate}}</button>
+            </div>
+
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <div class="table-responsive-sm">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th class="br-tabele bg-pattern text-light" scope="col">{{'PROJECT.PROJECT_NAME' |
+                                    translate}}</th>
+                                <th class="bg-pattern text-light" scope="col">{{'PROJECT.MANAGER_PROJECT' | translate}}
+                                </th>
+                                <th class="bg-pattern text-light" scope="col">{{'PROJECT.DATA' | translate}}</th>
+                                <th class="bg-pattern text-light" scope="col"></th>
+                                <th class="bg-pattern text-light" scope="col"></th>
+                                <th class="br-tabele2 bg-pattern text-light" scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of projectsFilter | paginate: { itemsPerPage: itensPerPage, currentPage: currentPage } let i = index">
+                                <th (click)="navigateToItem(item)" class="text-capitalize" scope="row">{{item.name}}</th>
+                                <td (click)="navigateToItem(item)" class="text-capitalize">{{item.project_manager.name}}</td>
+                                <td (click)="navigateToItem(item)" class="text-capitalize">{{item.createdAt | date:'dd/MM/YYYY'}}</td>
+                                <td><i (click)="navigateToItem(item)" class="bi bi-eye-fill"></i></td>
+                                <td class="text-capitalize">
+                                    <div style="max-height: 20px;"></div>
+                                </td>
+                                                                
+
+                                <td class="table_icon" *ngIf="authService.getAuthenticatedUser().type !== 'project_manager' && authService.getAuthenticatedUser().type !== 'associacao'">
+                                    <button (click)="delete(item)" class="btn btn-danger">                                        
+                                        <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                    </button>
+                                </td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+                    <div class="row">
+                        <div class="col-md-12"> <pagination-controls (pageChange)="currentPage= $event"
+                                previousLabel="{{'BUTTON_TEXT.PREVIOUS' | translate}}"
+                                nextLabel="{{'BUTTON_TEXT.NEXT' | translate}}"></pagination-controls>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

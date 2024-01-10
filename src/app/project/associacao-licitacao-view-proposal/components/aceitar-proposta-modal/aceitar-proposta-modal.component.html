@@ -1,0 +1,12 @@
+<section class="container-fluid p-4 modal-custom">
+    <div class="d-flex justify-content-end">
+        <i class="bi bi-x-lg" (click)="exit()"></i>
+    </div>
+    <div class="d-flex flex-column justify-content-center">
+        <h4 class="text-center fw-bold">{{"MODAL_PROPOSAL.ACCEPT" | translate}}</h4>
+
+        <div class="d-flex justify-content-end">
+            <button class="btn btn-success mt-3" (click)="confirm()">{{"BUTTON_TEXT.CONFIRM" | translate}}</button>
+        </div>
+    </div>
+</section>

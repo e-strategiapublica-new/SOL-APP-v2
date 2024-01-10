@@ -1,0 +1,36 @@
+<main class="br-16 modal-fade bg-light p-3 row">
+    <div class="col-md-12 d-flex justify-content-between align-items-center">
+        <h3><strong class="text-dark">{{'ADMINISTRATION_DETAIL_BID_CANCEL.CANCEL_BID' | translate}}</strong></h3>
+        <i (click)="closeModal('close')" class="bi cursor-pointer bi-x text-dark h1"></i>
+    </div>
+    <div class="col-md-12 my-3">
+        <div class="border-warning border py-2 br-10 text-center w-100">
+            <h6 class="text-warning mb-0"> <i class="bi bi-exclamation-triangle-fill"></i> &nbsp; {{'ADMINISTRATION_DETAIL_BID_CANCEL.ATENTION' | translate}}</h6>
+        </div>
+    </div>
+    <div class="col-md-5 mt-3">
+        <h4 class="f-size-14 text-dark mb-0">{{'ADMINISTRATION_DETAIL_BID_CANCEL.NUMBER' | translate}}</h4>
+        <h5 class="f-size-16 text-dark">{{datamock.getDataLicitacao().numero}}</h5>
+    </div>
+    <div class="col-md-7 mt-3">
+        <h4 class="f-size-14 text-dark mb-0">{{'ADMINISTRATION_DETAIL_BID_CANCEL.REASON' | translate}}</h4>
+        <h5 class="f-size-16 text-dark">{{datamock.getDataLicitacao().status}}</h5>
+    </div>
+
+    <div class="col-md-12 mt-2">
+        <div class="form-group">
+            <label class="text-dark" for="feedback"><strong>{{'ADMINISTRATION_DETAIL_BID_CANCEL.DESCRIPTION' | translate}}</strong></label>
+            <textarea class="form-control w-100  br-10 p-2" [maxLength]="200" placeholder="Digite aqui" id="feedback" rows="3"></textarea>
+          </div>
+    </div>
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-6">
+                <button (click)="closeModal('cancel')" class="btn w-100 h50 br-10 btn-danger f-size-16" type="button"><strong>{{'ADMINISTRATION_DETAIL_BID_CANCEL.CANCEL_BID' | translate}}</strong></button>
+            </div>
+            <div class="col-md-6">
+                <button  (click)="closeModal('close')" class="btn w-100 h50 br-10 text-light bg-pattern f-size-16" type="button"><strong>{{'ADMINISTRATION_DETAIL_BID_CANCEL.RECUSED_CANCEL' | translate}}</strong></button>
+            </div>
+        </div>
+    </div>
+</main>

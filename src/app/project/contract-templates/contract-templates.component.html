@@ -1,0 +1,56 @@
+<div class="container-fluid" [formGroup]="form">
+    <div class="row mt-5">
+        <div class="col-md-12">
+            <h1><strong>{{'CONTRACT_MODELS.CONTRACT_MODELS' | translate}}</strong></h1>
+            <hr class="bg-primary">
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-md-9">
+            <input type="text" formControlName="search" class="form-control text-secondary input-height-border"
+                placeholder="{{'CONTRACT_MODELS.SEARCH' | translate}}">
+        </div>
+        <div class="col-md-3">
+            <button [routerLink]="['/pages/modelo-contratos/novo-modelo']" type="button"
+                class="btn btn-dark btn-lg btn-block">{{'CONTRACT_MODELS.NEW_CONTRACT' | translate}}</button>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <div class="table-responsive-sm">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th class="br-tabele bg-pattern text-light" scope="col">{{'AGREEMENTS.NAME' | translate}}
+                            </th>
+                            <th class="bg-pattern text-light" scope="col">{{'CONTRACT_MODELS.CREATE_DATE' | translate}}
+                            </th>
+                            <th class="bg-pattern text-light" scope="col">{{'CREATE_BIDDING.LANGUAGE' | translate}}</th>
+                            <th class="bg-pattern text-light" scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of secondTemplateList | paginate: { itemsPerPage: 10, currentPage: currentPage }; let i= index; "
+                            class="border-right border-left">
+                            <th class="text-capitalize" scope="row">{{item.name}}</th>
+                            <td class="text-capitalize">{{item.createdAt}}</td>
+                            <td class="text-capitalize">{{handlerLanguage(item.language) | translate}}</td>
+                            <td class="table_icon">
+                                <button class="btn btn-outline-secondary" (click)="editContract(item._id)">
+                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="row">
+                    <div class="col-md-12"><pagination-controls (pageChange)="currentPage = $event"
+                            previousLabel="{{'BUTTON_TEXT.PREVIOUS' | translate}}"
+                            nextLabel="{{'BUTTON_TEXT.NEXT' | translate}}"></pagination-controls>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

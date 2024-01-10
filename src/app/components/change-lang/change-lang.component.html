@@ -1,0 +1,53 @@
+<div class="dropdown">
+	<a class="dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+		aria-haspopup="true" aria-expanded="false">
+		<div class="d-flex">
+			<img *ngIf="selectLang == 'EN-US'" class="mr-1" src="../../../assets/images/united-states.png"
+				style="height: 21px; width: 21px;" />
+			<span *ngIf="selectLang == 'EN-US'" class="text-white">EN-US</span>
+		</div>
+
+		<div class="d-flex">
+			<img *ngIf="selectLang == 'PT-BR'" class="mr-1" src="../../../assets/images/brazil-.png"
+				style="height: 21px; width: 21px;" />
+			<span *ngIf="selectLang == 'PT-BR'" class="text-white">PT-BR</span>
+		</div>
+
+		<div class="d-flex">
+			<img *ngIf="selectLang == 'FR-FR'" class="mr-1" src="../../../assets/images/france.png"
+				style="height: 21px; width: 21px;" />
+			<span *ngIf="selectLang == 'FR-FR'" class="text-white">FR-FR</span>
+		</div>
+		<div class="d-flex">
+			<img *ngIf="selectLang == 'ES-ES'" class="mr-1" src="../../../assets/images/spain.png"
+				style="height: 21px; width: 21px;" />
+			<span *ngIf="selectLang == 'ES-ES'" class="text-white">ES-ES</span>
+		</div>
+	</a>
+	<div class="dropdown-menu mt-2 ml-1" aria-labelledby="navbarDropdown">
+		<div class="dropdown-item body-400-md" (click)="changeLanguage('en')">
+			<div class="d-flex cursor-pointer">
+				<img class="mr-1" src="../../../assets/images/united-states.png" style="height: 21px; width: 21px;" />
+				<span>EN-US</span>
+			</div>
+		</div>
+		<div class="dropdown-item body-400-md" (click)="changeLanguage('pt')">
+			<div class="d-flex cursor-pointer">
+				<img class="mr-1" src="../../../assets/images/brazil-.png" style="height: 21px; width: 21px;" />
+				<span>PT-BR</span>
+			</div>
+		</div>
+		<div class="dropdown-item body-400-md" (click)="changeLanguage('fr')">
+			<div class="d-flex cursor-pointer  align-items-center">
+				<img class="mr-1" src="../../../assets/images/france.png" style="height: 21px; width: 21px;" />
+				<span>FR-FR</span>
+			</div>
+		</div>
+		<div class="dropdown-item body-400-md" (click)="changeLanguage('es')">
+			<div class="d-flex cursor-pointer">
+				<img class="mr-1" src="../../../assets/images/spain.png" style="height: 21px; width: 21px;" />
+				<span>ES-ES</span>
+			</div>
+		</div>
+	</div>
+</div>

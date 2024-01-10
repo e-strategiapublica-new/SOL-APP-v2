@@ -1,0 +1,251 @@
+<div class="container">
+    <div class="row mt-5">
+        <div class="col-md-12">
+            <h1 class="text-dark"><strong>{{'CONTRACT_MODELS.NEW_CONTRACT' | translate}}</strong></h1>
+            <hr class="bg-primary">
+        </div>
+    </div>
+    <div class="col-md-4 pull-right">
+        <div class="d-flex align-items-center justify-content-between">
+            <div>
+                <h6>Tags de fornecedor</h6>
+            </div>
+            <div class="col-md-1 p-0 d-flex justify-content-end">
+                <i class="bi"
+                    [ngClass]="{'bi-caret-down-fill': !isSectionOpenFornecedor, 'bi-caret-up': isSectionOpenFornecedor}"
+                    (click)="toggleSectionFornecedor()"></i>
+            </div>
+        </div>
+        <div class="content" [ngClass]="{ 'open': isSectionOpenFornecedor }">
+            <hr>
+            <div class="row col-12 ">
+                <div class="col-md-12">
+                    <div class="table-responsive-sm">
+                        <h6>[supplier_name]: nome fornecedor</h6>
+                        <h6>[supplier_id]: CPF fornecedor</h6>
+                        <h6>[supplier_zip_code]: CEP fornecedor</h6>
+                        <h6>[supplier_address]: Endereço fornecedor</h6>
+                        <h6>[supplier_municipality]: Municipio fornecedor</h6>
+                        <h6>[supplier_state]: Estado fornecedor</h6>
+                        <h6>[supplier_legal_representative_name]: nome representante legal fornecedor</h6>
+                        <h6>[supplier_legal_representative_id]: CPF representante legal fornecedor</h6>
+                        <h6>[supplier_legal_representative_address]: Endereço representante legal fornecedor</h6>
+                        <h6>[supplier_legal_representative_supplier_municipality]: Municipio representante legal
+                            fornecedor</h6>
+                        <h6>[supplier_legal_representative_supplier_state]: Estado representante legal fornecedor</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex align-items-center justify-content-between">
+            <div>
+                <h6>Tags de associação</h6>
+            </div>
+            <div class="col-md-1 p-0 d-flex justify-content-end">
+                <i class="bi"
+                    [ngClass]="{'bi-caret-down-fill': !isSectionOpenAssociacao, 'bi-caret-up': isSectionOpenAssociacao}"
+                    (click)="toggleSectionAssociacao()"></i>
+            </div>
+        </div>
+        <div class="content" [ngClass]="{ 'open': isSectionOpenAssociacao }">
+            <hr>
+            <div class="row col-12 ">
+                <div class="col-md-12">
+                    <div class="table-responsive-sm">
+                        <h6>[association_name]: nome associacao</h6>
+                        <h6>[association_id]: CPF associacao</h6>
+                        <h6>[association_zip_code]: CEP associacao</h6>
+                        <h6>[association_address]: Endereço associacao</h6>
+                        <h6>[association_municipality]: Municipio associacao</h6>
+                        <h6>[association_state]: Estado associacao</h6>
+                        <h6>[association_legal_representative_name]: nome representante legal associacao</h6>
+                        <h6>[association_legal_representative_id]: CPF representante legal associacao</h6>
+                        <h6>[association_legal_representative_address]: Endereço representante legal associacao</h6>
+                        <h6>[association_legal_representative_supplier_municipality]: Municipio representante legal
+                            associacao</h6>
+                        <h6>[association_legal_representative_supplier_state]: Estado representante legal associacao
+                        </h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex align-items-center justify-content-between">
+            <div>
+                <h6>Tags de convênio</h6>
+            </div>
+            <div class="col-md-1 p-0 d-flex justify-content-end">
+                <i class="bi"
+                    [ngClass]="{'bi-caret-down-fill': !isSectionOpenConvenio, 'bi-caret-up': isSectionOpenConvenio}"
+                    (click)="toggleSectionConvenio()"></i>
+            </div>
+        </div>
+        <div class="content" [ngClass]="{ 'open': isSectionOpenConvenio }">
+            <hr>
+            <div class="row col-12 ">
+                <div class="col-md-12">
+                    <div class="table-responsive-sm">
+                        <h6>[covenant_number] = Número convênio</h6>
+                        <h6>[covenant_object] = Objeto convenio</h6>
+                        <h6>[municipality_execution_covenant] = Municipio execucao convenio</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex align-items-center justify-content-between">
+            <div>
+                <h6>Tags de licitação</h6>
+            </div>
+            <div class="col-md-1 p-0 d-flex justify-content-end">
+                <i class="bi"
+                    [ngClass]="{'bi-caret-down-fill': !isSectionOpenLicitacao, 'bi-caret-up': isSectionOpenLicitacao}"
+                    (click)="toggleSectionLicitacao()"></i>
+            </div>
+        </div>
+        <div class="content" [ngClass]="{ 'open': isSectionOpenLicitacao }">
+            <hr>
+            <div class="row col-12 ">
+                <div class="col-md-12">
+                    <div class="table-responsive-sm">
+                        <h6>[number/year_bidding] = Número/ano licitação</h6>
+                        <h6>[guest_supplier] = Fornecedor convidado</h6>
+                        <h6>[proposed_list] = Lista proposta</h6>
+                        <h6>[winning_supplier] = Fornecedor vencedor</h6>
+                        <h6>[batch_list] = Lista lotes</h6>
+                        <h6>[closing_date] = Data de encerramento</h6>
+                        <h6>[start_date] = Data de Início</h6>
+                        <h6>[estimated_value_of_the_bid] = Valor estimado da licitação</h6>
+                        <h6>[object_description] = objeto/descricao licitacao</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex align-items-center justify-content-between">
+            <div>
+                <h6>Tags de lote</h6>
+            </div>
+            <div class="col-md-1 p-0 d-flex justify-content-end">
+                <i class="bi" [ngClass]="{'bi-caret-down-fill': !isSectionOpenLote, 'bi-caret-up': isSectionOpenLote}"
+                    (click)="toggleSectionLote()"></i>
+            </div>
+        </div>
+        <div class="content" [ngClass]="{ 'open': isSectionOpenLote }">
+            <hr>
+            <div class="row col-12 ">
+                <div class="col-md-12">
+                    <div class="table-responsive-sm">
+                        <h6>[batch_list] = Lista com o nome dos lotes</h6>
+                        <h6>[batch_complete_list] = Lista completa(nome do lote,
+                            nome do item,
+                            especificação do item,
+                            quantidade de item no lote,
+                            unidade do item,
+                            valor unitario proposta,
+                            valor frete lote,
+                            valor total proposta)</h6>
+                        <h6>[batch_specification_list](Nome do item, especificação)</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex align-items-center justify-content-between">
+            <div>
+                <h6>Tags de contrato</h6>
+            </div>
+            <div class="col-md-1 p-0 d-flex justify-content-end">
+                <i class="bi"
+                    [ngClass]="{'bi-caret-down-fill': !isSectionOpenContrato, 'bi-caret-up': isSectionOpenContrato}"
+                    (click)="toggleSectionContrato()"></i>
+            </div>
+        </div>
+        <div class="content" [ngClass]="{ 'open': isSectionOpenContrato }">
+            <hr>
+            <div class="row col-12 ">
+                <div class="col-md-12">
+                    <div class="table-responsive-sm">
+                        <h6>[contract_number] = Numero do contrato</h6>
+                        <h6>[signature_association] = Assintarua associação</h6>
+                        <h6>[supplier_signature] = Assinatura fornecedor</h6>
+                        <h6>[supplier] = Fornecedor</h6>
+                        <h6>[documentcontract_date]: Data criação do contrato</h6>
+                        <h6>[document_minutes]: Data criação ATA</h6>
+                        <h6>[document_notice_ date]: Data criação Edital</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-9">
+        <form [formGroup]="form" class="row" (ngSubmit)="onSubmit()">
+
+            <div class="col-md-4 mt-2">
+                <label class="text-dark" for="name"><strong>{{'AGREEMENTS.NAME' | translate}}</strong></label>
+                <input type="text" [maxlength]="50" class="form-control br-10 py-4" formControlName="name" id="name"
+                    placeholder="{{'CONTRACT_MODELS.TYPING_NAME' | translate}}">
+            </div>
+            <div class="col-md-4 mt-2">
+                <label for="classification" class="text-dark text-capitalize"><b>{{"CREATE_BIDDING.CLASSIFICATION"
+                        | translate}}</b><span class="f-size-16
+									text-danger">*</span></label>
+                <select type="text" formControlName="classification" #licitacoes class="form-control br-10 h50"
+                    id="classification">
+                    <option selected readonly disabled [value]="''">{{"BUTTON_TEXT.SELECT" | translate}}
+                    </option>
+                    <option [value]="modelContractClassificationEnum.bens">{{"CREATE_BIDDING.CONCTRACT" | translate}}
+                        {{"CREATE_BIDDING.OF_GOODS" | translate}}</option>
+                    <option [value]="modelContractClassificationEnum.obras">{{"CREATE_BIDDING.CONCTRACT" | translate}}
+                        {{"CREATE_BIDDING.OF_WORKS" | translate}}</option>
+                    <option [value]="modelContractClassificationEnum.servicos">{{"CREATE_BIDDING.CONCTRACT" |
+                        translate}} {{"CREATE_BIDDING.OF_Services" | translate}}</option>
+                    <option [value]="modelContractClassificationEnum.ata">{{"CREATE_BIDDING.OF_Minutes" | translate}}
+                    </option>
+                    <option [value]="modelContractClassificationEnum.editalBens">{{"CREATE_BIDDING.OF_Notice" |
+                        translate}} {{"CREATE_BIDDING.OF_GOODS" | translate}}</option>
+                    <option [value]="modelContractClassificationEnum.editalObras">{{"CREATE_BIDDING.OF_Notice" |
+                        translate}} {{"CREATE_BIDDING.OF_WORKS" | translate}}</option>
+                    <option [value]="modelContractClassificationEnum.editalServicos">{{"CREATE_BIDDING.OF_Notice" |
+                        translate}} {{"CREATE_BIDDING.OF_Services" | translate}}</option>
+                </select>
+            </div>
+
+            <div class="col-md-4 mt-2">
+                <label for="classification" class="text-dark text-capitalize"><b>{{"CREATE_BIDDING.LANGUAGE" |
+                        translate}}</b><span class="f-size-16 text-danger">*</span></label>
+                <select type="text" formControlName="language" class="form-control br-10 h50" id="language">
+                    <option selected readonly disabled [value]="''">{{"BUTTON_TEXT.SELECT" | translate}}
+                    </option>
+                    <option [value]="languageContractEnum.english">{{"CREATE_BIDDING.SELECT_LANGUAGE_ENGLISH" |
+                        translate}}</option>
+                    <option [value]="languageContractEnum.spanish">{{"CREATE_BIDDING.SELECT_LANGUAGE_SPANISH" |
+                        translate}}</option>
+                    <option [value]="languageContractEnum.french">{{"CREATE_BIDDING.SELECT_LANGUAGE_FRENCH" |
+                        translate}}</option>
+                    <option [value]="languageContractEnum.portuguese">{{"CREATE_BIDDING.SELECT_LANGUAGE_PORTUGUESE" |
+                        translate}}</option>
+                </select>
+
+            </div>
+
+            <div class="col-12 mb-5">
+                <div class="d-flex flex-column  ">
+                    <label class="text-dark text-capitalize"
+                        for="licitacoes"><strong>{{'CONTRACT_MODELS.CONTRACT_MODELS' |
+                            translate}}</strong></label>
+                    <input type="file" class="file-upload" (change)="onFileSelected($event)" accept=".docx">
+                </div>
+                <div class="row d-flex justify-content-end">
+                    <div class="col-md-4 mt-4 ">
+                        <button (click)="backContract()" type="button"
+                            class="btn btn-light br-10 w-100 color-patter h50">
+                            <strong>{{'BUTTON_TEXT.CANCEL' | translate}}</strong>
+                        </button>
+                    </div>
+                    <div class="col-md-4 mt-4 ">
+                        <button type="submit" class="btn bg-pattern text-light br-10 w-100 h50">
+                            <strong>{{'BUTTON_TEXT.SAVE' | translate}}</strong>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

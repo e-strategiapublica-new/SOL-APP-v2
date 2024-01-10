@@ -1,0 +1,24 @@
+<div class="py-5 px-5 bg-white">
+    <div class="row">
+        <div class="d-flex flex-fill justify-content-between">
+            <h4 class="m-0">{{'AGREEMENTS.DELETE_AGREEMENT.TITLE' | translate}}</h4>
+            <i (click)="closeModal()" class="bi cursor-pointer h4 mb-0 color-pattern bi-x"></i>
+        </div>
+    </div>
+    <form>
+        <div class="row mt-4">
+            <p class="font-poppins font-size-14 text-secondary">{{'AGREEMENTS.DELETE_AGREEMENT.ARE_YOU_SURE' | translate}} <b class="text-capitalize">{{convenio.register_object}}</b>?</p>
+        </div>
+
+        <div class="mt-4">
+            <div class="row">
+                <div class="col-md-6 pl-0">
+                    <button type="button" class="bg-light btn-border-none btn-lg btn-block" (click)="closeModal()">{{'AGREEMENTS.NEW_AGREEMENT.CANCEL_BUTTON' | translate}}</button>
+                </div>
+                <div class="col-md-6 pr-0">
+                    <button (click)="deleteItem()" id="cancel" type="submit" class="btn btn-danger btn-lg btn-block">{{'AGREEMENTS.DELETE_AGREEMENT.DELETE_BUTTON' | translate}}</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

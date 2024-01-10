@@ -1,0 +1,23 @@
+<section class="container-fluid p-4 bg-white rounded">
+    <div class="d-flex justify-content-between align-items-center">
+        <h3>{{ "SET_TIME.OPENING" | translate }}</h3>
+        <i class="bi bi-x-lg" style="cursor: pointer !important;" (click)="exit()"></i>
+    </div>
+    <form [formGroup]="form">
+        <div class="row">
+            <div class="col-md-6 mt-4">
+                <label for="timeStart"
+                    class="font-archivo font-size-16 font-weight-medium text-secondary m-0"><b>{{ "SET_TIME.OPENING" | translate }}</b><span class="text-danger">*</span></label>
+                <input type="time" id="timeStart" (input)="setDate($event)" class="form-control" formControlName="timeStart">
+            </div>
+            <div class="col-md-6 mt-4">
+                <label for="timeEnd" class="font-archivo font-size-16 font-weight-medium text-secondary m-0"><b>{{ "SET_TIME.CLOSING" | translate }}</b><span class="text-danger">*</span></label>
+                <input type="time" id="timeEnd" class="form-control" (input)="setDate($event)" formControlName="timeEnd">
+            </div>
+            <div class="col-12 mt-5 d-flex justify-content-end">
+                <button class="btn-dark btn-lg btn-block" (click)="onSubmit($event)" style="max-width: 300px !important;"
+                    >{{ "BUTTON_TEXT.SAVE" | translate }}</button>
+            </div>
+        </div>
+    </form>
+</section>

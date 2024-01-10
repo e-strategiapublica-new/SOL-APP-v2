@@ -1,0 +1,35 @@
+.img-avatar {
+  width: 45px;
+  height: 45px;
+
+  border: 2px solid var(--color-blue-third);
+  border-radius: 50%;
+  padding: 2px;
+}
+
+.dropdown-header {
+  position: absolute;
+  text-align: center;
+  top: 50px;
+  left: -80px;
+  display: none;
+  flex-direction: column;
+  width: 200px;
+  font-size: 12px;
+  z-index: 9999;
+}
+
+.nav-link{
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 576px) {
+
+  .img-avatar:hover .dropdown-header,
+  .img-avatar:focus .dropdown-header {
+    display: flex;
+  }
+}
+
+
+

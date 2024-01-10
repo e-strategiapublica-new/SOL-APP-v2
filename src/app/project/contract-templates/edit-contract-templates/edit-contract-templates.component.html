@@ -1,0 +1,249 @@
+<div class="container">
+    <div class="row mt-5">
+        <div class="col-md-12">
+            <h1 class="text-dark"><strong>{{'CONTRACT_MODELS.EDIT_MODEL' | translate}}</strong></h1>
+            <hr class="bg-primary">
+        </div>
+    </div>
+    <div class="col-md-12">
+        <form [formGroup]="form" class="row" (ngSubmit)="onSubmit()">
+            <div class="col-md-4 mt-2">
+                <label class="text-dark" for="name"><strong>{{'AGREEMENTS.NAME' | translate}}</strong></label>
+                <input type="text" class="form-control br-10 py-4" formControlName="name" id="name" placeholder="{{'AGREEMENTS.NAME' | translate}}">
+            </div>
+            <div class="col-md-4 mt-2">
+                <label for="classification" class="text-dark text-capitalize"><b>{{"CREATE_BIDDING.CLASSIFICATION"
+                        | translate}}</b><span class="f-size-16
+									text-danger">*</span></label>
+                <select type="text" formControlName="classification" #licitacoes class="form-control br-10 h50"
+                    id="classification">
+                    <option selected readonly disabled [value]="''">{{"BUTTON_TEXT.SELECT" | translate}}
+                    </option>
+                    <option [value]="modelContractClassificationEnum.bens">{{"CREATE_BIDDING.CONCTRACT" | translate}}
+                        {{"CREATE_BIDDING.OF_GOODS" | translate}}</option>
+                    <option [value]="modelContractClassificationEnum.obras">{{"CREATE_BIDDING.CONCTRACT" | translate}}
+                        {{"CREATE_BIDDING.OF_WORKS" | translate}}</option>
+                    <option [value]="modelContractClassificationEnum.servicos">{{"CREATE_BIDDING.CONCTRACT" |
+                        translate}} {{"CREATE_BIDDING.OF_Services" | translate}}</option>
+                    <option [value]="modelContractClassificationEnum.ata">{{"CREATE_BIDDING.OF_Minutes" | translate}}
+                    </option>
+                    <option [value]="modelContractClassificationEnum.editalBens">{{"CREATE_BIDDING.OF_Notice" |
+                        translate}} {{"CREATE_BIDDING.OF_GOODS" | translate}}</option>
+                    <option [value]="modelContractClassificationEnum.editalObras">{{"CREATE_BIDDING.OF_Notice" |
+                        translate}} {{"CREATE_BIDDING.OF_WORKS" | translate}}</option>
+                    <option [value]="modelContractClassificationEnum.editalServicos">{{"CREATE_BIDDING.OF_Notice" |
+                        translate}} {{"CREATE_BIDDING.OF_Services" | translate}}</option>
+                </select>
+
+            </div>
+            <div class="col-md-4 mt-2">
+                <label for="classification" class="text-dark text-capitalize"><b>{{"CREATE_BIDDING.LANGUAGE" |
+                        translate}}</b><span class="f-size-16 text-danger">*</span></label>
+                <select type="text" formControlName="language" class="form-control br-10 h50" id="language">
+                    <option selected readonly disabled [value]="''">{{"BUTTON_TEXT.SELECT" | translate}}
+                    </option>
+                    <option [value]="languageContractEnum.english">{{"CREATE_BIDDING.SELECT_LANGUAGE_ENGLISH" |
+                        translate}}</option>
+                    <option [value]="languageContractEnum.spanish">{{"CREATE_BIDDING.SELECT_LANGUAGE_SPANISH" |
+                        translate}}</option>
+                    <option [value]="languageContractEnum.french">{{"CREATE_BIDDING.SELECT_LANGUAGE_FRENCH" |
+                        translate}}</option>
+                    <option [value]="languageContractEnum.portuguese">{{"CREATE_BIDDING.SELECT_LANGUAGE_PORTUGUESE" |
+                        translate}}</option>
+                </select>
+
+            </div>
+            <div class="col-12 mb-5">
+                <div class="d-flex flex-column  ">
+                    <label class="text-dark text-capitalize"
+                        for="licitacoes"><strong>{{'CONTRACT_MODELS.CONTRACT_MODELS' |
+                            translate}}</strong></label>
+                    <input type="file" class="file-upload" (change)="onFileSelected($event)" accept=".docx">
+                </div>
+                <div class="row d-flex justify-content-end">
+                    <div class="col-md-4 mt-4 ">
+                        <button (click)="backContact()" type="button"
+                            class="btn btn-light br-10 w-100 color-patter h50">
+                            <strong>{{'BUTTON_TEXT.CANCEL' | translate}}</strong>
+                        </button>
+                    </div>
+                    <div class="col-md-4 mt-4 ">
+                        <button type="submit" class="btn bg-pattern text-light br-10 w-100 h50">
+                            <strong>{{'BUTTON_TEXT.SAVE' | translate}}</strong>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 mb-5">
+                <h6 class="text-dark pt-2">{{ "CONTRACT_TEMPLATE.REPLACE" | translate }}</h6>
+                <h6 class="text-dark pl-3 pt-2">{{ "CONTRACT_TEMPLATE.EXAMPLE" | translate }} {{'{bid_status}'}}</h6>
+                <h6 class="text-dark pt-5">{{ "CONTRACT_TEMPLATE.STEP_1" | translate }}</h6>
+                <h6 class="text-dark pl-3 pt-2">{{ "CONTRACT_TEMPLATE.STEP_2" | translate }}</h6>
+                <h6 class="text-dark pl-3 pt-2">{{ "CONTRACT_TEMPLATE.STEP_3" | translate }}</h6>
+                <h6 class="text-dark pl-3 pt-2">{{ "CONTRACT_TEMPLATE.STEP_4" | translate }} {{'{/}'}}</h6>
+                <h6 class="text-dark pl-3 pt-2">{{'{#list_of_bids}'}}{{'{accepted}'}}{{'{/}'}}</h6>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-12 pb-5">
+        <div class="d-flex align-items-center justify-content-between" (click)="toggleSectionFornecedor()">
+            <div>
+                <h6>{{ "CONTRACT_TEMPLATE.SUPPLIER_TAG.TITLE" | translate }}</h6>
+            </div>
+            <div class="col-md-1 p-0 d-flex justify-content-end">
+                <i class="bi"
+                    [ngClass]="{'bi-caret-down-fill': !isSectionOpenFornecedor, 'bi-caret-up': isSectionOpenFornecedor}"></i>
+            </div>
+        </div>
+        <div class="content pb-3" [ngClass]="{ 'open': isSectionOpenFornecedor }">
+            <hr>
+            <div class="row col-12 ">
+                <div class="col-md-12">
+                    <div class="table-responsive-sm">
+                        <h6>{{'{name_supplier}'}} : {{ "CONTRACT_TEMPLATE.SUPPLIER_TAG.T1" | translate }}</h6>
+                        <h6>{{'{supplier_cnpj}'}} : {{ "CONTRACT_TEMPLATE.SUPPLIER_TAG.T2" | translate }}</h6>
+                        <h6>{{'{supplier_country}'}} : {{ "CONTRACT_TEMPLATE.SUPPLIER_TAG.T3" | translate }}</h6>
+                        <h6>{{'{adress_supplier}'}} : {{ "CONTRACT_TEMPLATE.SUPPLIER_TAG.T4" | translate }}</h6>
+                        <h6>{{'{name_legal_representative_supplier}'}} : {{ "CONTRACT_TEMPLATE.SUPPLIER_TAG.T5" | translate }}</h6>
+                        <h6>{{'{supplier_email}'}} : {{ "CONTRACT_TEMPLATE.SUPPLIER_TAG.T6" | translate }}</h6>
+                        <h6>{{'{signature_supplier}'}} : {{ "CONTRACT_TEMPLATE.SUPPLIER_TAG.T7" | translate }}</h6>
+                        <h6>{{'{guest_suppliers}'}} : {{ "CONTRACT_TEMPLATE.SUPPLIER_TAG.T8" | translate }}</h6>
+                        <h6>{{'{winning_supplier}'}} : {{ "CONTRACT_TEMPLATE.SUPPLIER_TAG.T9" | translate }}</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex align-items-center justify-content-between" (click)="toggleSectionAssociacao()">
+            <div>
+                <h6>{{ "CONTRACT_TEMPLATE.ASSOCIATION_TAG.TITLE" | translate }}</h6>
+            </div>
+            <div class="col-md-1 p-0 d-flex justify-content-end">
+                <i class="bi"
+                    [ngClass]="{'bi-caret-down-fill': !isSectionOpenAssociacao, 'bi-caret-up': isSectionOpenAssociacao}"></i>
+            </div>
+        </div>
+        <div class="content pb-3" [ngClass]="{ 'open': isSectionOpenAssociacao }">
+            <hr>
+            <div class="row col-12 ">
+                <div class="col-md-12">
+                    <div class="table-responsive-sm">
+                        <h6>{{'{name_purchaser}'}} : {{ "CONTRACT_TEMPLATE.ASSOCIATION_TAG.T1" | translate }}</h6>
+                        <h6>{{'{purchaser_country}'}} : {{ "CONTRACT_TEMPLATE.ASSOCIATION_TAG.T2" | translate }}</h6>
+                        <h6>{{'{email_purchaser}'}} : {{ "CONTRACT_TEMPLATE.ASSOCIATION_TAG.T3" | translate }}</h6>
+                        <h6>{{'{adress_purchaser}'}} : {{ "CONTRACT_TEMPLATE.ASSOCIATION_TAG.T4" | translate }}</h6>
+                        <h6>{{'{name_legal_representative_purchaser}'}} : {{ "CONTRACT_TEMPLATE.ASSOCIATION_TAG.T5" | translate }}</h6>
+                        <h6>{{'{purchaser_cnpj}'}} : {{ "CONTRACT_TEMPLATE.ASSOCIATION_TAG.T6" | translate }}</h6>
+                        <h6>{{'{signature_purchaser}'}} : {{ "CONTRACT_TEMPLATE.ASSOCIATION_TAG.T7" | translate }}</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex align-items-center justify-content-between" (click)="toggleSectionLicitacao()">
+            <div>
+                <h6>{{ "CONTRACT_TEMPLATE.BIDDING_TAG.TITLE" | translate }}</h6>
+            </div>
+            <div class="col-md-1 p-0 d-flex justify-content-end">
+                <i class="bi"
+                    [ngClass]="{'bi-caret-down-fill': !isSectionOpenLicitacao, 'bi-caret-up': isSectionOpenLicitacao}"></i>
+            </div>
+        </div>
+        <div class="content pb-3" [ngClass]="{ 'open': isSectionOpenLicitacao }">
+            <hr>
+            <div class="row col-12 ">
+                <div class="col-md-12">
+                    <div class="table-responsive-sm">
+                        <h6>{{'{bid_number}'}} : {{ "CONTRACT_TEMPLATE.BIDDING_TAG.T1" | translate }}</h6>
+                        <h6>{{'{bid_opening_date}'}} : {{ "CONTRACT_TEMPLATE.BIDDING_TAG.T2" | translate }}</h6>
+                        <h6>{{'{bid_concluded_date}'}} : {{ "CONTRACT_TEMPLATE.BIDDING_TAG.T3" | translate }}</h6>
+                        <h6>{{'{deadline_date}'}} : {{ "CONTRACT_TEMPLATE.BIDDING_TAG.T4" | translate }}</h6>
+                        <h6>{{'{days_to_delivery}'}} : {{ "CONTRACT_TEMPLATE.BIDDING_TAG.T5" | translate }}</h6>
+                        <h6>{{'{bid_status}'}} : {{ "CONTRACT_TEMPLATE.BIDDING_TAG.T6" | translate }}</h6>
+                        <h6>{{'{process_description}'}} : {{ "CONTRACT_TEMPLATE.BIDDING_TAG.T7" | translate }}</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex align-items-center justify-content-between" (click)="toggleSectionLote()">
+            <div>
+                <h6>{{ "CONTRACT_TEMPLATE.LOTE_TAG.TITLE" | translate }}</h6>
+            </div>
+            <div class="col-md-1 p-0 d-flex justify-content-end">
+                <i class="bi" [ngClass]="{'bi-caret-down-fill': !isSectionOpenLote, 'bi-caret-up': isSectionOpenLote}"></i>
+            </div>
+        </div>
+        <div class="content pb-3" [ngClass]="{ 'open': isSectionOpenLote }">
+            <hr>
+            <div class="row col-12 ">
+                <div class="col-md-12">
+                    <div class="table-responsive-sm">
+                        <h6>{{'{batch_list_name}'}} : {{ "CONTRACT_TEMPLATE.LOTE_TAG.T1" | translate }}</h6>
+                        <h6>{{'{delivery_place}'}} : {{ "CONTRACT_TEMPLATE.LOTE_TAG.T2" | translate }}</h6>
+                        <h6>{{'{date_to_delivery}'}} : {{ "CONTRACT_TEMPLATE.LOTE_TAG.T3" | translate }}</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex align-items-center justify-content-between" (click)="toggleSectionContrato()">
+            <div>
+                <h6>{{ "CONTRACT_TEMPLATE.CONTRACT_TAG.TITLE" | translate }}</h6>
+            </div>
+            <div class="col-md-1 p-0 d-flex justify-content-end">
+                <i class="bi"
+                    [ngClass]="{'bi-caret-down-fill': !isSectionOpenContrato, 'bi-caret-up': isSectionOpenContrato}"></i>
+            </div>
+        </div>
+        <div class="content pb-3" [ngClass]="{ 'open': isSectionOpenContrato }">
+            <hr>
+            <div class="row col-12 ">
+                <div class="col-md-12">
+                    <div class="table-responsive-sm">
+                        <h6>{{'{day_contract}'}} : {{ "CONTRACT_TEMPLATE.CONTRACT_TAG.T1" | translate }}</h6>
+                        <h6>{{'{month_contract}'}} : {{ "CONTRACT_TEMPLATE.CONTRACT_TAG.T2" | translate }}</h6>
+                        <h6>{{'{year_contract}'}} : {{ "CONTRACT_TEMPLATE.CONTRACT_TAG.T3" | translate }}</h6>
+                        <h6>{{'{number_contract}'}} : {{ "CONTRACT_TEMPLATE.CONTRACT_TAG.T4" | translate }}</h6>
+                        <h6>{{'{contract_value}'}} : {{ "CONTRACT_TEMPLATE.CONTRACT_TAG.T5" | translate }}</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex align-items-center justify-content-between" (click)="toggleSectionConvenio()">
+            <div>
+                <h6>{{ "CONTRACT_TEMPLATE.AGREEMENT_TAG.TITLE" | translate }}</h6>
+            </div>
+            <div class="col-md-1 p-0 d-flex justify-content-end">
+                <i class="bi"
+                    [ngClass]="{'bi-caret-down-fill': !isSectionOpenConvenio, 'bi-caret-up': isSectionOpenConvenio}"></i>
+            </div>
+        </div>
+        <div class="content pb-3" [ngClass]="{ 'open': isSectionOpenConvenio }">
+            <hr>
+            <div class="row col-12 ">
+                <div class="col-md-12">
+                    <div class="table-responsive-sm">
+                        <h6>{{'{agreement_name}'}} : {{ "CONTRACT_TEMPLATE.AGREEMENT_TAG.T1" | translate }}</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex align-items-center justify-content-between" (click)="toggleSectionOutros()">
+            <div>
+                <h6>{{ "CONTRACT_TEMPLATE.OTHER_TAG.TITLE" | translate }}</h6>
+            </div>
+            <div class="col-md-1 p-0 d-flex justify-content-end">
+                <i class="bi"
+                    [ngClass]="{'bi-caret-down-fill': !isSectionOutros, 'bi-caret-up': isSectionOpenConvenio}"></i>
+            </div>
+        </div>
+        <div class="content pb-3" [ngClass]="{ 'open': isSectionOutros }">
+            <hr>
+            <div class="row col-12 ">
+                <div class="col-md-12">
+                    <div class="table-responsive-sm">
+                        <h6>{{'{publication_date}'}} : {{ "CONTRACT_TEMPLATE.OTHER_TAG.T1" | translate }}</h6>
+                        <h6>{{'{website_url}'}} : {{ "CONTRACT_TEMPLATE.OTHER_TAG.T2" | translate }}</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

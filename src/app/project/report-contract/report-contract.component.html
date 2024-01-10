@@ -1,0 +1,95 @@
+<section class="container-fluid">
+    <div class="row">
+        <div class="col-12 mt-5">
+            <h3>{{ "REPORTS.TITLE" | translate }}</h3>
+            <hr color="green"> 
+        </div>
+
+        <div class="col-md-8 pt-3 mt-5 border rounded">
+            
+            <!--
+            <div class="d-flex justify-content-end">
+                <button class="btn btn-dark mb-3">{{ "REPORTS.DOWNLOAD_DATA" | translate }}</button>
+            </div>
+            -->
+        
+            <div *ngIf="chartReady">
+                <canvas baseChart
+          [datasets]="barChartData"
+          [labels]="barChartLabels"
+          [options]="barChartOptions"
+          [chartType]="'bar'"></canvas>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mt-3">
+                <div class="d-flex flex-column align-items-center">
+                    <span>{{ "REPORTS.BIDDINGS_AMOUNT" | translate }}</span>
+                    <h6>{{response?.qtdBid || '-'}}</h6>
+                </div>
+                <div class="d-flex flex-column align-items-center">
+                    <span>{{ "REPORTS.ESTIMATED_VALUE" | translate }}</span>
+                    <h6>{{response?.estimatedTotalValueOfBids | currency: 'R$ ' || '-'}}</h6>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mt-5">
+            <div class="row">
+                <div class="col-12 border rounded py-3">
+                    <div class="row">
+                        <div class="col-md-6 d-flex flex-column justify-content-between">
+                            <h4 class="font-weight-bold" style="color: #EC8813;">{{ "REPORTS.PROPERTIES" | translate }}</h4>
+                            <div>
+                                <span class="text-dark">{{ "REPORTS.CONTRACTS_AMOUNT" | translate }}</span>
+                                <h6 class="text-dark font-weight-bold">{{response?.qtdAssets}}</h6>
+                            </div>
+                        </div>
+                        <div class="col-md-6 d-flex flex-column justify-content-end">
+
+                            <div>
+                                <span class="text-dark">{{ "REPORTS.CONTRACTS_VALUE" | translate }}</span>
+                                <h6 class="text-dark font-weight-bold">{{response?.valueAssets | currency: 'R$ '}}</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 border rounded py-3 mt-3">
+                    <div class="row">
+                        <div class="col-md-6 d-flex flex-column justify-content-between">
+                            <h4 class="font-weight-bold" style="color: #64B0DC;">{{ "REPORTS.SERVICES" | translate }}</h4>
+                            <div>
+                                <span class="text-dark">{{ "REPORTS.CONTRACTS_AMOUNT" | translate }}</span>
+                                <h6 class="text-dark font-weight-bold">{{response?.qtdServices}}</h6>
+                            </div>
+                        </div>
+                        <div class="col-md-6 d-flex flex-column justify-content-end">
+
+                            <div>
+                                <span class="text-dark">{{ "REPORTS.CONTRACTS_VALUE" | translate }}</span>
+                                <h6 class="text-dark font-weight-bold">{{response?.valueServices | currency: 'R$ '}}
+                                </h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 border rounded py-3 mt-3">
+                    <div class="row">
+                        <div class="col-md-6 d-flex flex-column justify-content-between">
+                            <h4 class="font-weight-bold" style="color: #EFC626;">{{ "CREATE_BIDDING.OF_WORKS" | translate }}</h4>
+                            <div>
+                                <span class="text-dark">{{ "REPORTS.CONTRACTS_AMOUNT" | translate }}</span>
+                                <h6 class="text-dark font-weight-bold">{{response?.qtdconstruction}}</h6>
+                            </div>
+                        </div>
+                        <div class="col-md-6 d-flex flex-column justify-content-end">
+
+                            <div>
+                                <span class="text-dark">{{ "REPORTS.CONTRACTS_VALUE" | translate }}</span>
+                                <h6 class="text-dark font-weight-bold">{{response?.valueconstruction | currency: 'R$ '}}
+                                </h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

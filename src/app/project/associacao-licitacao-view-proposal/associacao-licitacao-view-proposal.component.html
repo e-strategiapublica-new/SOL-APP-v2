@@ -1,0 +1,197 @@
+<div class="container-fluid mb-6">
+    <div class="row mt-5">
+        <div class="col-md-12">
+            <h1>{{"ASSOCIATION_CONTRACTS.VIEW_PROPOSAL" | translate}}</h1>
+            <hr class="bg-primary">
+        </div>
+    </div>
+	<div class="row mt-1">
+        <div class="col-12">
+            <i (click)="back()" class="fa fa-arrow-left f-size-24 cursor-pointer" aria-hidden="true"></i>
+        </div>
+    </div>
+    <div *ngIf="response.proposals.length > 0"
+        class="my-4 text-center unblock-messege py-1 d-flex justify-content-center">
+        <div class="pr-1"><img src="../../../../assets/images/icon-alert-blue.svg"></div>
+        <div *ngIf="response.proposals.length > 1" class="unblock-text">{{"ASSOCIATION_CONTRACTS.ESTIMATED_TOTAL_VALUE"
+            | translate}}: {{valueEsteemed | currency : 'BRL'}}</div>
+        <div *ngIf="response.proposals.length === 1" class="unblock-text">
+            {{"ASSOCIATION_CONTRACTS.ESTIMATED_TOTAL_VALUE" | translate}}:
+            {{response.proposals[0].total_value | currency : 'BRL'}}</div>
+    </div>
+
+    <div *ngIf="handleTie()" class="w-100 d-flex justify-content-end my-2">
+        <button class="btn btn-dark br-10 p-2" (click)="sendTieBreaker()">
+            {{"ASSOCIATION_BIDDING.SEND_TIEBREAKER" | translate}}
+        </button>
+    </div>
+
+    <div class="row">
+        <div *ngFor="let content of response.bid.add_allotment" class="col-12 border rounded mb-4 pb-3">
+            <h2>Propostas para o lote {{content.allotment_name}}</h2>
+
+            <ngb-accordion>
+                <ngb-panel *ngFor="let item of content.proposals; let i = index" [expanded]="isActiveItem(i)"
+                    (click)="setActiveItem(i)">
+                    <ng-template ngbPanelTitle>
+                        <div class="position-relative my-3">
+                            <div *ngIf="item?.proposal?.proposalWin === true" class="space-win-proposal">
+                                <div class="d-flex align-items-center winning-proposal-border px-3 py-1">
+                                    <img class="pr-2" style="width: 25px;"
+                                        src="../../../assets/images/filled-star-icon.svg">
+                                    <span
+                                        class="winning-proposal-text text-white">{{"ASSOCIATION_CONTRACTS.BEST_PROPOSAL"
+                                        | translate}}</span>
+                                </div>
+                            </div>
+                            <div class="d-flex w-100 align-items-center justify-content-between">
+                                <div *ngFor="let item of response.invited_suppliers" class="d-flex flex-column">
+                                    <h6 class="text-dark">{{"ASSOCIATION_CONTRACTS.SUPPLIER" | translate}}</h6>
+                                    <h6>{{item?.name}}</h6>
+                                </div>
+                                <div class="d-flex flex-column">
+                                    <h6 class="text-dark">Fornecedor</h6>
+                                    <h6>{{getSupplierName(item?.proposal?._id || '')}}
+                                    </h6>
+                                </div>
+                                <div *ngIf="item?.proposal?.total_value" class="d-flex flex-column">
+                                    <h6 class="text-dark">{{"ASSOCIATION_AGREEMENTS.TOTAL_VALUE" | translate}}</h6>
+                                    <h6 *ngIf="item.proposal.total_value">{{item.proposal.total_value | currency :
+                                        'BRL'}}</h6>
+                                </div>
+
+                                <div *ngIf="!item?.proposal?.total_value" class="d-flex flex-column">
+                                    <h6 class="text-dark">{{"ASSOCIATION_CONTRACTS.PROPOSAL_SPREADSHEET" | translate}}
+                                    </h6>
+                                    <a (click)="download()">{{"ASSOCIATION_CONTRACTS.DOWNLOAD_SPREADSHEET" |
+                                        translate}}</a>
+                                </div>
+
+                                <!-- <i class="bi"
+                                    [ngClass]="{'bi-caret-down-fill': !isIconUp(i), 'bi-caret-up': isIconUp(i)}"></i> -->
+                            </div>
+                            <!-- <div *ngIf="item?.proposal?.proposalWin === true && item.proposal.association_accept === false"
+                                class="space-buttons-action-bid-custom">
+                                <button class="btn btn-outline-danger mt-3" (click)="refuse(item.proposal)"
+                                    *ngIf="item.proposal.status !== 'aceitoRevisor' && item.proposal.status !== 'aceitoAssociacao' && !item.proposal.acceptedRevisorAt"
+                                    style="max-width: 250px !important;">{{"SUPPLIER_BIDDING.REFUSE" |
+                                    translate}}</button>
+                                <button class="btn btn-outline-primary mx-sm-3 mt-3" (click)="setActiveItem(i)"
+                                    style="max-width: 250px !important;">{{"ASSOCIATION_CONTRACTS.VIEW" |
+                                    translate}}</button>
+                                <button class="btn btn-outline-success mt-3" (click)="accept(item.proposal)"
+                                    *ngIf="item.proposal.status !== 'aceitoRevisor' && item.proposal.status !== 'aceitoAssociacao' && !item.proposal.acceptedRevisorAt"
+                                    style="max-width: 250px !important;">{{"SUPPLIER_BIDDING.ACCEPT" |
+                                    translate}}</button>
+                            </div> -->
+                            <div 
+                            class="space-buttons-action-bid-custom">
+                            <button class="btn btn-outline-danger mt-3" (click)="refuse(item.proposal)"
+                                *ngIf="item.proposal.status !== 'aceitoRevisor' && item.proposal.status !== 'aceitoAssociacao' && !item.proposal.acceptedRevisorAt"
+                                style="max-width: 250px !important;">{{"SUPPLIER_BIDDING.REFUSE" |
+                                translate}}</button>
+                            <button class="btn btn-outline-primary mx-sm-3 mt-3" (click)="setActiveItem(i)"
+                                style="max-width: 250px !important;">{{"ASSOCIATION_CONTRACTS.VIEW" |
+                                translate}}</button>
+                            <button class="btn btn-outline-success mt-3" (click)="accept(item.proposal)"
+                            *ngIf="item.proposal.status !== 'aceitoRevisor' && item.proposal.status !== 'aceitoAssociacao' && !item.proposal.acceptedRevisorAt"
+                                style="max-width: 250px !important;">{{"SUPPLIER_BIDDING.ACCEPT" |
+                                translate}}</button>
+                        </div>
+                        </div>
+                    </ng-template>
+                    <ng-template ngbPanelContent>
+                        <div class="row col-12 mb-3">
+                            <div class="col-md-12">
+                                <div class="table-responsive-sm">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr class="custom-th-contrato">
+                                                <th scope="col" style="color: black;">Item</th>
+                                                <th scope="col"></th>
+                                                <th scope="col"></th>
+                                                <td class="text-capitalize">{{"SUPPLIER_BIDDING.UNITS" | translate}}
+                                                </td>
+                                                <th scope="col"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let teste of content.add_item" class="bg-first-row">
+                                                <th class="text-capitalize" scope="row">{{teste.item}}</th>
+                                                <th scope="col"></th>
+                                                <th scope="col"></th>
+                                                <td class="text-capitalize">{{teste.quantity}}</td>
+                                                <th scope="col"></th>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </ngb-panel>
+            </ngb-accordion>
+            <div *ngIf="content.proposals.length === 0" class>
+                <span class="text-muted">{{"ASSOCIATION_CONTRACTS.NO_PROPOSAL" | translate}}</span>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- <div class="row col-12 col-md-12 p-0 mt-4 mx-0 user-data-border">
+        <div class="col-12 py-3">
+            <div class="d-flex align-items-center justify-content-between">
+                <div class="col-md-6 p-0">
+                    <h6 class="text-dark">Fornecedor</h6>
+                    <h6>Fornecedor 1</h6>
+                </div>
+                <div class="col-md-2 p-0">
+                    <h6 class="text-dark">Valor total</h6>
+                    <h6>R$ 5000,00</h6>
+                </div>
+                <div class="col-md-3 p-0">
+                    <h6 class="refused-proposal-text">Proposta recusada</h6>
+                </div>
+                <div class="col-md-1 p-0 d-flex justify-content-end">
+                    <img (click)="toggleSectionTwo()" style="width: 16px;"
+                        [src]="isSectionTwoOpen ? '../../../assets/images/arrow-close.svg' : '../../../assets/images/arrow-opener.svg'"
+                        alt="Ícone" class="opener-icon cursor-pointer">
+                </div>
+            </div>
+
+            <div class="content" [ngClass]="{ 'open': isSectionTwoOpen }">
+                <hr>
+                <h4 class="pb-3">Lista de itens e propostas</h4>
+                <div class="row col-12 mb-3">
+                    <div class="col-md-12">
+                        <div class="table-responsive-sm">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr class="custom-th-contrato">
+                                        <th scope="col" style="color: black;">Item</th>
+                                        <th scope="col"></th>
+                                        <th scope="col"></th>
+                                        <td class="text-capitalize">1 Unidade(s)</td>
+                                        <th scope="col"></th>
+                                        <th scope="col" style="color: black;">Valor</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="bg-first-row">
+                                        <th class="text-capitalize" scope="row">Microcomputadores i3 4gb</th>
+                                        <th scope="col"></th>
+                                        <th scope="col"></th>
+                                        <td class="text-capitalize">1 Unidade(s)</td>
+                                        <th scope="col"></th>
+                                        <td class="text-capitalize">R$ 5000,00</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+</div>

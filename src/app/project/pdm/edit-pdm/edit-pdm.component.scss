@@ -1,0 +1,78 @@
+.btn-add-unit{
+	margin-top: 3px;	
+}
+.unitList{	
+	margin-left: 20px;
+}
+.unit{
+	display: flex;	
+	border: 1px solid #9f9f9f;
+	color: #495057;
+	border-radius: .25rem;	
+	margin-left: 5px;	
+	margin-top: 8px;
+}
+.unitText{	
+	padding-top: 4px;
+	padding-right: 10px;		
+	padding-left: 10px;
+	padding-bottom: 5px;
+	border-right: 1px solid #9f9f9f;
+	font-weight: bold;
+	width: 220px;
+}
+.unitTrash{
+	color: #fff;
+	background-color: #dc3545;
+	padding-top: 4px;
+	padding-left: 10px;
+	padding-right: 10px;
+	cursor: pointer;
+}
+
+.checkbox{
+	margin-right: 5px;
+	cursor: pointer;
+}
+.btn-add-property{
+	margin-top: 3px;	
+}
+.unitProperty{	
+	margin-left: 20px;
+}
+
+.cycle{
+	display: flex;	
+	border: 1px solid #9f9f9f;
+	color: #495057;
+	border-radius: .25rem;	
+	margin-left: 16px;	
+	margin-top: 12px;
+}
+.propertyText{	
+	padding-top: 4px;
+	padding-right: 10px;		
+	padding-left: 10px;
+	border-right: 1px solid #9f9f9f;
+	font-weight: bold;
+	width: 194px;
+}
+.required{	
+	padding-top: 4px;
+	padding-right: 14px;
+	padding-bottom: 4px;
+	padding-left: 10px;
+	cursor: pointer;
+}
+.propertyTrash{
+	color: #fff;
+	background-color: #dc3545;
+	padding-top: 4px;
+	padding-left: 11px;
+	padding-right: 11px;
+	cursor: pointer;
+}
+
+.btn-actions{
+	margin-top: 60px
+}

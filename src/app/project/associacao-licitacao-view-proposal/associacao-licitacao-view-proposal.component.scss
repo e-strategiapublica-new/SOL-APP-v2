@@ -1,0 +1,52 @@
+.space-win-proposal {
+    position: absolute;
+    top: -25.5px !important;
+    right: 10% !important;
+    z-index: 99 !important;
+}
+
+.space-buttons-action-bid-custom {
+    display: flex !important;
+    justify-content: end !important;
+    align-items: center !important;
+}
+
+::ng-deep .card-header {
+    cursor: pointer;
+}
+
+::ng-deep .card-header:hover {
+    background-color: #f5f5f5;
+}
+
+::ng-deep .card-header button {
+    width: 100%;
+}
+
+.accordion>.card>.card-header {
+    border-radius: 0;
+    margin-bottom: -1px;
+}
+
+::ng-deep .accordion>.card:not(:last-of-type) {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    margin-bottom: 35px;
+}
+
+::ng-deep .accordion>.card:not(:first-of-type) {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    margin-bottom: 35px;
+}
+
+@media (max-width: 576px) {
+    .space-buttons-action-bid-custom {
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: end !important;
+    }
+}

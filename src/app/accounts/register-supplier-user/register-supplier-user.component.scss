@@ -1,0 +1,64 @@
+.wrap-first-access100{
+  width: 90%;
+}
+.content-100{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.selectPerson{
+  width: 200px;
+}
+.screens{
+  display: flex;
+  margin-top: 28px;
+  justify-content: center;
+}
+.screens .supplier{
+  margin-right: 10px;  
+}
+
+.screens button{
+  width: 400px;
+  height: 55px;
+}
+
+.active{
+  color: #fff;
+  background-color: #343a40;
+  border-color: #343a40;
+}
+.inactive{
+  color: #888787;
+  background-color: #fefeff;
+  border-color: #343a40;
+}
+.content-user{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.arrow{
+  margin-left: 104px;
+}
+
+/*---------------------------------------------------------------------
+              RESPONSIVE
+----------------------------------------------------------------------*/
+
+
+@media(max-width: 768px){
+
+  .wrap-first-access100{
+    width: 96%;
+  }
+  .screens{
+    display: block;
+    margin-top: 28px;    
+  }
+  .screens .supplier{
+    margin-right: 0px;
+    margin-bottom: 10px;
+  }
+
+}

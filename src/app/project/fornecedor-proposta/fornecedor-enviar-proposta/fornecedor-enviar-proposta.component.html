@@ -1,0 +1,202 @@
+<div *ngIf="create === 'create'" class="container">
+    <div class="row mt-5">
+        <div class="col-md-12">
+            <h1><strong class="text-dark">{{ "SEND_PROPOSAL.TITLE" | translate }}</strong></h1>
+            <hr class="bg-primary">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-11">
+            <div class="col-md-12 cursor-pointer border br-10 py-3 px-4 ">
+                <div class="row">
+                    <div class="col-md-12 my-2">
+                        <h2 class="w-100 text-dark"><strong>{{response.bid_count}}/{{response.createdAt |
+                                date:'yyyy'}}</strong></h2>
+                    </div>
+                    <div *ngFor="let item of response.add_allotment; let ii = index" class="col-md-12">
+                        <div class="row d-flex justify-content-start">
+                            <div class="col-md-3 mt-3 ">
+                                <h6 class="font-poppins f-size-14 text-secondary">{{ "SUPPLIER_BIDDING.LOT" | translate }}</h6>
+                                <h5 class="f-size-16">{{item.allotment_name}}</h5>
+                            </div>
+                            <div class="col-md-4 mt-3 ">
+                                <h6 class="font-poppins f-size-14 text-secondary">{{ "SUPPLIER_BIDDING.DELIVERY_DEADLINE" | translate }}</h6>
+                                <h5 class="f-size-16">{{item.days_to_delivery}} {{ "SUPPLIER_BIDDING.DAYS" | translate }}</h5>
+                            </div>
+                            <div class="col-md-3 mt-3 ">
+                                <h6 class="font-poppins f-size-14 text-secondary">{{ "CREATE_BIDDING.DELIVERY_PLACE" | translate }}</h6>
+                                <h5 class="f-size-16">{{item.place_to_delivery}}</h5>
+                            </div>
+
+                            <div class="col-md-12 mt-3">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th class="br-tabele bg-light text-dark" scope="col">{{ "SEND_PROPOSAL.ITEM" | translate }}</th>
+                                            <th class=" bg-light text-dark" scope="col">{{ "CREATE_BIDDING.QUANTITY" | translate }}</th>
+                                            <th class="br-tabele2 bg-light text-dark" scope="col">{{ "ASSOCIATION_CONTRACTS.UNIT_PRICE" | translate }}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let content of item.add_item; let idFake = index">
+                                            <td class="text-dark w-50">{{content.item}}</td>
+                                            <td class="text-dark">{{content.quantity}} {{ "COST_ITEMS.UNIT_TITLE" | translate }}</td>
+
+                                            <td>
+                                                <form [formGroup]="formItemValue">
+                                                    <input type="text" #fretealarm
+                                                        [formControlName]="'value-' + item._id + '-position-' +  idFake"
+                                                        class="form-control br-10 py-4" id="valor" currencyMask
+                                                        [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
+                                                        (keyup)="operation($event, item, idFake)">
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <p class="mt-3">{{ "CREATE_BIDDING.DELIVERY_PLACE" | translate }}
+                                    {{ item.totalValue || '0' | currency: 'R$ '}}</p>
+                            </div>
+                            <form [formGroup]="form" class="row w-100" *ngIf="response.bid_type !== 'globalPrice'">
+                                <div class="col-md-6">
+                                    <!--                                     <h6 class="font-poppins f-size-14 text-secondary">Valor Total Itens</h6>
+                                    <input type="tel" [formControlName]="'totalValue-' + item._id"
+                                        class="form-control br-10 py-4" id="valor" currencyMask
+                                        [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"> -->
+                                    <!-- <p class="mt-3">Valor total da proposta
+                                        {{item.totalValue || '0' | currency: 'R$ '}}</p> -->
+                                </div>
+                                <div class="col-md-6">
+                                    <h6 class="font-poppins f-size-14 text-secondary">{{ "ASSOCIATION_CONTRACTS.SHIPPING_COST" | translate }}</h6>
+                                    <input type="tel" #fretealarm [formControlName]="'frete-' + item._id"
+                                        class="form-control br-10 py-4" id="valor" currencyMask
+                                        [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
+                                </div>
+                                <div class="col-12"></div>
+                                <div class="col-6"></div>
+                            </form>
+                            <div class="w-100 d-flex mt-3 justify-content-end"
+                                *ngIf="response.bid_type !== 'globalPrice'">
+                                <button [disabled]="item.disabledBtn" class="btn bg-pattern text-light w-50 py-2 br-10"
+                                    type="button" (click)="confirm(item._id)"><strong>{{ "SEND_PROPOSAL.TITLE" | translate }}</strong></button>
+                            </div>
+                        </div>
+                    </div>
+                    <form [formGroup]="formGlobal" class="row w-100" *ngIf="response.bid_type === 'globalPrice'">
+                        <div class="col-md-6">
+
+                        </div>
+                        <div class="col-md-6">
+                            <h6 class="font-poppins f-size-14 text-secondary">{{ "ASSOCIATION_CONTRACTS.SHIPPING_COST" | translate }}</h6>
+                            <input type="tel" #fretealarm formControlName="frete" class="form-control br-10 py-4"
+                                id="valor" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
+                        </div>
+                        <div class="col-12"></div>
+                        <div class="col-6"></div>
+                    </form>
+                    <div class="w-100 d-flex mt-3 justify-content-end" *ngIf="response.bid_type === 'globalPrice'">
+                        <button [disabled]="!response.enableBtn" class="btn bg-pattern text-light w-50 py-2 br-10"
+                            type="button" (click)="confirm('')"><strong>{{ "SEND_PROPOSAL.TITLE" | translate }}</strong></button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="create === 'send'" class="container">
+    <div class="row mt-5">
+        <div class="col-md-12">
+            <h1><strong class="text-dark">{{ "SEND_PROPOSAL.TITLE" | translate }}</strong></h1>
+            <hr class="bg-primary">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-11">
+            <div class="col-md-12 cursor-pointer border br-10 py-3 px-4 ">
+                <div class="row">
+                    <div class="col-md-12 d-flex justify-content-between">
+                        <h2 class="w-100 text-dark"><strong>
+                                <h2 class="w-100 text-dark"><strong>{{response.bid_count}}</strong></h2>
+                            </strong></h2>
+                        <div class="col-md-4">
+                            <button type="button" (click)="download()"
+                                class="btn bg-pattern br-10 h50 w-100 text-light"><strong>{{ "SEND_PROPOSAL.DOWNLOAD_PLAN" | translate }}</strong></button>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <!-- <div class="row d-flex justify-content-start">
+                            <div class="col-md-2 mt-3 ">
+                                <h6 class="font-poppins f-size-14 text-secondary">Lote</h6>
+                                <h5 class="f-size-16">{{datamock.getDataLicitacao().lote}}</h5>
+                            </div>
+                            <div class="col-md-2 mt-3 ">
+                                <h6 class="font-poppins f-size-14 text-secondary">Prazo para entrega</h6>
+                                <h5 class="f-size-16">{{datamock.getDataLicitacao().dias}}</h5>
+                            </div>
+                            <div class="col-md-2 mt-3 ">
+                                <h6 class="font-poppins f-size-14 text-secondary">Local da entrega</h6>
+                                <h5 class="f-size-16">Casa</h5>
+                            </div>
+                            <div class="col-md-6 align-items-center d-flex justify-content-end">
+                                <p class="b-pattern f-size-10 br-10 px-2 w-75 text-center py-1 color-pattern">
+                                    <i class="bi bi-info-circle-fill"></i> &nbsp; Baixe a planilha e preencha apenas os
+                                    campos <strong>“proposta ({{datamock.getDataLote().value | currency :
+                                        'BRL'}})”</strong> e o campo <strong>“Frete ({{datamock.getDataLote().frete |
+                                        currency : 'BRL'}})”</strong> .
+                                </p>
+                            </div>
+                        </div> -->
+                        <div *ngFor="let item of response.add_allotment" class="col-md-12">
+                            <div class="row d-flex justify-content-start">
+                                <div class="col-md-3 mt-3 ">
+                                    <h6 class="font-poppins f-size-14 text-secondary">{{ "SUPPLIER_BIDDING.LOT" | translate }}</h6>
+                                    <h5 class="f-size-16">{{item.allotment_name}}</h5>
+                                </div>
+                                <div class="col-md-4 mt-3 ">
+                                    <h6 class="font-poppins f-size-14 text-secondary">{{ "SUPPLIER_BIDDING.DELIVERY_DEADLINE" | translate }}</h6>
+                                    <h5 class="f-size-16">{{item.days_to_delivery}} {{ "SUPPLIER_BIDDING.DAYS" | translate }}</h5>
+                                </div>
+                                <div class="col-md-3 mt-3 ">
+                                    <h6 class="font-poppins f-size-14 text-secondary">{{ "CREATE_BIDDING.DELIVERY_PLACE" | translate }}</h6>
+                                    <h5 class="f-size-16">{{item.place_to_delivery}}</h5>
+                                </div>
+                                <div class="col-md-6 align-items-center d-flex justify-content-end">
+                                    <p class="b-pattern f-size-10 br-10 px-2 w-75 text-center py-1 color-pattern">
+                                        <i class="bi bi-info-circle-fill"></i> &nbsp; {{ "SEND_PROPOSAL.INSTRUCTION" | translate }}: <strong>"{{ "SUPPLIER_BIDDING.CONTRACT_PROPOSAL" | translate }}"</strong>, <strong>“{{ "SUPPLIER_BIDDING.CONTRACT_PROPOSAL" | translate }}”</strong> .
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <form [formGroup]="formDoc" class="col-md-12 mt-3">
+                        <h3 class="">Anexar Planilha</h3>
+                        <div *ngIf="docsINput" class="w-100 text-center h60 border  cursos-pointer br-16 bg-light">
+                            <h6 class="color-pattern position-reltive mt-3 align-items-baseline pt-1"><i
+                                    class="bi bi-arrow-bar-up"></i> &nbsp; {{ "BUTTON_TEXT.ADD" | translate }} {{ "CREATE_BIDDING.FILE" | translate }}</h6>
+                            <input type="file" #doc formControlName="doc" accept=".xlsx,.xls"
+                                (change)="fileSelected($event)"
+                                class="w-100 z-10 position-absolute opacity-0 cursos-pointer h60"
+                                style="left: 0; top: 23%;">
+                        </div>
+                        <div *ngIf="docs"
+                            class="w-100 d-flex align-items-center border br-10 px-2 py-1 justify-content-between">
+                            <span class="">{{docName}}</span> <i (click)="deleteDoc()"
+                                class="bi text-danger h3 mb-0 bi-x"></i>
+                        </div>
+                        <div *ngIf="" class="col-md-12 mt-3">
+                            <div class="row d-flex justify-content-end">
+                                <div class="col-md-4">
+                                    <button [disabled]="docsINput && response.add_allotment[0].disabledBtn"
+                                        (click)="confirm('')" class="btn w-100 br-10 h50" type="sumbit"><strong>{{ "SEND_PROPOSAL.TITLE" | translate }}</strong></button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

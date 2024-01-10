@@ -1,0 +1,165 @@
+<div class="container-fluid py-1">
+  <div class="row mt-5">
+    <div class="col-md-12">
+      <h1>{{'PROPOSAL.VIEW_PROPOSAL' | translate}}</h1>
+      <hr class="bg-primary">
+    </div>
+  </div>
+  <div class="row mt-1">
+    <div class="col-12">
+      <i class="fa fa-arrow-left f-size-24 cursor-pointer"
+        [routerLink]="['/pages/licitacoes/detalhes-licitacoes/' + responseBid._id]" aria-hidden="true"></i>
+    </div>
+  </div>
+
+  <div *ngFor="let item of responseProposal?.bid.add_allotment; let index = index ">
+    <div class="row mt-4 mb-0" *ngIf="item.proposals.length > 0">
+      <th>Lote numero: {{index + 1}}
+
+      </th>
+
+    </div>
+    <!---inicio dos lotes-->
+    <div class="row mt-4 mb-0 " *ngIf="item.proposals.length > 0">
+
+      <div class="col-md-11">
+
+        <div class="row br-10 bg-blur ">
+          <div class="col-4">
+            <p>{{'PROFILE.PROFILE_NAME' | translate}}
+              <th>{{item?.allotment_name}}</th>
+            </p>
+
+          </div>
+          <div class="col-12 mb-0">
+            <p>Data para entrega
+              <th>{{item?.days_to_delivery}} dias, apartir do dia {{responseProposal.bid.start_at | date:
+                'dd/MM/yyyy,h:mm a'}}</th>
+            </p>
+
+          </div>
+          <div class="col-4 mb-0">
+            <p>Local para entrega
+              <th>{{item?.place_to_delivery}}</th>
+            </p>
+          </div>
+
+          <!--Primeira porposta do lote-->
+          <div>
+            <div class="row mt-4 mb-0" *ngIf="item.proposals.length > 0">
+              <th>Propostas do lote:
+
+              </th>
+
+            </div>
+            <div class="row mt-4 mb-0  bg-opacity-50 border mx-0 br-16 p-3 " *ngFor="let proposal of item.proposals">
+              <div *ngIf="proposal?.proposal?.proposalWin === true">
+                <div class="d-flex align-items-center winning-proposal-border px-3 py-1">
+                  <img class="pr-2" style="width: 25px;" src="../../../assets/images/filled-star-icon.svg">
+                  <span class="winning-proposal-text text-white">{{"ASSOCIATION_CONTRACTS.BEST_PROPOSAL"
+                    | translate}}</span>
+                </div>
+              </div>
+
+              <div class="row br-10 bg-blur">
+                <div class="col-12 col-md-6 col-xl-4 ">
+                  <p>Proposto por
+                    <th>{{proposal.proposal.proposedBy.name}}</th>
+                  </p>
+                </div>
+
+                <div class="col-12 col-md-6 col-xl-4">
+                  <p>Documento do fornecedor
+                    <th>{{proposal.proposal.proposedBy.document}}</th>
+                  </p>
+                </div>
+
+                <div class="col-12 col-md-6 col-xl-4">
+                  <p>CEP do fornecedor
+                    <th>{{proposal.proposal.proposedBy.supplier.address.zipCode}}</th>
+                  </p>
+                </div>
+
+                <div class="col-12 col-md-6 col-xl-4">
+                  <p>Cidade do fornecedor
+                    <th>{{proposal.proposal.proposedBy.supplier.address.city}}</th>
+                  </p>
+                </div>
+                <!---->
+
+                <div class="col-12 col-md-6 col-xl-4">
+                  <p>Representate legal
+                    <th>{{proposal.proposal.proposedBy.supplier.legal_representative?.name}}</th>
+                  </p>
+                </div>
+                <div class="col-12 col-md-6 col-xl-4">
+                  <p>cpf do representante legal
+                    <th>{{proposal.proposal.proposedBy.supplier.legal_representative?.cpf}}</th>
+                  </p>
+                </div>
+                <div class="col-12 col-md-6 col-xl-4">
+                  <p>RG do representante legal
+                    <th>{{proposal.proposal.proposedBy.supplier.legal_representative?.rg}}</th>
+                  </p>
+                </div>
+              </div>
+
+              <table class="table table-hover mt-4">
+
+                <thead>
+                  <tr>
+                    <th class=" br-tabele" scope="col">{{'ASSOCIATION_CONTRACTS.COST_ITEM'
+                      | translate}}</th>
+                    <th scope="col">{{'ADMINISTRATION_AGREEMENTS_BIDDING.QUANTITY'
+                      | translate}}</th>
+                    <th scope="col">Unidade de medida</th>
+                    <th class=" br-tabele2" scope="col">Valor unitário
+                  </tr>
+
+                </thead>
+                <tbody *ngFor="let ele of item.add_item">
+
+                  <tr>
+                    <td class="text-capitalize text-dark" scope="row">{{ele.item}}</td>
+                    <td class="text-capitalize text-dark">{{ele.quantity}}</td>
+                    <td class="text-capitalize text-dark">{{ele.unitMeasure}}</td>
+                    <td class="text-capitalize text-dark">{{proposal.proposal.total_value
+                      / ele.quantity | currency: 'R$ '}}</td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="col-md-12">
+                <div class="row">
+                  <div class="col-md-4">
+                    <p>Valor do frete
+                      <th>{{proposal.proposal.freight | currency: 'R$ '}}</th>
+                    </p>
+                  </div>
+                  <div class="col-md-8">
+                    <div class="row d-flex"
+                      *ngIf="authService.getAuthenticatedUser().type === 'project_manager' && (authService.getAuthenticatedUser().roles==='gerente_geral_projetos' || authService.getAuthenticatedUser().roles==='revisor_projetos')">
+                      <div class="col-md-6">
+                        <button
+                          *ngIf="proposal.proposal.proposalWin === true && !proposal.proposal.reviewer_accept && proposal.proposal.association_accept && user.roles !== 'geral'"
+                          class="btn btn-danger h3 h50 br-10 w-100 mt-3"
+                          (click)="refuse(proposal.proposal)">{{"SUPPLIER_BIDDING.REFUSE"
+                          | translate}}</button>
+                      </div>
+                      <div class="col-md-6">
+                        <button
+                          *ngIf="proposal.proposal.proposalWin === true && !proposal.proposal.reviewer_accept  && proposal.proposal.association_accept && user.roles !== 'geral'"
+                          class="btn btn-success h50 br-10 h3 w-100 mt-3"
+                          (click)="accept(proposal.proposal)">{{"SUPPLIER_BIDDING.ACCEPT"
+                          |translate}} </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

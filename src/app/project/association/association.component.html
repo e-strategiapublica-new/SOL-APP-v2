@@ -1,0 +1,73 @@
+<div class="container-fluid">
+  <div class="row mt-5">
+    <div class="col-md-12">
+      <h1>{{'SIDEBAR.ASSOCIATIONS' | translate}}</h1>
+      <hr class="bg-primary">
+    </div>
+  </div>
+  <form [formGroup]="form">
+    <div class="row mt-4">
+      <div class="col-md-9">
+        <input type="search" name="search" [(ngModel)]="filterTerm" formControlName="search"
+          class="form-control text-secondary input-height-border"
+          placeholder="{{'BUTTON_TEXT.INPUT_SEARCH_ENTITY' | translate}}">
+      </div>
+      <div class="col-md-3" *ngIf="user.roles !== 'geral' && authService.getAuthenticatedUser().roles !== 'visualizador_projetos'">
+        <button type="button" class="btn btn-dark btn-lg btn-block"
+          [routerLink]="['/pages/associacao/registrar-associacao']">{{'ADMINISTATION_ASSOCIATION.NEW_ASSOCIATION' |
+          translate}}</button>
+      </div>
+
+    </div>
+
+    <div class="row mt-4">
+      <div class="col-md-12">
+        <div class="table-responsive-sm">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th class="br-tabele bg-pattern text-light" scope="col">{{'ADMINISTATION_ASSOCIATION.NAME_ASSOCIATION' |
+                  translate}}</th>
+                <th class="bg-pattern text-light" scope="col">CNPJ</th>
+                <th class="bg-pattern text-light" scope="col">{{'ADMINISTATION_ASSOCIATION.LOCAL' | translate}}</th>
+                <th class="bg-pattern text-light" scope="col"></th>
+                <th class="bg-pattern text-light" scope="col"></th>
+                <th class="br-tabele2 bg-pattern text-light" scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="let item of associationFilterList | paginate: { itemsPerPage: itensPerPage, currentPage: currentPage }; let i= index;">
+                <th class="text-capitalize" scope="row" (click)="navigateToItem(item._id)">{{item.name}}</th>
+                <td class="text-capitalize" (click)="navigateToItem(item._id)">{{item.cnpj | mask :
+                  '00.000.000/0000-00'}}</td>
+                <td class="text-capitalize" (click)="navigateToItem(item._id)">{{item.address.city}}</td>
+                <td [routerLink]="['/pages/associacao/dados-associacao/' + item._id]"><i class="bi bi-eye-fill"></i>
+                </td>
+                <td class="table_icon" *ngIf="user.roles !== 'geral' && authService.getAuthenticatedUser().roles !== 'visualizador_projetos'">
+                  <button [routerLink]="['/pages/associacao/editar-associacao/' + item._id]"
+                    class="btn btn-outline-secondary">
+                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                  </button>
+                </td>
+                <td class="table_icon" *ngIf="authService.getAuthenticatedUser().type !== 'administrador' && authService.getAuthenticatedUser().roles !== 'visualizador_projetos'">
+                  <button class="btn btn-danger" (click)="openModal(item)">
+                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                  </button>
+                </td>
+              </tr>
+
+            </tbody>
+
+          </table>
+          <div class="row">
+            <div class="col-md-12"> <pagination-controls (pageChange)="currentPage= $event"
+                previousLabel="{{'BUTTON_TEXT.PREVIOUS' | translate}}"
+                nextLabel="{{'BUTTON_TEXT.NEXT' | translate}}"></pagination-controls>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

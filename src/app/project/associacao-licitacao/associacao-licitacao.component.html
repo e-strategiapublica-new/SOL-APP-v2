@@ -1,0 +1,86 @@
+<div class="container-fluid">
+  <div class="container-fluid">
+    <div class="row mt-5">
+      <div class="col-md-12">
+        <h1>{{"SIDEBAR.BIDDINGS" | translate}}</h1>
+        <hr class="bg-primary">
+      </div>
+    </div>
+    <div class="row mt-4">
+      <div class="col-md-6">
+        <input type="text" class="form-control text-secondary input-height-border"
+          placeholder="{{'BUTTON_TEXT.STATUS_INPUT_SEARCH' | translate}}">
+      </div>
+      <div class="col-md-3 d-flex justify-content-end">
+        <select class="form-control w-100 br-10 h50" (change)="filterBid($event)">
+          <option value="all" selected>{{"CREATE_BIDDING_STATUS.ALL" | translate}}</option>
+          <option value="awaiting">{{"CREATE_BIDDING_STATUS.PENDING_RELEASE" | translate}}</option>
+          <option value="tiebreaker">{{"CREATE_BIDDING_STATUS.WAITING_TIEBREAKER" | translate}}</option>
+          <option value="analysis">{{"CREATE_BIDDING_STATUS.UNDER_REVIEW" | translate}}</option>
+          <option value="deserted">{{"CREATE_BIDDING_STATUS.DESERTED" | translate}}</option>
+          <option value="canceled">{{"CREATE_BIDDING_STATUS.CANCELED" | translate}}</option>
+          <option value="failed">{{"CREATE_BIDDING_STATUS.FAILED" | translate}}</option>
+          <option value="draft">{{"CREATE_BIDDING_STATUS.DRAFT" | translate}}</option>
+          <option value="open">{{"CREATE_BIDDING_STATUS.OPEN" | translate}}</option>
+          <option value="released">{{"CREATE_BIDDING_STATUS.LAUNCHED" | translate}}</option>
+          <option value="completed">{{"CREATE_BIDDING_STATUS.COMPLETED" | translate}}</option>
+          <option value="reopened">{{"CREATE_BIDDING_STATUS.REOPENED" | translate}}</option>
+          <option value="returned">{{"CREATE_BIDDING_STATUS.RETURNED" | translate}}</option>
+        </select>
+      </div>
+      <div class="col-md-3 mt-2 mt-md-0">
+        <button type="button" class="btn btn-dark btn-lg btn-block"
+          [routerLink]="['/pages/licitacoes/licitacao-register']">{{"ASSOCIATION_BIDDING.NEW_BIDDING" | translate}}</button>
+      </div>
+
+    </div>
+
+          
+    <div *ngFor="let item of licitacoesList | paginate: { itemsPerPage: itensPerPage, currentPage: currentPage }; let i= index;" class="row p-3 user-data-border mt-5 cursor-pointer">
+      <div class="row col-12 p-2" (click)="detailBids(item);">
+        <div class="col-12 col-md-10">
+          <h5 class="text-dark"> <b> {{"SIDEBAR.BIDDING" | translate}} nº {{item.bid_count}} / {{item.createdAt | date:'yyyy'}} </b>
+          </h5>
+        </div>
+        <div class="col-12 col-md-2">
+          <h6 class="font-poppins f-size-14 text-secondary">Status</h6>
+          <h5 *ngIf="item.status ==='awaiting'" class="f-size-16 text-warning">{{"CREATE_BIDDING_STATUS.PENDING_RELEASE" | translate}}</h5>
+          <h5 *ngIf="item.status ==='tiebreaker'" class="f-size-16 text-warning">{{"CREATE_BIDDING_STATUS.WAITING_TIEBREAKER" | translate}}</h5>
+          <h5 *ngIf="item.status ==='analysis'" class="f-size-16 text-info">{{"CREATE_BIDDING_STATUS.UNDER_REVIEW" | translate}}</h5>
+          <h5 *ngIf="item.status ==='deserted'" class="f-size-16 text-danger">{{"CREATE_BIDDING_STATUS.DESERTED" | translate}}</h5>
+          <h5 *ngIf="item.status ==='canceled'" class="f-size-16 text-danger">{{"CREATE_BIDDING_STATUS.CANCELED" | translate}}</h5>
+          <h5 *ngIf="item.status ==='failed'" class="f-size-16 text-danger">{{"CREATE_BIDDING_STATUS.FAILED" | translate}}</h5>
+          <h5 *ngIf="item.status ==='draft'" class="f-size-16 text-dark">{{"CREATE_BIDDING_STATUS.DRAFT" | translate}}</h5>
+          <h5 *ngIf="item.status ==='released'" class="f-size-16 text-success">{{"CREATE_BIDDING_STATUS.LAUNCHED" | translate}}</h5>
+          <h5 *ngIf="item.status ==='open'" class="f-size-16 text-success">{{"CREATE_BIDDING_STATUS.OPEN" | translate}}</h5>
+          <h5 *ngIf="item.status ==='completed'" class="f-size-16 text-success">{{"CREATE_BIDDING_STATUS.COMPLETED" | translate}}</h5>
+          <h5 *ngIf="item.status ==='reopened'" class="f-size-16 text-success">{{"CREATE_BIDDING_STATUS.REOPENED" | translate}}</h5>
+          <h5 *ngIf="item.status ==='returned'" class="f-size-16 text-info">{{"CREATE_BIDDING_STATUS.RETURNED" | translate}}</h5>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-12 p-2 text-capitalize" (click)="detailBids(item);">
+        <h6 class="font-poppins f-size-16 text-secondary">{{item.description}}</h6>
+      </div>
+
+      <div class="row col-12 p-2">
+        <div class="col-12 col-md-10" (click)="detailBids(item);">
+          <h6 *ngIf="item.status !== 'draft' && item.status !== 'awaiting' && item.status !== 'returned'" class="font-poppins f-size-14 text-dark">{{"ASSOCIATION_BIDDING.DURATION" | translate}}</h6>
+          <h6 *ngIf="item.status !== 'draft' && item.status !== 'awaiting' && item.status !== 'returned'" class="font-poppins f-size-16 text-secondary">{{item.start_at | date: 'dd/MM/yyyy'}} -
+            {{item.end_at | date: 'dd/MM/yyyy'}}</h6>
+        </div>
+        <div class="col-12 col-md-2">
+          <button (click)="editBids(item);" *ngIf="item.status ==='draft' || item.status ==='returned'" type="button"
+            class="bg-light btn-lg btn-block mb-4 text-small text-dark">{{"BUTTON_TEXT.EDIT" | translate}}</button>
+        </div>
+      </div>
+    </div>
+    
+    <div *ngIf="licitacoesList && licitacoesList.length > 6" class="row">
+      <div class="col-12 d-flex justify-content-end">
+        <pagination-controls (pageChange)="currentPage= $event" previousLabel="{{'BUTTON_TEXT.PREVIOUS' | translate}}"
+          nextLabel="{{'BUTTON_TEXT.NEXT' | translate}}"></pagination-controls>
+      </div>
+    </div>
+  </div>
+</div>

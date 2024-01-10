@@ -1,0 +1,411 @@
+<div class="container-fluid">
+    <div class="row mt-5">
+        <div class="col-md-12">
+            <h1>{{'PROJECT.CREATE_NEW_PROJECT' | translate}}</h1>
+            <hr class="bg-primary">
+        </div>
+    </div>
+
+    <form class="" [formGroup]="form">
+        <div class="row">
+            <div class="col-12 mt-3">
+                <h5>{{'PROJECT.PROJECT_DATA' | translate}}</h5>
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-sm-12 col-md-6 mt-3">
+                <label for="name"
+                    class="font-archivo font-size-16 font-weight-medium text-secondary m-0"><b>{{'PROJECT.PROJECT_NAME'
+                        | translate}}</b></label>
+                <input type="text" formControlName="name" style="text-indent:20px;" class="form-control" id="name"
+                    placeholder="{{'PROJECT.PROJECT_NAME' | translate}}">
+
+                <div *ngIf="form.controls['name'].errors?.['required'] && isSubmit" class="div-msg-error mt-2">
+                    <img src="../../../assets/images/icon-alert.svg" class="img-msg-error" alt="">
+                    <p class="font-poppins font-size-14 m-0">{{'PROJECT.NAME_MANDATORY' |
+                        translate}}</p>
+                </div>
+                <div *ngIf="form.controls['name'].errors?.['maxlength'] && isSubmit" class="div-msg-error mt-2">
+                    <img src="../../../assets/images/icon-alert.svg" class="img-msg-error" alt="">
+                    <p class="font-poppins font-size-14 m-0">{{'PROJECT.NAME_CHARACTERS' |
+                        translate}}</p>
+                </div>
+            </div>
+
+            <div class="col-sm-12 col-md-6 mt-3">
+                <label class="font-archivo font-size-16 font-weight-medium text-secondary m-0"
+                    for="review"><b>{{'PROJECT.MANAGER_PROJECT' | translate}}</b></label>
+                <select formControlName="manager" style="text-indent:20px;" class="form-control" #review id="review"
+                    (change)="selectedManager($event)">
+                    <option *ngFor="let item of userListProject" [value]="item._id">{{item.name}}</option>
+                </select>
+            </div>
+
+
+        </div>
+
+        <div class="row">
+            <div class="col-12 mt-5">
+                <h5>{{'ADMINISTRATION_ASSOCIATION_DATA.LEGAL' | translate}}</h5>
+            </div>
+        </div>
+
+
+
+        <form class="mr-5" [formGroup]="formLegalRepresentative">
+
+            <div class="row">
+
+                <div class="col-sm-12 col-md-5 mt-3">
+                    <label for="name"
+                        class="font-archivo font-size-16 font-weight-medium text-secondary m-0"><b>{{'PROFILE.PROFILE_NAME'
+                            | translate}}</b></label>
+                    <input type="text" formControlName="name" style="text-indent:20px;" [readOnly]="true"
+                        class="form-control" value="{{representativeName}}" id="name"
+                        placeholder="{{'PROFILE.PROFILE_NAME' | translate}}">
+
+                </div>
+
+                <div class="col-sm-12 col-md-4 mt-3">
+                    <label for="nationality"
+                        class="font-archivo font-size-16 font-weight-medium text-secondary m-0"><b>{{'ADMINISTRATION_ASSOCIATION_DATA.NACIONALITY'
+                            | translate}}</b></label>
+                    <input type="text" formControlName="nationality" style="text-indent:20px;" class="form-control"
+                        id="nationality" placeholder="{{'ADMINISTRATION_ASSOCIATION_DATA.NACIONALITY' | translate}}">
+
+                    <div *ngIf="formLegalRepresentative.controls['nationality'].errors?.['required'] && isSubmit"
+                        class="div-msg-error mt-2">
+                        <img src="../../../assets/images/icon-alert.svg" class="img-msg-error" alt>
+                        <p class="font-poppins font-size-14 m-0">
+                            {{'ADMINISTRATION_NEW_ASSOCIATION.NACIONALITY_REQUIRED' | translate}}</p>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 col-md-3 mt-3">
+                    <label for="maritalStatus"
+                        class="font-archivo font-size-16 font-weight-medium text-secondary m-0"><b>{{'ADMINISTRATION_ASSOCIATION_DATA.CIVIL_STATE'
+                            | translate}}</b></label>
+                    <select type="text" formControlName="maritalStatus" style="text-indent:20px;" class="form-control"
+                        id="maritalStatus">
+                        <option selected readonly disabled [value]="''">
+                            {{'ADMINISTRATION_NEW_ASSOCIATION.SELECT' | translate}}...</option>
+                        <option value="solteiro">{{'ADMINISTRATION_NEW_ASSOCIATION.SINGLE' | translate}}
+                        </option>
+                        <option value="casado">{{'ADMINISTRATION_NEW_ASSOCIATION.MARRIED' | translate}}</option>
+                        <option value="separado">{{'ADMINISTRATION_NEW_ASSOCIATION.SEPARATED' | translate}}
+                        </option>
+                        <option value="divorciado">{{'ADMINISTRATION_NEW_ASSOCIATION.DIVORCED' | translate}}
+                        </option>
+                        <option value="viuvo">{{'ADMINISTRATION_NEW_ASSOCIATION.WIDOWER' | translate}}</option>
+                    </select>
+
+                    <div *ngIf="formLegalRepresentative.controls['maritalStatus'].errors?.['required'] && isSubmit"
+                        class="div-msg-error mt-2">
+                        <img src="../../../assets/images/icon-alert.svg" class="img-msg-error" alt>
+                        <p class="font-poppins font-size-14 m-0">
+                            {{'ADMINISTRATION_NEW_ASSOCIATION.CIVIL_STATE_REQUIRED' | translate}}</p>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 col-md-3 mt-3">
+                    <label for="cpf" class="font-archivo font-size-16 font-weight-medium text-secondary m-0">
+                        <b>{{ 'REGISTER_SUPPLIER.ID_NUMBER' | translate }}</b>
+                    </label>
+                    <input type="text" formControlName="cpf" style="text-indent: 20px;" class="form-control"
+                        mask="000.000.000-00" id="cpf" placeholder="000.000.000-00">
+
+                    <div *ngIf="formLegalRepresentative.controls['cpf'].errors?.['required'] && isSubmit"
+                        class="div-msg-error mt-2">
+                        <img src="../../../assets/images/icon-alert.svg" class="img-msg-error" alt>
+                        <p class="font-poppins font-size-14 m-0">{{ 'ERROR_MESSAGES.REQUIRED_DOCUMENT' |
+                            translate }}!</p>
+                    </div>
+                    <div *ngIf="isCPFInvalidAndTouched()" class="div-msg-error mt-2">
+                        <img src="../../../assets/images/icon-alert.svg" class="img-msg-error" alt>
+                        <p class="font-poppins font-size-14 m-0">{{"INVALID_ID_DOCUMENT.TITLE" | translate}}</p>
+                    </div>
+                </div>
+
+<!--                 <div class="col-sm-12 col-md-3 mt-3">
+                    <label for="rg"
+                        class="font-archivo font-size-16 font-weight-medium text-secondary m-0"><b>{{'REGISTER_SUPPLIER.BRAZILIAN_IDENTITY_CARD'
+                            | translate}}</b></label>
+                    <input type="text" formControlName="rg" style="text-indent: 20px;" class="form-control" id="rg"
+                        placeholder="000000-0" (input)="onRGInput($event)">
+                    <div *ngIf="formLegalRepresentative.controls['rg'].hasError('required') && isSubmit"
+                        class="div-msg-error mt-2">
+                        <img src="../../../assets/images/icon-alert.svg" class="img-msg-error" alt>
+                        <p class="font-poppins font-size-14 m-0">
+                            {{'REGISTER_SUPPLIER.BRAZILIAN_IDENTITY_CARD_MANDATORY' | translate}}</p>
+                    </div>
+                    <div *ngIf="formLegalRepresentative.controls['rg'].hasError('invalidRG')"
+                        class="div-msg-error mt-2">
+                        <img src="../../../assets/images/icon-alert.svg" class="img-msg-error" alt>
+                        <p class="font-poppins font-size-14 m-0">
+                            {{'REGISTER_SUPPLIER.BRAZILIAN_IDENTITY_CARD_INVALID' | translate}}</p>
+                    </div>
+                </div> -->
+
+<!--                 <div class="col-sm-12 col-md-3 mt-3">
+                    <label for="document_origin"
+                        class="font-archivo font-size-16 font-weight-medium text-secondary m-0"><b>Orgão
+                            expedidor</b></label>
+                    <input type="text" formControlName="document_origin" style="text-indent:20px;" class="form-control"
+                        maxlength="6" id="document_origin" placeholder="ex.:SSP/RN">
+
+                    <div *ngIf="formLegalRepresentative.controls['document_origin'].errors?.['required'] && isSubmit"
+                        class="div-msg-error mt-2">
+                        <img src="../../../assets/images/icon-alert.svg" class="img-msg-error" alt>
+                        <p class="font-poppins font-size-14 m-0">
+                            {{'REGISTER_SUPPLIER.BRAZILIAN_IDENTITY_CARD_MANDATORY' | translate}}</p>
+                    </div>
+                </div> -->
+
+<!--                 <div class="col-sm-12 col-md-3 mt-3">
+                    <label for="validityData"
+                        class="font-archivo font-size-16 font-weight-medium text-secondary m-0"><b>{{'ADMINISTRATION_ASSOCIATION_DATA.VALIDITY'
+                            | translate}}</b></label>
+                    <input type="date" formControlName="validityData" style="text-indent:20px;" max="{{maxDate()}}"
+                        class="form-control" id="validityData">
+
+                    <div *ngIf="formLegalRepresentative.controls['validityData'].errors?.['required'] && isSubmit"
+                        class="div-msg-error mt-2">
+                        <img src="../../../assets/images/icon-alert.svg" class="img-msg-error" alt>
+                        <p class="font-poppins font-size-14 m-0">
+                            {{'ADMINISTRATION_NEW_ASSOCIATION.VALIDITY_REQUIRED' | translate}}</p>
+                    </div>
+                    <div *ngIf="formLegalRepresentative.controls['validityData'].hasError('dateError') && isSubmit"
+                        class="div-msg-error mt-2">
+                        <img src="../../../assets/images/icon-alert.svg" class="img-msg-error" alt>
+                        <p class="font-poppins font-size-14 m-0">{{'A data selecionada não é válida.'}}</p>
+                    </div>
+                </div> -->
+
+            </div>
+
+        </form>
+
+        <form class="mr-5" [formGroup]="formLegalRepresentativeAddress" (ngSubmit)="onSubmit()">
+
+            <div class="row">
+
+                <div class="col-sm-12 col-md-4 mt-3">
+                    <label for="zipCode"
+                        class="font-archivo font-size-16 font-weight-medium text-secondary m-0"><b>CEP</b></label>
+                    <input type="text" formControlName="zipCode" style="text-indent:20px;" class="form-control"
+                        mask="00.000-000" id="zipCode" placeholder="00.000-000"
+                        (focusout)="searchLegalRepresentativeAddressByCep($event)">
+
+                    <div *ngIf="formLegalRepresentativeAddress.controls['zipCode'].errors?.['required'] && isSubmit"
+                        class="div-msg-error mt-2">
+                        <img src="../../../assets/images/icon-alert.svg" class="img-msg-error" alt>
+                        <p class="font-poppins font-size-14 m-0">{{'ADMINISTRATION_NEW_ASSOCIATION.CEP_REQUIRED'
+                            | translate}}</p>
+                    </div>
+                    <div *ngIf="formLegalRepresentativeAddress.controls['zipCode'].errors?.['minlength'] && isSubmit"
+                        class="div-msg-error mt-2">
+                        <img src="../../../assets/images/icon-alert.svg" class="img-msg-error" alt>
+                        <p class="font-poppins font-size-14 m-0">{{'ADMINISTRATION_NEW_ASSOCIATION.CEP_INVALID'
+                            | translate}}</p>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 col-md-5 mt-3">
+                    <label for="publicPlace"
+                        class="font-archivo font-size-16 font-weight-medium text-secondary m-0"><b>{{'ADMINISTRATION_ASSOCIATION_DATA.PUBLIC_PLACE'
+                            | translate}}</b></label>
+                    <input type="text" formControlName="publicPlace" style="text-indent:20px;" class="form-control"
+                        id="publicPlace" placeholder="{{'ADMINISTRATION_ASSOCIATION_DATA.PUBLIC_PLACE' | translate}}">
+
+                    <div *ngIf="formLegalRepresentativeAddress.controls['publicPlace'].errors?.['required'] && isSubmit"
+                        class="div-msg-error mt-2">
+                        <img src="../../../assets/images/icon-alert.svg" class="img-msg-error" alt>
+                        <p class="font-poppins font-size-14 m-0">
+                            {{'ADMINISTRATION_NEW_ASSOCIATION.PUBLIC_PLACE_REQUIRED' | translate}}</p>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 col-md-3 mt-3">
+                    <label for="number"
+                        class="font-archivo font-size-16 font-weight-medium text-secondary m-0"><b>{{'ADMINISTRATION_ASSOCIATION_DATA.STREET_NUMBER'
+                            | translate}}</b></label>
+                    <input type="text" formControlName="number" style="text-indent:20px;" class="form-control"
+                        id="number" placeholder="000" #addressnumberlegal>
+
+                    <div *ngIf="formLegalRepresentativeAddress.controls['number'].errors?.['required'] && isSubmit"
+                        class="div-msg-error mt-2">
+                        <img src="../../../assets/images/icon-alert.svg" class="img-msg-error" alt>
+                        <p class="font-poppins font-size-14 m-0">
+                            {{'ADMINISTRATION_NEW_ASSOCIATION.NUMBER_REQUIRED' | translate}}</p>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 col-md-4 mt-3">
+                    <label for="state" class="font-archivo font-size-16 font-weight-medium text-secondary m-0"><b>
+                            {{'ADMINISTRATION_ASSOCIATION_DATA.STATE' | translate}}</b></label>
+                    <input type="text" formControlName="state" style="text-indent:20px;" class="form-control" id="state"
+                        placeholder="{{'ADMINISTRATION_ASSOCIATION_DATA.STATE' | translate}}">
+
+                    <div *ngIf="formLegalRepresentativeAddress.controls['state'].errors?.['required'] && isSubmit"
+                        class="div-msg-error mt-2">
+                        <img src="../../../assets/images/icon-alert.svg" class="img-msg-error" alt>
+                        <p class="font-poppins font-size-14 m-0">
+                            {{'ADMINISTRATION_NEW_ASSOCIATION.STATE_REQUIRED' | translate}}</p>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 col-md-4 mt-3">
+                    <label for="city"
+                        class="font-archivo font-size-16 font-weight-medium text-secondary m-0"><b>{{'ADMINISTRATION_ASSOCIATION_DATA.LOCAL'
+                            | translate}}</b></label>
+                    <input type="text" formControlName="city" style="text-indent:20px;" class="form-control" id="city"
+                        placeholder="{{'ADMINISTRATION_ASSOCIATION_DATA.LOCAL' | translate}}">
+
+                    <div *ngIf="formLegalRepresentativeAddress.controls['city'].errors?.['required'] && isSubmit"
+                        class="div-msg-error mt-2">
+                        <img src="../../../assets/images/icon-alert.svg" class="img-msg-error" alt>
+                        <p class="font-poppins font-size-14 m-0">
+                            {{'ADMINISTRATION_NEW_ASSOCIATION.LOCAL_REQUIRED' | translate}}</p>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 col-md-4 mt-3">
+                    <label for="neighborhood"
+                        class="font-archivo font-size-16 font-weight-medium text-secondary m-0"><b>{{'ADMINISTRATION_ASSOCIATION_DATA.NEIGHBORHOOD'
+                            | translate}}</b></label>
+                    <input type="text" formControlName="neighborhood" style="text-indent:20px;" class="form-control"
+                        id="neighborhood" placeholder="{{'ADMINISTRATION_ASSOCIATION_DATA.NEIGHBORHOOD' | translate}}">
+
+                    <div *ngIf="formLegalRepresentativeAddress.controls['neighborhood'].errors?.['required'] && isSubmit"
+                        class="div-msg-error mt-2">
+                        <img src="../../../assets/images/icon-alert.svg" class="img-msg-error" alt>
+                        <p class="font-poppins font-size-14 m-0">
+                            {{'ADMINISTRATION_NEW_ASSOCIATION.NEIGHBORHOOD_REQUIRED' | translate}}</p>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 col-md-6 mt-3">
+                    <label for="complement"
+                        class="font-archivo font-size-16 font-weight-medium text-secondary m-0"><b>{{'ADMINISTRATION_ASSOCIATION_DATA.COMPLEMENTS'
+                            | translate}}</b></label>
+                    <input type="text" formControlName="complement" style="text-indent:20px;" class="form-control"
+                        id="complement" placeholder="{{'ADMINISTRATION_ASSOCIATION_DATA.COMPLEMENTS' | translate}}">
+                </div>
+
+                <div class="col-sm-12 col-md-6 mt-3">
+                    <label for="referencePoint"
+                        class="font-archivo font-size-16 font-weight-medium text-secondary m-0"><b>{{'ADMINISTRATION_ASSOCIATION_DATA.POINT'
+                            | translate}}</b></label>
+                    <input type="text" formControlName="referencePoint" style="text-indent:20px;" class="form-control"
+                        id="referencePoint" placeholder="{{'ADMINISTRATION_ASSOCIATION_DATA.POINT' | translate}}">
+                </div>
+
+            </div>
+
+
+        </form>
+        <div class="row">
+
+
+            <!-- <div *ngIf="form.controls['manager'].value !== ''" class="col-sm-10 col-md-6 mt-3">
+                <label class="font-archivo font-size-16 font-weight-medium text-secondary m-0"
+                    for="review"><b>{{'PROJECT.AGREEMENT' | translate}}</b></label>
+                <select formControlName="agreements" style="text-indent:20px;" class="form-control" #review id="review">
+                    <option *ngFor="let item of agreementList" [value]="item._id">{{ item.register_object }}
+                    </option>
+                </select>
+            </div>
+            <div *ngIf="form.controls['manager'].value !== '' " class="col-md-4 pt-2 mt-4">
+                <button (click)="handleAgreements()" type="submit" class="btn btn-dark btn-lg btn-block">
+                    {{'REGISTER_SUPPLIER.ADD' | translate}}</button>
+            </div>
+            <div *ngFor="let item of selectAgreementList; let i = index" class="col-sm-8 col-sm-8 mt-2">
+                <div class="categories-card mb-3 col-sm-9 p-2 d-flex justify-content-between">
+                    <div class="pl-4 f-size-16 text-dark">
+                        {{ item.register_object }}
+                    </div>
+                    <div (click)="removeAgreements(i);" class="cursor-pointer">
+                        <img src="../../../assets/images/delete-X-icon.svg" class="img-msg-error" alt="">
+                    </div>
+                </div>
+
+            </div> -->
+
+            <div class="col-sm-10 col-md-6 mt-3">
+                <label class="font-archivo font-size-16 font-weight-medium text-secondary m-0"
+                    for="review"><b>{{'PROJECT.PROJECT_VIEWER' | translate}}</b></label>
+                <select formControlName="reviewerList" style="text-indent:20px;" class="form-control" #review
+                    id="review" (change)="selectViewer($event)" [(ngModel)]='ngSelectViewer'>
+                    <option value="1">{{'PROJECT.VIEWER_DEFAULT_SELECT' | translate}}</option>
+                    <option *ngFor="let item of userViewerList" [value]="item._id">{{item.name}}</option>
+                </select>
+            </div>
+            <div class="col-md-4 pt-2 mt-4">
+                <button (click)="handleAddSupplier($event)" type="submit" class="btn btn-dark btn-lg btn-block">
+                    {{'REGISTER_SUPPLIER.ADD' | translate}}</button>
+            </div>
+            <div *ngFor="let item of userSelectedList; let i = index" class="col-sm-12 col-md-8 mt-2">
+                <div class="categories-card mb-3 col-sm-9 p-2 d-flex justify-content-between">
+                    <div class="pl-4 f-size-16 text-dark">
+                        {{ item.name }}
+                    </div>
+
+                    <div (click)="removeViewer(i);" class="cursor-pointer">
+                        <img src="../../../assets/images/delete-X-icon.svg" class="img-msg-error" alt="">
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="col-sm-10 col-md-6 mt-3">
+                <label class="font-archivo font-size-16 font-weight-medium text-secondary m-0"
+                    for="review"><b>{{'ASSOCIATION_AGREEMENTS.REVIWER' | translate}}</b></label>
+                <select formControlName="reviewerList" style="text-indent:20px;" class="form-control" #review
+                    id="review" (change)="selectReViewer($event)" [(ngModel)]='ngSelectReViewer'>
+                    <option value="1">{{'PROJECT.REVIEWER_DEFAULT_SELECT' | translate}}</option>
+                    <option *ngFor="let item of projectReviewer" [value]="item._id">{{item.name}}</option>
+                </select>
+            </div>
+            <div class="col-md-4 pt-2 mt-4">
+                <button (click)="handleAddReviewer($event)" type="submit" class="btn btn-dark btn-lg btn-block">
+                    {{'REGISTER_SUPPLIER.ADD' | translate}}</button>
+            </div>
+            <div *ngFor="let item of projectSecondReviewer; let i = index" class="col-sm-12 col-md-8 mt-2">
+                <div class="categories-card mb-3 col-sm-9 p-2 d-flex justify-content-between">
+                    <div class="pl-4 f-size-16 text-dark">
+                        {{ item.name }}
+                    </div>
+
+                    <div (click)="removeReViewer(i);" class="cursor-pointer">
+                        <img src="../../../assets/images/delete-X-icon.svg" class="img-msg-error" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+    </form>
+    <div class="mt-5">
+        <div class="row">
+            <div class="col-md-6">
+                <p type="button" class="bg-light btn-lg btn-block mb-4 text-center" (click)="cancel()">
+                    {{'PROJECT.CANCEL' | translate}}
+                </p>
+            </div>
+            <div class="col-md-6"> 
+                <button (click)="onSubmit();" type="submit"
+                    class="btn btn-dark btn-lg btn-block mb-4">{{'PROJECT.CREATE_PROJECT' |
+                    translate}}</button>
+            </div>
+
+        </div>
+    </div>

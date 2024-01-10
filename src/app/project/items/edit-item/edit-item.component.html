@@ -1,0 +1,102 @@
+<div class="container-fluid">
+  <div class="row mt-5">
+    <div class="col-md-12">
+      <h1 class="text-dark"><strong>{{"ITEMS.EDIT_ITEM_TITLE" | translate}}</strong></h1>
+      <hr class="bg-primary">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-7">
+      <section>
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <div class="row">
+              
+            <!-- Group -->
+            <div class="col-12 col-lg-12 p-2 text-capitalize">
+              <label
+                class="font-archivo font-size-16 font-weight-medium text-secondary m-0"><b>{{"ITEMS.GROUP_TITLE" | translate}}</b>
+              </label>  
+              <input type="text" readonly [value]="item.group.code+' '+item.group.segment" class="form-control h50 br-10">                
+            </div>
+
+            <!-- Class -->
+            <div class="col-12 col-lg-12 p-2 text-capitalize">
+              <label
+                class="font-archivo font-size-16 font-weight-medium text-secondary m-0"><b>{{"ITEMS.CLASS_TITLE" | translate}}</b>
+              </label>  
+              <input type="text" readonly [value]="item.class.code+' '+item.class.description" class="form-control h50 br-10">                
+            </div>
+
+            <!-- PDM -->
+            <div class="col-12 col-lg-12 p-2 text-capitalize">
+              <label
+                class="font-archivo font-size-16 font-weight-medium text-secondary m-0"><b>{{"ITEMS.PDM_TITLE" | translate}}</b>
+              </label>  
+              <input type="text" readonly [value]="item.pdm.name" class="form-control h50 br-10">                
+            </div>      
+            
+            <!-- Code -->
+            <div class="col-12 col-lg-12 p-2 text-capitalize">
+              <label
+                class="font-archivo font-size-16 font-weight-medium text-secondary m-0"><b>{{"ITEMS.CODE_TITLE" | translate}}</b>
+              </label>  
+              <input type="text" readonly [value]="item.code" class="form-control h50 br-10">                
+            </div> 
+
+            <!-- Name -->
+            <div class="col-12 col-lg-12 p-2 text-capitalize">
+              <label
+                class="font-archivo font-size-16 font-weight-medium text-secondary m-0">
+                <b>{{"ITEMS.NAME_TITLE" | translate}}</b>
+              </label> 
+              <input type="text" required formControlName="name" class="form-control h50 br-10"
+                placeholder="{{'ITEMS.ENTER_NAME' | translate}}">
+              <div *ngIf="form.controls['name'].errors?.['required'] && isSubmit"
+                class="div-msg-error mt-2">
+                <img src="../../../assets/images/icon-alert.svg" class="img-msg-error" alt>
+                <p class="font-poppins font-size-14 m-0">{{"ITEMS.NAME_REQUIRED" |
+                  translate}}</p>
+              </div>
+            </div>
+
+            <!-- propertyList -->
+            <div class="col-12 col-lg-12 p-2 text-capitalize">
+              <label for="segment"
+                class="font-archivo font-size-16 font-weight-medium text-secondary propertyListTitle">
+                <b>{{"ITEMS.PROPERTY_LIST_TITLE" | translate}}</b>
+              </label>
+              <div class="propertyList">
+                <div class="properties" *ngFor="let item of propertyListValue; let i = index">
+                  <p class="property">
+                    {{item.property}}
+                    <span *ngIf="item.required" class="required">
+                      - {{"ITEMS.IS_REQUIRED" | translate}}
+                    </span>
+                  </p>
+                  <input type="text" required
+                    placeholder="{{'ITEMS.ENTER_PROPERTY' | translate}}" class="input-property form-control br-10 ng-pristine ng-invalid ng-touched" #inputElement (input)="onInput(inputElement.value, i)" [value]="item.value">
+                </div>
+              </div>              
+            </div>
+            
+          </div>
+          <div class="my-4">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="row d-flex justify-content-end">
+                  <div class="col-md-5">
+                    <button type="button" class="bg-transparent w-100 btn br-10 h50 color-pattern" (click)="cancel()"><strong>{{"BUTTON_TEXT.CANCEL"
+                        | translate}}</strong></button>
+                  </div>
+                  <div class="col-md-5">
+                    <button type="submit" class="btn bg-pattern text-light br-10 h50 w-100"><strong>{{"BUTTON_TEXT.SAVE" | translate}}</strong></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </section>
+    </div>
+  </div>
+</div>

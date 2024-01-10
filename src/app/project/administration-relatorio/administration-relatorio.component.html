@@ -1,0 +1,56 @@
+<div class="container-fluid">
+  <div class="row mt-5">
+    <div class="col-md-12">
+      <h1><strong>{{ "BIDDINGS_REPORTS.TITLE" | translate }}</strong></h1>
+      <hr class="bg-primary">
+    </div>
+  </div>
+  <div class="row ">
+
+    <canvas id="acquisitions"></canvas>
+
+    <div *ngFor="let ele of objKeys" class="col-md-11 border mt-2 br-10 py-3 m-3">
+      <div class="row">
+        <!-- <div class="col-md-10">
+                  <h2 class="mb-0 text-dark"><strong>{{item.bid_count}}/{{item.createdAt | date:'yyyy'}}</strong></h2>
+              </div> -->
+        <div class="col-md-12 text-capitalize">
+          <div class="row d-flex">
+            <div class="col-md-4 text-left align-items-center">
+              <h5 *ngIf="ele ==='tiebreaker'" class="f-size-16 text-warning">{{'ADMINISTRATION_BIDDING.TIEBREAKER' | translate}}</h5>
+              <h5 *ngIf="ele ==='analysis'" class="f-size-16 text-warning">{{'ADMINISTRATION_BIDDING.ANALYSIS' | translate}}</h5>
+              <h5 *ngIf="ele ==='awaiting'" class="f-size-16 text-warning">{{ "BIDDINGS_REPORTS.AWAITING" | translate }}</h5>
+              <h5 *ngIf="ele ==='deserted'" class="f-size-16 text-danger">{{'ADMINISTRATION_BIDDING.DESERTED' | translate}}</h5>
+              <h5 *ngIf="ele ==='canceled'" class="f-size-16 text-danger">{{'ADMINISTRATION_BIDDING.CANCELED' | translate}}</h5>
+              <h5 *ngIf="ele ==='failed'" class="f-size-16 text-danger">{{'ADMINISTRATION_BIDDING.FAILED' | translate}}</h5>
+              <h5 *ngIf="ele ==='draft'" class="f-size-16 text-dark">{{'ADMINISTRATION_BIDDING.DRAFT' | translate}}</h5>
+              <h5 *ngIf="ele ==='released'" class="f-size-16 text-success">{{'ADMINISTRATION_BIDDING.RELEASED' | translate}}</h5>
+              <h5 *ngIf="ele ==='open'" class="f-size-16 text-success">{{'ADMINISTRATION_BIDDING.OPEN' | translate}}</h5>
+              <h5 *ngIf="ele ==='completed'" class="f-size-16 text-success">{{'ADMINISTRATION_BIDDING.COMPLETED' | translate}}</h5>
+              <h5 *ngIf="ele ==='reopened'" class="f-size-16 text-success">{{'ADMINISTRATION_BIDDING.REOPENED' | translate}}</h5>
+              <h5 *ngIf="ele ==='returned'" class="f-size-16 text-info">{{"CREATE_BIDDING_STATUS.RETURNED" | translate}}</h5>
+            </div>
+            <div class="col-md-4">
+              <div class="d-block text-left">
+                <h5 class="font-poppins f-size-14 text-secondary">{{ "BIDDINGS_REPORTS.BIDDINGS_AMOUNT" | translate }}</h5>
+                <h5 class="font-poppins f-size-14 text-secondary"><strong>{{this.map.get(ele).quantity}}</strong></h5>
+              </div>
+
+            </div>
+            <div class="col-md-4">
+              <div class="d-block text-left">
+                <h5 class="font-poppins f-size-14 text-secondary">{{ "BIDDINGS_REPORTS.ESTIMATED_VALUE" | translate }}</h5>
+                <h5 class="font-poppins f-size-14 text-secondary"><strong>{{this.map.get(ele).value | currency: 'R$ '}}</strong></h5>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>

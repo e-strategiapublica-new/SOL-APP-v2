@@ -1,0 +1,131 @@
+<div class="container-fluid">
+    <div class="row mt-5">
+        <div class="col-md-12">
+            <h1 class="text-dark"><strong>{{'WORKPLAN.SECTION_TITLE' | translate}}</strong></h1>
+            <hr class="bg-primary">
+        </div>
+    </div>
+    <form [formGroup]="form" class="row">
+        <div class="col-md-9">
+            <div class="row mt-4">
+                <div class="col-md-12">
+                    <h3>{{'WORKPLAN.NAME' | translate}}</h3>
+                    <label for="nome">{{'AGREEMENTS.NAME' | translate}}:</label>
+                    <input type="text" formControlName="name" class="br-10 form-control text-dark h50 "
+                        placeholder="{{'WORKPLAN.PLACEHOLDER_NAME' | translate}}">
+                    <div *ngIf="form.controls['name'].invalid && isSubmit" class="div-msg-error mt-2">
+                        <img src="../../../assets/images/icon-alert.svg" class="img-msg-error" alt>
+                        <p class="font-poppins font-size-14 m-0">{{'ERROR_MESSAGES.NAME_REQUIRED' | translate}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row block-important mt-3">
+                <div class="col-12">
+                    <h3>{{'WORKPLAN.ITEMS_TITLE' | translate}}</h3>
+                </div>
+
+                <!-- Item -->
+                <div class="prop">
+                    <div class="w100 col-md-4">
+                        <label class=text-dark for="nome">{{'WORKPLAN.ITEMS_SUBTITLE' | translate}}:</label>
+                        <select formControlName="items" class="form-control br-10 h50" [(ngModel)]="selectedItem">
+                            <option value="1" disabled selected>{{"BUTTON_TEXT.SELECT" | translate}}</option>
+                            <option *ngFor="let item of costItemsList" [value]="item._id">{{item.code+' '+item.name}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Cantidad -->
+                <div class="prop">
+                    <div class="w100 col-md-2">
+                        <label class=text-dark for="nome">{{'ADMINISTRATION_AGREEMENTS_BIDDING.QUANTITY' |
+                            translate}}</label>
+                        <input type="text" formControlName="quantity" [maxlength]="10" mask="0*"
+                            class="w100 py-4 br-10 form-control text-dark h50 " placeholder="{{'WORKPLAN.PLACEHOLDER_QUANTITY' | translate}}">
+                    </div>
+                </div>
+
+                <!-- Unit List -->                  
+                <div class="prop">
+                    <div class="w100 col-md-4">
+                        <label class=text-dark>{{'WORKPLAN.UNIT_LIST_SUBTITLE' | translate}}:</label>
+                        <select class="form-control br-10 h50" formControlName="unit" [(ngModel)]="selectedUnit">
+                            <option value="1" disabled selected>{{"BUTTON_TEXT.SELECT" | translate}}</option>
+                            <option *ngFor="let item of unitList" [value]="item">{{item}}</option>
+                        </select>
+                    </div>
+                </div>
+                   
+                
+
+                <!-- Price -->
+                <div class="prop">
+                    <div class="w100 col-md-3">
+                        <label class=text-dark for="nome">{{'GROUP_ITEMS.PRICE' | translate}}:</label>
+                        <input type="text" formControlName="price" class="w100 py-4 br-10 form-control text-dark h50 " mask="separator.2" thousandSeparator="."
+                            placeholder="{{'WORKPLAN.PLACEHOLDER_PRICE' | translate}}">
+                    </div>
+                </div>
+
+                <div class="d-flex align-self-end w100 mt-2 col-md-3">
+                    <button type="button" (click)="addItem()"
+                        [disabled]="form.controls['items'].invalid || form.controls['price'].invalid || form.controls['quantity'].invalid"
+                        class="w-100 py-2 br-10 align-self-end h50 btn btn-dark">
+                        {{'GROUP_ITEMS.ADD' | translate}}
+                    </button>
+                </div>
+            </div>
+            <div *ngIf="itemList.length > 0" class="row mt-3">
+                <div class="col-md-12">
+                    <table class="table table-borderless">
+                        <thead>
+                            <tr style="border-bottom: none !important; border-top: none !important">
+                                <th class="br-tabele bg-pattern text-light" scope="col">{{'COST_ITEMS.COST_ITEMS' | translate}}</th>
+                                <th class="bg-pattern text-light" scope="col">{{'GROUP_ITEMS.QUANTITY_TOTAL' | translate}}</th>
+                                <th class="bg-pattern text-light" scope="col">{{'GROUP_ITEMS.UNIT_TITLE' | translate}}</th>
+                                <th class="bg-pattern text-light" scope="col">{{'GROUP_ITEMS.COST' | translate}}</th>
+                                <th class="br-tabele2 bg-pattern text-light" scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom: none !important; border-top: none !important"
+                                *ngFor="let item of itemList">
+                                <td style="border-radius: 10px 0px 0px 10px" class="border  border-right-0">
+                                    {{item.costItems.name}}</td>
+                                <td class=" border-top text-dark border-bottom">{{item.quantity}}</td>
+                                <td class=" border-top text-dark border-bottom">{{item.unit}}</td>
+                                <td class=" border-top  text-dark border-bottom">{{item.unitValue | currency: 'BRL'}}
+                                </td>
+                                <td style="border-radius: 0px 10px 10px 0px" (click)="removeItem(item)"
+                                    class="d-flex  text-dark  border border-left-0 justify-content-center">
+                                    <i class="bi h3 mb-0 text-danger bi-x"></i>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div *ngIf="!itemList.length && isSubmit"
+                class="div-msg-error mt-2">
+                <img src="../../../assets/images/icon-alert.svg" class="img-msg-error" alt>
+                <p class="font-poppins font-size-14 m-0">{{'GROUP_ITEMS.ALL_REQUEST' | translate}}</p>
+            </div>
+            <div class="row  mt-5">
+                <div class="col-md-12 d-flex justify-content-end px-0">
+                    <div class="col-md-3">
+                        <button (click)="goBack()" type="button"
+                            class="btn br-10 border-light h50 text-dark bg-light w-100 py-2">
+                            <strong>{{'BUTTON_TEXT.CANCEL' | translate}}</strong>
+                        </button>
+                    </div>
+                    <div class="col-md-4">
+                        <button (click)="onSubmit()" type="submit"
+                            class="btn br-10 w-100 py-2 h50 text-light bg-pattern">
+                            <strong>{{'WORKPLAN.BTN_CREATE' | translate}}</strong>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

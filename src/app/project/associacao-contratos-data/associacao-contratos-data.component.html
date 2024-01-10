@@ -1,0 +1,169 @@
+<div class="container-fluid mb-6">
+  <div class="row mt-5">
+    <div class="col-md-12">
+      <h1>
+        {{'ADMINISTATION_CONTRACT_DETAIL.DATA' | translate}}
+      </h1>
+      <hr class="bg-primary">
+    </div>
+  </div>
+
+  <div class="row mt-1">
+    <div class="col-12">
+      <i class="fa fa-arrow-left f-size-24 cursor-pointer" [routerLink]="['/pages/associacao/contratos']"
+        aria-hidden="true"></i>
+    </div>
+    <div class="col-md-12 d-flex justify-content-end mt-4 ">
+      <button *ngIf="convenio?.status === 'assinado'" type="button" class="bg-pattern mt-1 text-light w-50 h50 br-10"
+        (click)="openUpdateContractModal()"><strong>{{'ADMINISTATION_CONTRACT_DETAIL.UPDATE_CONTRACT' | translate}}</strong></button>
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="col-12">
+      <div class="col-md-12 col-lg-12 col-xl-10">
+        <div class="row p-3 user-data-border">
+
+          <div class="row col-12 p-2">
+            <div class="col-12 col-md-5">
+              <h6 class="font-poppins f-size-14 text-secondary">{{'ADMINISTRATION_CONTRACTS.CONTRACT' | translate}}
+              </h6>
+              <h6 class="f-size-16">{{convenio?.contract_number}} / {{convenio?.createdAt | date:
+                'YYYY'}}</h6>
+            </div>
+            <div class="col-12 col-md-5">
+              <h6 class="font-poppins f-size-14 text-secondary">{{'ASSOCIATION_CONTRACTS.BIDDING' | translate}}
+              </h6>
+              <h6 class="f-size-16">{{convenio?.bid_number?.bid_count}} / {{convenio?.bid_number?.createdAt | date:
+                'YYYY'}}</h6>
+            </div>
+            <div class="col-12 col-md-2">
+              <h6 class="font-poppins f-size-14 text-secondary">{{'ADMINISTATION_CONTRACT_DETAIL.SITUATION' | translate}}</h6>
+              <h5 class="f-size-16 text-warning" *ngIf="convenio?.status === 'aguardando_assinaturas'">{{'ADMINISTRATION_CONTRACTS.AWAITING_SIGNATURES'
+                | translate}}</h5>
+              <h5 class="f-size-16 text-success" *ngIf="convenio?.status === 'concluido'">{{'ADMINISTRATION_CONTRACTS.CONCLUED' | translate}}</h5>
+              <h5 class="f-size-16 text-info" *ngIf="convenio?.status === 'executado_parcialmente'">{{'ADMINISTRATION_CONTRACTS.EXECULTING_STEPS' |
+                translate}}</h5>
+              <h5 class="f-size-16 text-danger" *ngIf="convenio?.status === 'inexecucao_total'">{{'ADMINISTRATION_CONTRACTS.TOTAL_NON_EXECUTION' |
+                translate}}</h5>
+              <h5 class="f-size-16 text-success" *ngIf="convenio?.status === 'assinado'">{{'ADMINISTRATION_CONTRACTS.ASSINED' | translate}}</h5>
+              <h5 class="f-size-16 text-warning" *ngIf="convenio?.status === 'aguardando_fornecedor'">{{'ADMINISTRATION_CONTRACTS.AWAITING_SUPPLIER' |
+                translate}}</h5>
+            </div>
+          </div>
+
+          <div class="row col-12 p-2">
+            <div class="col-12 col-md-5">
+              <h6 class="font-poppins f-size-14 text-secondary">{{'ASSOCIATION_CONTRACTS.SUPPLIER' | translate}}
+              </h6>
+              <p>{{convenio?.supplier_id?.name}}</p>
+            </div>
+
+          </div>
+
+          <div class="col-md-12 mt-2">
+            <h4>{{'ASSOCIATION_CONTRACTS.SIGNATURES' | translate}}
+            </h4>
+            <hr>
+          </div>
+
+          <div class="row col-12 p-2">
+            <div class="col-12 col-md-5">
+              <h6 class="font-poppins f-size-14 text-secondary">{{'ASSOCIATION_CONTRACTS.SUPPLIER' | translate}}</h6>
+              <h6 class="f-size-16 text-dark">{{(convenio?.supplier_sign_date | date:'dd/MM/yyyy')|| 'Aguardando assinatura'}}</h6>
+            </div>
+            <div class="col-12 col-md-5">
+              <h6 class="font-poppins f-size-14 text-secondary">{{'ADMINISTRATION_BIDDING.ASSOCIATION' | translate}}</h6>
+              <h6 class="f-size-16 text-dark">{{(convenio?.association_sign_date | date:'dd/MM/yyyy')|| 'Aguardando assinatura'}}</h6>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-12 my-4">
+        <h4>{{'ASSOCIATION_CONTRACTS.SUMMARY_PROPOSAL' | translate}}</h4>
+      </div>
+
+      <div class="col-md-12 col-lg-12 col-xl-10 mb-5">
+        <div class="d-flex justify-content-end">
+          <div class="d-flex align-items-center winning-proposal-border px-3 py-1">
+            <img class="pr-2" style="width: 25px;" src="../../../assets/images/filled-star-icon.svg">
+            <span class="winning-proposal-text text-white">{{"ASSOCIATION_CONTRACTS.WINNING_PROPOSAL" | translate}}</span>
+          </div>
+        </div>
+        <div class="row p-3 association-data-border">
+
+          <div class="col-md-12">
+            <hr>
+            <h4>{{"ASSOCIATION_CONTRACTS.LIST_ITEMS_PROPOSALS" | translate}}</h4>
+          </div>
+          <div class="w-100" *ngFor="let item of convenio?.bid_number?.add_allotment">
+            <div class="row col-12 p-2 px-4">
+              <div class="col-12 col-md-10">
+                <h6 class="font-poppins f-size-14 text-secondary">{{"CREATE_BIDDING.LOT_NAME" | translate}}</h6>
+                <h6 class="f-size-16">{{item.allotment_name}}</h6>
+              </div>
+            </div>
+
+            <div class="row mt-4 col-12">
+              <div class="col-md-12">
+                <div class="table-responsive-sm">
+                  <table class="table table-hover">
+                    <thead>
+                      <tr class="custom-th-contrato">
+                        <th scope="col"></th>
+                        <th scope="col" style="color: black;">Item</th>
+                        <th scope="col"></th>
+                        <th scope="col" style="color: black;">{{"ADMINISTRATION_AGREEMENTS_BIDDING.QUANTITY" | translate}}</th>
+                        <th scope="col"></th>
+                        <th scope="col" style="color: black;">{{"ASSOCIATION_CONTRACTS.UNIT_PRICE" | translate}}</th>
+                      </tr>
+                    </thead>
+                    <tbody *ngFor="let item of convenio?.bid_number.add_allotment">
+                      <tr *ngFor="let content of item?.add_item" class="bg-first-row">
+                        <th scope="col"></th>
+                        <th class="text-capitalize" scope="row">{{content?.item}}</th>
+                        <th scope="col"></th>
+                        <td class="text-capitalize">{{content?.quantity}}</td>
+                        <th scope="col"></th>
+                        <td>{{totalValue | currency: 'R$ '}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="d-flex flex-column align-items-end mt-3">
+          <h5 class="text-dark">{{"ASSOCIATION_CONTRACTS.SHIPPING_COST" | translate}}</h5>
+          <h6>{{handlerSumFreight(convenio?.proposal_id) | currency: 'R$ ' }}</h6>
+        </div>
+        <div class="row mb-5 mt-4"
+          *ngIf="!convenio?.association_accept">
+          <div *ngIf="authbase.getAuthenticatedUser().type !== 'project_manager'" class="col-md-12 d-flex justify-content-end px-0">
+            <div class="col-md-3">
+              <button class="btn br-10 border-light text-light  w-100 py-2" style="background-color: #F34C41;"
+                (click)="refused()">
+                {{"SUPPLIER_BIDDING.REFUSE" | translate}}
+              </button>
+            </div>
+            <div class="col-md-4">
+              <button class="btn br-10 w-100 py-2 text-light" style="background-color: #2CCE71;"
+                (click)="approve()">
+                {{"SUPPLIER_BIDDING.ACCEPT" | translate}}
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <button class="btn br-10 w-100 py-2 text-light" style="background-color: #000;" (click)="downloadPdf()">
+            {{"SUPPLIER_BIDDING.ORIGINAL_CONTRACT" | translate}}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

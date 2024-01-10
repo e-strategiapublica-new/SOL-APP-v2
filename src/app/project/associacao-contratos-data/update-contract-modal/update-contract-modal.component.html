@@ -1,0 +1,76 @@
+<section class="container-fluid p-4 modal-custom">
+	<div class="d-flex justify-content-between">
+		<h3>{{"ASSOCIATION_CONTRACTS.CONTRACT_STATUS" | translate}}</h3>
+		<i class="bi bi-x-lg cursor-pointer" (click)="exit()"></i>
+	</div>
+	<form [formGroup]="form">
+		<div class="d-flex flex-column justify-content-center">
+			<div class="d-flex justify-content-center align-items-center py-2"
+				style="border: 1px solid red; border-radius: 8px;"><i
+					class="bi bi-exclamation-triangle-fill text-danger"></i>
+				<span class="text-danger">
+					{{"ASSOCIATION_CONTRACTS.ACTION_UNDONE" | translate}}
+				</span>
+			</div>
+			<b class="text-dark my-3">
+				{{"ADMINISTRATION_CONTRACTS.CONTRACT" | translate}}:
+				<span style="color: #185289 !important;">
+					{{response.contract_number}} / {{response.createdAt | date: 'YYYY'}}
+				</span>
+			</b>
+			<label for="newStatus">{{"ASSOCIATION_CONTRACTS.SET_CONTRACT_STATUS" | translate}}</label>
+			<select name id="newStatus" formControlName="newStatus" class="form-control">
+				<option value disabled selected>{{"BUTTON_TEXT.SELECT" | translate}}</option>
+				<option value="concluido">{{"ADMINISTRATION_CONTRACTS.CONCLUED" | translate}}</option>
+				<option value="executado_parcialmente">{{"ADMINISTRATION_CONTRACTS.EXECULTING_STEPS" | translate}}</option>
+				<option value="inexecucao_total">{{"ADMINISTRATION_CONTRACTS.TOTAL_NON_EXECUTION" | translate}}</option>
+			</select>
+
+			<div class="space-info mt-3 py-2" *ngIf="msg !== ''">
+				<span class="ms-2 text-center"><i class="bi bi-exclamation-triangle-fill text-info me-2"></i>
+					{{msg}}</span>
+			</div>
+
+			<div *ngIf="executadoParcialmente">
+				<div *ngFor="let item of response?.proposal_id?.allotment">
+					<div *ngFor="let content of item.add_item"
+						class="d-flex justify-content-between align-items-center mt-3">
+						<div class="d-flex flex-column">
+							<h6>{{"ASSOCIATION_CONTRACTS.COST_ITEM" | translate}}</h6>
+							<span class="mt-2">{{content.item}}</span>
+						</div>
+						<div class="d-flex flex-column">
+							<h6>{{"SUPPLIER_BIDDING.UNITS" | translate}}</h6>
+							<span class="mt-2">{{content.quantity}}</span>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div *ngIf="form.value.newStatus=== 'inexecucao_total'">
+				<div class="form-check py-2">
+					<input class="form-check-input" formControlName="selectRadio" type="radio" name="selectRadio" id="option1" value="newBid">
+					<label class="form-check-label mx-2" for="option1">
+						{{"CREATE_BIDDING.CREATE_NEW_BIDDING" | translate}}
+					</label>
+				</div>
+				<div class="form-check py-2">
+					<input class="form-check-input" formControlName="selectRadio" type="radio" name="selectRadio" id="option2" value="newProposal">
+					<label class="form-check-label mx-2" for="option2">
+						{{"CREATE_BIDDING.CHOOSE_NEW_PROPOSAL" | translate}}
+					</label>
+				</div>
+			</div>
+
+			<div *ngIf="executadoParcialmente" class="d-flex flex-column py-2">
+				<label for="items_received">{{"CREATE_BIDDING.DELIVERED_QUANTITIES" | translate}}</label>
+				<input type="text" id="items_received" class="form-control" formControlName="items_received">
+			</div>
+
+			<div class="d-flex justify-content-between mt-3">
+				<button class="btn">{{"BUTTON_TEXT.CANCEL" | translate}}</button>
+				<button class="btn btn-confirm-change-status mt-3" (click)="confirm()">{{"ASSOCIATION_CONTRACTS.SET_STATUS" | translate}}</button>
+			</div>
+		</div>
+	</form>
+</section>

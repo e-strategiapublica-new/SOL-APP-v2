@@ -1,0 +1,16 @@
+.container {
+    margin-bottom: 730px;
+  }
+  
+  @media only screen and (max-width: 320px) {
+    .container {
+      margin-bottom: 430px;
+    }
+  }
+  
+  @media only screen and (max-width: 600px) {
+    .container {
+      margin-bottom: 330px;
+    }
+  }
+  

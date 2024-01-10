@@ -1,0 +1,54 @@
+<div class="container-fluid">
+    <div class="row mt-5">
+        <div class="col-md-12">
+            <h1>Dados do Usuário de Associação</h1>
+            <hr class="bg-primary">
+        </div>
+    </div>
+
+    <div class="row mt-1">
+        <div class="col-12">
+            <i class="fa fa-arrow-left f-size-24 cursor-pointer" (click)="back()" aria-hidden="true"></i>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-12">
+            <div class="col-12">
+                <div class="row p-3 user-data-border">
+                    <div class="col-12 col-lg-6 p-2 text-capitalize">
+                        <h6 class="font-poppins f-size-14 text-secondary">Nome</h6>
+                        <h5 class="f-size-16">{{user?.name}}</h5>
+                    </div>
+                    <div class="col-12 col-lg-6 p-2 text-capitalize">
+                        <h6 class="font-poppins f-size-14 text-secondary">{{"REGISTER_SUPPLIER.CPF_CNPJ" | translate}}</h6>
+                        <h5 *ngIf="user?.document?.length == 14" class="f-size-16">{{user?.document! | mask: '00.000.000/0000-00'}}</h5>
+                        <h5 *ngIf="user?.document?.length == 11" class="f-size-16">{{user?.document! | mask: '000.000.000-00'}}</h5>
+                    </div>
+                    <div class="col-12 col-lg-6 p-2">
+                        <h6 class="font-poppins f-size-14 text-secondary">Email</h6>
+                        <h5 class="f-size-16">{{user?.email}}</h5>
+                    </div>
+                    <div class="col-12 col-lg-6 p-2 text-capitalize">
+                        <h6 class="font-poppins f-size-14 text-secondary">Telefone</h6>
+                        <h5 *ngIf="user?.phone?.length == 10" class="f-size-16">{{user?.phone! | mask: '(00) 0000-0000'}}</h5>
+                        <h5 *ngIf="user?.phone?.length == 11" class="f-size-16">{{user?.phone! | mask: '(00) 0 0000-0000'}}</h5>
+                    </div>
+                    <div class="col-12 col-lg-6 p-2 text-capitalize">
+                        <h6 class="font-poppins f-size-14 text-secondary">Associação</h6>
+                        <a class="f-size-16" [href]="'pages/associacao/dados-associacao/' + (user?.association?._id)">{{user?.association?.name}}</a>
+                    </div>
+                    <div class="col-12 col-lg-6 p-2 text-capitalize">
+                        <h6 class="font-poppins f-size-14 text-secondary">Cargo</h6>
+                        <h5 class="f-size-16">{{user?.office}}</h5>
+                    </div>
+                    <div class="col-12 col-lg-6 p-2 text-capitalize">
+                        <h6 class="font-poppins f-size-14 text-secondary">Status</h6>
+                        <h5 *ngIf="user?.status ==='inactive'" class="f-size-16">Inativo</h5>
+                        <h5 *ngIf="user?.status ==='active'" class="f-size-16">Ativo</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

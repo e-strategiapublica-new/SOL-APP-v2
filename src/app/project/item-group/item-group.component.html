@@ -1,0 +1,42 @@
+<div class="container-fluid">
+  <div class="row mt-5">
+    <div class="col-md-12">
+      <h1>{{'GROUP_ITEMS.DETAIL_GROUP' | translate}}</h1>
+      <hr class="bg-primary">
+    </div>
+  </div>
+  <form>
+    <div class="row mt-4 mb-0">
+      <div class="col-md-11">
+        <div class="row bg-blur  bg-opacity-50 border mx-0 br-16 p-3">
+          <div class="col-md-6">
+            <p class="mb-0 pb-0">{{'GROUP_ITEMS.NAME_GROUP' | translate}}</p>
+            <h5>{{response.name}}</h5>
+          </div>
+          <div class="col-md-6">
+            <p class="mb-0 pb-0">{{'GROUP_ITEMS.TOTAL_COST' | translate}}</p>
+            <h5>{{response.product.length}}</h5>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-11">
+        <table class="mt-5 table table-hover">
+          <thead>
+            <tr>
+              <th class="br-tabele bg-pattern text-light" scope="col">{{'COST_ITEMS.COST_ITEMS' | translate}}</th>
+              <th class="bg-pattern text-light" scope="col">{{'GROUP_ITEMS.QUANTITY_TOTAL' | translate}}</th>
+              <th class="br-tabele2 bg-pattern text-light" scope="col">{{'GROUP_ITEMS.COST' | translate}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of response.product">
+              <td (click)="dataItem(item.costItems._id)" class="text-capitalize" scope="row">{{item.costItems.name || '-'}}</td>
+              <td (click)="dataItem(item.costItems._id)"class="text-capitalize">{{item.quantity}}</td>
+              <td (click)="dataItem(item.costItems._id)"class="text-capitalize">{{item.unitValue | currency: 'BRL'}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </form>
+</div>

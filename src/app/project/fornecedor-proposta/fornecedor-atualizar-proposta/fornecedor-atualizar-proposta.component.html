@@ -1,0 +1,81 @@
+<div class="container-fluid">
+  <div class="row mt-5">
+    <div class="col-md-12">
+      <h1><strong class="text-dark">{{"SUPPLIER_BIDDING.UPDATE_PROPOSAL" | translate}}</strong></h1>
+      <hr class="bg-primary">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-11">
+      <div class="col-md-12 border br-10 py-3 px-4 ">
+        <div class="row" *ngFor="let item of response.allotment">
+          <div class="col-md-12 my-2">
+            <h2 class="w-100 text-dark"><strong>{{item.allotment_name}}</strong></h2>
+          </div>
+          <div class="col-md-12">
+            <div class="row d-flex justify-content-start">
+              <div class="col-md-4 mt-3 ">
+                <h6 class="font-poppins f-size-14 text-secondary">{{"SUPPLIER_BIDDING.LOT" | translate}}</h6>
+                <h5 class="f-size-16">{{item.lote}}</h5>
+              </div>
+              <div class="col-md-4 mt-3 ">
+                <h6 class="font-poppins f-size-14 text-secondary">{{"SUPPLIER_BIDDING.DELIVERY_DEADLINE" | translate}}</h6>
+                <h5 class="f-size-16">{{item.days_to_delivery}}</h5>
+              </div>
+              <div class="col-md-4 mt-3 ">
+                <h6 class="font-poppins f-size-14 text-secondary">{{"CREATE_BIDDING.DELIVERY_PLACE" | translate}}</h6>
+                <h5 class="f-size-16">{{item.place_to_delivery}}</h5>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12 mt-3">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th class="br-tabele bg-light text-dark" scope="col">{{"SIDEBAR.ITEMS" | translate}}</th>
+                  <th class="bg-light text-dark" scope="col">{{"CREATE_BIDDING.QUANTITY" | translate}}</th>
+                  <th class="br-tabele2 bg-light text-dark" scope="col">{{"COST_ITEMS.UNIT_TITLE" | translate}}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let products of item.add_item">
+                  <td class="text-dark">{{products.item}}</td>
+                  <td class="text-dark">{{products.quantity}} {{"SUPPLIER_BIDDING.UNITS" | translate}} *<span
+                      class="text-primary f-size-14">{{form.value.valueUnity | currency:
+                      'BRL' }}</span></td>
+                  <td class="text-dark">{{products.unitMeasure}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <form [formGroup]="form" class="col-md-12 d-flex justify-content-end">
+          <div class="col mt-1" *ngIf="form.value.valueUnity">
+            <h6 class="font-poppins f-size-14 text-secondary">{{"ASSOCIATION_AGREEMENTS.TOTAL_VALUE" | translate}}</h6>
+            <span class="text-primary f-size-16">{{form.value.valueUnity * quantity | currency: 'BRL' }}</span>
+          </div>
+          <div class="col-md-3">
+            <h6 class="font-poppins f-size-14 text-secondary">{{"SUPPLIER_BIDDING.PRICE_PER_UNIT" | translate}}</h6>
+            <input type="tel" #fretealarm formControlName="valueUnity" class="form-control br-10 py-4" id="valor" 
+            currencyMask
+            [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }" >
+          </div>
+          <!-- <input type="tel" #fretealarm [formControlName]="'frete-' + item._id"
+                                        class="form-control br-10 py-4" id="valor" currencyMask
+                                        [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"> -->
+          <div class="col-md-3">
+            <h6 class="font-poppins f-size-14 text-secondary">{{"ASSOCIATION_CONTRACTS.SHIPPING_COST" | translate}}</h6>
+            <input type="tel" #fretealarm formControlName="frete" class="form-control br-10 py-4" id="valor" 
+            currencyMask
+            [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
+          </div>
+          <div class="col-md-4 d-flex align-self-end">
+            <button class="btn bg-pattern text-light w-100 h50 br-10" type="button"
+              (click)="backProposal()"><strong>{{"SUPPLIER_BIDDING.UPDATE_PROPOSAL" | translate}}</strong></button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

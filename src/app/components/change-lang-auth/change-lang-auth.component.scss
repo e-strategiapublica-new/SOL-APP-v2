@@ -1,0 +1,19 @@
+.dropdown {
+  border: 1px solid white !important;
+  padding: 6px 24px;
+  border-radius: 12px !important;
+  color: white !important;
+  margin-right: 16px !important;
+}
+
+.dropdown-menu {
+  min-width: 70px !important;
+}
+
+@media (max-width: 576px) {
+  .dropdown {
+      border: none !important;
+      padding: 0px !important;
+  }
+}
+

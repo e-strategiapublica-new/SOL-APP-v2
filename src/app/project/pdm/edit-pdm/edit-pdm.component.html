@@ -1,0 +1,157 @@
+<div class="container-fluid">
+  <div class="row mt-5">
+    <div class="col-md-12">
+      <h1 class="text-dark"><strong>{{"PDM.EDIT_PDM_TITLE" | translate}}</strong></h1>
+      <hr class="bg-primary">
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-md-7">
+      <section>
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <div class="row">
+
+            <!-- Group -->  
+            <div class="col-12 col-lg-12 p-2 text-capitalize">
+              <label
+                class="font-archivo font-size-16 font-weight-medium text-secondary m-0"><b>{{"PDM.GROUP_TITLE" | translate}}</b>
+              </label>  
+              <input type="text" readonly [value]="pdm.group.code+' '+pdm.group.segment" class="form-control h50 br-10">                
+            </div>
+
+            <!-- Class -->  
+            <div class="col-12 col-lg-12 p-2 text-capitalize">
+              <label
+                class="font-archivo font-size-16 font-weight-medium text-secondary m-0"><b>{{"PDM.CLASS_TITLE" | translate}}</b>
+              </label>  
+              <input type="text" readonly [value]="pdm.class.code+' '+pdm.class.description" class="form-control h50 br-10">                
+            </div>            
+            
+            <!-- Class -->  
+            <div class="col-12 col-lg-12 p-2 text-capitalize">
+              <label
+                class="font-archivo font-size-16 font-weight-medium text-secondary m-0"><b>{{"PDM.CODE_TITLE" | translate}}</b>
+              </label>  
+              <input type="text" readonly [value]="pdm.code" class="form-control h50 br-10">                
+            </div>    
+
+            <!-- Name -->
+            <div class="col-12 col-lg-12 p-2 text-capitalize">
+              <label
+                class="font-archivo font-size-16 font-weight-medium text-secondary m-0">
+                <b>{{"PDM.NAME_TITLE" | translate}}</b>
+              </label> 
+              <input type="text" required formControlName="name" class="form-control h50 br-10"
+                placeholder="{{'PDM.ENTER_NAME' | translate}}">
+              <div *ngIf="form.controls['name'].errors?.['required'] && isSubmit"
+                class="div-msg-error mt-2">
+                <img src="../../../assets/images/icon-alert.svg" class="img-msg-error" alt>
+                <p class="font-poppins font-size-14 m-0">{{"PDM.NAME_REQUIRED" |
+                  translate}}</p>
+              </div>
+            </div>
+
+            <!-- uintList -->
+            <div class="col-12 col-lg-12 p-2 text-capitalize">
+              <label
+                class="font-archivo font-size-16 font-weight-medium text-secondary m-0">
+                <b>{{"PDM.UNIT_LIST_TITLE" | translate}}</b>
+              </label> 
+              
+              <div class="row">
+                <div class="col-md-7">
+                  <input type="text" required formControlName="unit" class="form-control h50 br-10"
+                    id="segment" placeholder="{{'PDM.ENTER_UNIT' | translate}}">
+                </div>
+                <div class="col-md-5">
+                  <button type="button" class="btn btn-dark btn-lg btn-block btn-add-unit" (click)="addUnit()"><strong>+ {{"PDM.BTN_ADD_UNIT" | translate}}</strong></button>
+                </div>
+                
+                <div class="units">
+                  <div class="cycle" *ngFor="let item of unitList; let i = index">
+                    <div class="unitText">
+                        {{item}}
+                    </div>                    
+                    <div class="unitTrash" (click)="deleteUnit(i)">
+                      <i class="fa fa-trash-o " aria-hidden="true"></i>
+                    </div>
+                  </div>
+                </div>
+
+                <div *ngIf="!unitList.length && isSubmit"
+                class="div-msg-error mt-2">
+                <img src="../../../assets/images/icon-alert.svg" class="img-msg-error" alt>
+                <p class="font-poppins font-size-14 m-0">{{"PDM.UNIT_LIST_REQUIRED" |
+                  translate}}</p>
+              </div>
+
+              </div>                
+            </div>
+
+            <!-- propertyList -->
+            <div class="col-12 col-lg-12 p-2 text-capitalize">
+              <label
+                class="font-archivo font-size-16 font-weight-medium text-secondary m-0">
+                <b>{{"PDM.PROPERTY_LIST_TITLE" | translate}}</b>
+              </label> 
+              
+              <div class="row">
+                <div class="col-md-7">
+                  <input type="text" required formControlName="property" class="form-control h50 br-10" placeholder="{{'PDM.ENTER_PROPERTY' | translate}}">
+                </div>
+                <div class="col-md-5">
+                  <button type="button" class="btn btn-dark btn-lg btn-block btn-add-property" (click)="addProperty()"><strong>+ {{"PDM.BTN_ADD_PROPERTY" | translate}}</strong></button>
+                </div>
+                
+                <div class="properties">
+                  <div class="cycle" *ngFor="let item of propertyList; let i = index">
+                    <div class="propertyText">
+                        {{item.property}}
+                    </div>
+                    <div class="required" (click)="pressCheck(i)">
+                       <input type="checkbox" class="checkbox" [checked]="item.required"> {{"PDM.REQUIRED_PROPERTY" | translate}}
+                    </div>
+                    <div class="propertyTrash" (click)="deleteProperty(i)">
+                      <i class="fa fa-trash-o " aria-hidden="true"></i>
+                    </div>
+                  </div>
+                </div>
+                
+              </div>
+                
+              <div *ngIf="!propertyList.length && isSubmit"
+                class="div-msg-error mt-2">
+                <img src="../../../assets/images/icon-alert.svg" class="img-msg-error" alt>
+                <p class="font-poppins font-size-14 m-0">{{"PDM.PROPERTY_LIST_REQUIRED" |
+                  translate}}</p>
+              </div>
+
+            </div>
+            
+
+          </div>
+          <div class="btn-actions">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="row d-flex justify-content-end">
+                  <div class="col-md-5">
+                    <button type="button" class="bg-transparent w-100 btn br-10 h50 color-pattern"
+                      (click)="cancel()"><strong>{{"BUTTON_TEXT.CANCEL" |
+                        translate}}</strong></button>
+                  </div>
+                  <div class="col-md-5">
+                    <button type="submit"
+                      class="btn bg-pattern text-light br-10 h50 w-100"><strong>{{"BUTTON_TEXT.REGISTER"
+                        | translate}}</strong></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </section>
+    </div>
+  </div>
+
+</div>

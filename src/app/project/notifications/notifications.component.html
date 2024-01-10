@@ -1,0 +1,35 @@
+<div class="container-fluid">
+    <div class="row mt-5">
+        <div class="col-md-12">
+            <h1>{{"NOTIFICATION.TITLE" | translate}}</h1>
+            <hr class="bg-primary">
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-end">
+        <div class="custom-control custom-switch">
+            <!-- <input type="checkbox" class="custom-control-input" id="customSwitches">
+            <label class="custom-control-label toggle-text" for="customSwitches">Apenas notificações não lidas</label> -->
+        </div>
+    </div>
+
+    <div class="mt-4 notification-card p-4" *ngFor="let item of notificationList; let i= index;">
+        <div class="d-flex justify-content-between" [ngClass]="{pointer: item.bid_id !== undefined}" (click)="redirectToBid(item)">
+            <div class="d-flex align-items-center">
+                <img
+                    src="../../../assets/images/envelope.svg"
+                    style="max-height: 20px; max-width: 20px;"
+                    alt>
+                <div class="pl-3">
+
+                    <div class="toggle-text pb-2">{{item.title}}</div>
+                    <div class="notification-card-subtext">
+                        {{item.description}}
+                    </div>
+
+                </div>
+            </div>
+            <div class="d-flex flex-column justify-content-end notification-card-subtext">{{item.createdAt | date:'dd/MM/yyyy'}}</div>
+        </div>
+    </div>
+</div>

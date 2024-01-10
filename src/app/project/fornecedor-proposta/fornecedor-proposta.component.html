@@ -1,0 +1,130 @@
+<div class="container">
+    <div class="row mt-5">
+        <div class="col-md-12">
+            <h1><strong>Proposta</strong></h1>
+            <hr class="bg-primary">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-11">
+            <div class="d-flex rounded-top border border-success bg-success px-3 py-2 w-fit justify-content-start align-items-center">
+                <i class="bi w3-text-yellow bi-star-fill"></i>
+                <span class="text-light">&nbsp; {{"ASSOCIATION_CONTRACTS.WINNING_PROPOSAL" | translate}}</span>
+            </div>
+        </div>
+        <div class="col-md-11">
+            <div style="border-radius: 0px 10px 10px 10px" class="col-md-12 cursor-pointer border border-success br-10 py-3 px-4 ">
+                <div class="row">
+                    <div class="col-md-5">
+                        <h6 class="font-poppins f-size-14 text-secondary">Fornecedor</h6>
+                        <h5 class="f-size-16">{{datamock.getDataLote().supplier}}</h5>
+                    </div>
+                    <div class="col-md-2">
+                        <h6 class="font-poppins f-size-14 text-secondary">Valor total</h6>
+                        <h5 class="f-size-16">{{datamock.getDataLote().value | currency : 'BRL'}}</h5>
+                    </div>
+                    <div class="col-md-2 align-items-center d-flex">
+                        <h5 *ngIf="datamock.getDataLote().situation === 'Adjudicado'" class="f-size-16 text-success">Proposta aceita</h5>
+                        <h5 *ngIf="datamock.getDataLote().situation === 'Deserto'" class="f-size-16 text-danger"> Proposta recusada</h5>
+                    </div>
+                    <div class="col-md-3">
+                       <button type="button" (click)="openProposal()" class="btn w-100 b-pattern bg-light h50 br-10"><strong>Visualizar</strong></button>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row" *ngIf="twoStap">
+                        <hr class="bg-secondary mt-3">
+                        <div class="col-md-12 my-2">
+                           <h2 class="w-100"><strong>Lista de itens e propostas</strong></h2>
+                        </div>
+                        <div class="col-md-12">
+                            <table class="table table-hover">
+                                <thead>
+                                  <tr>
+                                    <th class="br-tabele bg-light text-dark" scope="col">Item</th>
+                                    <th class="bg-light text-dark" scope="col">Quantidade</th>
+                                    <th class="br-tabele2 bg-light text-dark" scope="col">Valor unitário</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    <td class="text-dark">{{datamock.getDataLicitacao().Item}}</td>
+                                    <td class="text-dark">{{datamock.getDataLicitacao()._id}}</td>
+                                    <td class="text-dark">{{datamock.getDataLicitacao().value | currency: 'BRL' }}</td>
+                                  </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-md-12">
+                            <div *ngIf="datamock.getDataLote().status ==='Em Análise'" class="row" >
+                                <div class="col-md-4">
+                                    <h6 class="font-poppins f-size-14 text-secondary">Valor do frete</h6>
+                                    <h5 class="f-size-16">{{datamock.getDataLote().frete | currency : 'BRL'}}</h5>
+                                </div>
+                                <div class="col-md-5">
+                                    <button class="btn btn-outline-dark br-10 w-100 " type="button"><strong>Preencher proposta via planilha</strong></button>
+                                </div>
+                                <div class="col-md-3">
+                                    <button class="btn btn-dark br-10 w-100" type="button"><strong>Preencher proposta</strong></button>
+                                </div>
+                            </div>
+                            <div *ngIf="datamock.getDataLote().status ==='Concluída'" class="row d-lfex justify-content-end">
+                                <div class="col-md-4">
+                                    <button class="btn btn-dark  br-10 w-100" type="button"><strong>Visualizar propostas</strong></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div *ngFor="let item of proposalList.slice(3, 4); let i = index"  class="col-md-12 cursor-pointer border mt-3 br-10 py-3 px-4 ">
+                <div class="row">
+                    <div class="col-md-5">
+                        <h6 class="font-poppins f-size-14 text-secondary">Fornecedor</h6>
+                        <h5 class="f-size-16">{{item.supplier}}</h5>
+                    </div>
+                    <div class="col-md-2">
+                        <h6 class="font-poppins f-size-14 text-secondary">Valor total</h6>
+                        <h5 class="f-size-16">{{item.frete | currency : 'BRL'}}</h5>
+                    </div>
+                    <div class="col-md-2 align-items-center d-flex">
+                        <h5 *ngIf="item.situation === 'Adjudicado'" class="f-size-16 text-success">Proposta aceita</h5>
+                        <h5 *ngIf="item.situation === 'Deserto'" class="f-size-16 text-danger"> Proposta recusada</h5>
+                    </div>
+                    <div class="col-md-3">
+                       <button type="button" (click)="openDetail(i)" class="btn w-100 b-pattern bg-light h50 br-10"><strong>Visualizar</strong></button>
+                    </div>
+                    <div class="col-md-12">
+                         <div class="row" *ngIf="oneStep === i">
+                        <hr class="bg-secondary mt-3">
+                        <div class="col-md-12 my-2">
+                           <h2 class="w-100"><strong>Lista de itens e propostas</strong></h2>
+                        </div>
+                        <div class="col-md-12">
+                            <table class="table table-hover">
+                            <thead>
+                              <tr>
+                                <th class="br-tabele bg-light text-dark" scope="col">Item</th>
+                                <th class="bg-light text-dark" scope="col">Quantidade</th>
+                                <th class="br-tabele2 bg-light text-dark" scope="col">Valor unitário</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td class="text-dark">{{datamock.getDataLicitacao().Item}}</td>
+                                <td class="text-dark">{{datamock.getDataLicitacao()._id}}</td>
+                                <td class="text-dark">{{datamock.getDataLicitacao().value | currency: 'BRL' }}</td>
+                              </tr>
+                            </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,45 @@
+<div class="container-fluid mb-5">
+    <div class="row mt-5">
+        <div class="col-md-12">
+            <h1>{{"PROFILE.EDIT_PROFILE_TITLE" | translate}}</h1>
+            <hr class="bg-primary">
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <form class="mr-5" [formGroup]="form">
+            <div class="row">
+
+                <div class="col-sm-12 col-md-6 mt-3">
+                    <label for="name"
+                        class="font-archivo font-size-16 font-weight-medium text-secondary m-0"><b>{{"PROFILE.PROFILE_NAME" | translate}}</b></label>
+                    <input type="text" formControlName="name" style="text-indent:20px;" class="form-control"
+                        id="name" [placeholder]="authService.getAuthenticatedUser().name">
+
+                </div>
+
+                <!-- <div class="col-sm-12 col-md-6 mt-3">
+                    <label for="email"
+                        class="font-archivo font-size-16 font-weight-medium text-secondary m-0"><b>Email</b></label>
+                    <input type="text" formControlName="email" style="text-indent:20px;" class="form-control"
+                        id="email" [placeholder]="authService.getAuthenticatedUser().email">
+                </div> -->
+                <div class="col-sm-12 col-md-6 mt-3">
+                    <h6 class="font-poppins f-size-14 text-secondary">Email</h6>
+                    <h5 class="f-size-16">{{authService.getAuthenticatedUser().email}}</h5>
+                </div>
+
+                <div class="d-flex flex-fill justify-content-end">
+                    <div class="col-md-4 mt-4">
+                        <button type="button" class="bg-light btn-lg btn-block mb-4 text-small"
+                            [routerLink]="['/pages/profile']">{{"BUTTON_TEXT.CANCEL" | translate}}</button>
+                    </div>
+                    <div class="col-md-4 mt-4">
+                        <button [disabled]="form.invalid" type="button" class="bg-light btn-lg btn-block mb-4 text-small"
+                            (click)="changeInfo()">{{"BUTTON_TEXT.SAVE" | translate}}</button>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>

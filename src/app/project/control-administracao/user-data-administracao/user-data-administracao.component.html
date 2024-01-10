@@ -1,0 +1,39 @@
+<div class="container-fluid">
+    <div class="row mt-5">
+        <div class="col-md-12">
+            <h1>Dados do Usuário de Administração</h1>
+            <hr class="bg-primary">
+        </div>
+    </div>
+
+    <div class="row mt-1">
+        <div class="col-12">
+            <i class="fa fa-arrow-left f-size-24 cursor-pointer" (click)="back()" aria-hidden="true"></i>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-12">
+            <div class="col-12">
+                <div class="row p-3 user-data-border">
+                    <div class="col-12 col-lg-6 p-2 text-capitalize">
+                        <h6 class="font-poppins f-size-14 text-secondary">Nome</h6>
+                        <h5 class="f-size-16">{{this.user?.name}}</h5>
+                    </div>
+                    <div class="col-12 col-lg-6 p-2">
+                        <h6 class="font-poppins f-size-14 text-secondary">Email</h6>
+                        <h5 class="f-size-16">{{this.user?.email}}</h5>
+                    </div>
+                    <div class="col-12 col-lg-6 p-2 text-capitalize">
+                        <h6 class="font-poppins f-size-14 text-secondary">Função</h6>
+                        <h5 class="f-size-16">{{this.user?.roles}}</h5>
+                    </div>
+                    <div class="col-12 col-lg-6 p-2 text-capitalize">
+                        <h6 class="font-poppins f-size-14 text-secondary">Status</h6>
+                        <h5 class="f-size-16">{{this.user?.status}}</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

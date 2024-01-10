@@ -1,0 +1,22 @@
+<div class="py-5 px-5 bg-white">
+    <div class="row">
+        <div class="d-flex flex-fill justify-content-between">
+            <h4 class="m-0">{{'CONTRACT_MODELS.DELETE_MODEL' | translate}}</h4>
+            <i class="fa fa-times cursor-pointer" (click)="closeModal()" aria-hidden="true"></i>
+        </div>
+    </div>
+        <div class="row mt-4">
+            <p class="font-poppins font-size-14 text-secondary">{{'CONTRACT_MODELS.CERTAINTY_DELETE' | translate}} <b class="text-capitalize">{{name}}</b>?</p>
+        </div>
+
+        <div class="mt-4">
+            <div class="row">
+                <div class="col-md-6 pl-0">
+                    <button type="button" class="bg-light btn-border-none btn-lg btn-block" >{{'ADMINISTRATION_ASSOCIATION_DATA.BACK' | translate}}</button>
+                </div>
+                <div class="col-md-6 pr-0">
+                    <button id="cancel" type="button"  class="btn btn-danger btn-lg btn-block">{{'ADMINISTRATION_ASSOCIATION_DATA.DELETAR' | translate}}</button>
+                </div>
+            </div>
+        </div>
+</div>

@@ -1,0 +1,83 @@
+<div class="container-fluid">
+    <div class="row mt-5">
+        <div class="col-md-12">
+            <h1 class="text-dark"><strong>{{'GROUP_ITEMS.EDIT_GROUP' | translate}}</strong></h1>
+            <hr class="bg-primary">
+        </div>
+    </div>
+    <form [formGroup]="form" (ngSubmit)="OnSubmit()" class="row">
+        <div class="col-md-9">
+            <div class="row mt-4">
+                <div class="col-md-12">
+                    <h3>{{'GROUP_ITEMS.DETAIL_GROUP' | translate}}</h3>
+                    <label for="nome">{{'AGREEMENTS.NAME' | translate}}:</label>
+                    <input type="text" formControlName="name" class="br-10 form-control text-dark h50 " placeholder="Digite">
+                </div>
+            </div>
+            <div class="row block-important mt-4">
+                <div class="col-12">
+                    <h3>{{'GROUP_ITEMS.ITEM_GROUP_COST' | translate}}</h3>
+                </div>
+                <div class="w100 col-md-4">
+                    <label class= text-dark for="nome">{{'ADMINISTRATION_AGREEMENTS_BIDDING.ITEMS_QUANTITY' | translate}}:</label>
+                    <select formControlName="items" class="form-control br-10 h50">
+                        <option *ngFor="let item of costItemsList" [value]="item._id">{{item.name}}</option>
+                    </select>
+                </div>
+                <div class="w100 col-md-2">
+                    <label class= text-dark for="nome">{{'ADMINISTRATION_AGREEMENTS_BIDDING.QUANTITY' | translate}}:</label>
+                    <input type="text" formControlName="quantity" [maxlength]="10" class="w100 py-4 br-10 form-control text-dark h50 " placeholder="Digite a quantidade">
+                </div>
+                <div class="w100 col-md-3">
+                    <label class= text-dark for="nome">{{'GROUP_ITEMS.PRICE' | translate}}:</label>
+                    <input type="text" formControlName="price" separatorLimit="100000000" prefix="R$" mask="0000" mask="separator.2" thousandSeparator="," class="w100 py-4 br-10 form-control text-dark h50 " placeholder="Digite">
+                </div>
+                <div class="d-flex align-self-end w100 mt-2 col-md-3">
+                    <button (click)="addItemList()"  type="button"
+                    [disabled]="form.controls['items'].invalid || form.controls['price'].invalid || form.controls['quantity'].invalid"
+                       class="w-100 py-2 br-10 align-self-end h50 btn btn-dark">
+                       {{'GROUP_ITEMS.ADD' | translate}}
+                    </button>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-12">
+                    <table class="table table-borderless">
+                        <thead>
+                          <tr style="border-bottom: none !important; border-top: none !important">
+                            <th class="br-tabele bg-pattern text-light" scope="col">{{'COST_ITEMS.COST_ITEMS' | translate}}</th>
+                            <th class="bg-pattern text-light" scope="col">{{'GROUP_ITEMS.QUANTITY_TOTAL' | translate}}</th>
+                            <th class="bg-pattern text-light" scope="col">{{'GROUP_ITEMS.COST' | translate}}</th>
+                            <th class="br-tabele2 bg-pattern text-light"></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let item of itemList">
+                            <td>{{item.costItems.name}}</td>
+                            <td >{{item.quantity}}</td>
+                            <td >{{item.unitValue | currency: 'BRL'}}</td>
+                            <td (click)="removeItem(item)" class="d-flex  text-dark justify-content-center" >
+                                <i class="bi h3 mb-0 text-danger bi-x"></i>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                </div>
+            </div>
+            <div class="row  mt-5">
+                <div class="col-md-12 d-flex justify-content-end px-0">
+                    <div class="col-md-3">
+                        <button type="button" (click)="goBack()" class="btn br-10 border-light h50 text-dark bg-light w-100 py-2">
+                            <strong>{{'BUTTON_TEXT.CANCEL' | translate}}</strong>
+                        </button>
+                    </div>
+                    <div class="col-md-4">
+                        <button type="submit" class="btn br-10 w-100 py-2 h50 text-light bg-pattern">
+                            <strong>{{'GROUP_ITEMS.EDIT_GROUP' | translate}}</strong>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

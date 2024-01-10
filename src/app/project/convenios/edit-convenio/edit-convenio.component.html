@@ -1,0 +1,104 @@
+<div class="container-fluid">
+  <div class="row mt-5">
+    <div class="col-md-12">
+      <h1 class="text-dark"><strong>{{'AGREEMENTS.EDIT_AGREEMENT.TITLE' | translate}}</strong></h1>
+      <hr class="bg-primary">
+    </div>
+  </div>
+  <div class="col-md-9">
+    <form [formGroup]="form" class="row" (ngSubmit)="onSubmit()">
+      <div class="col-md-2">
+        <label class="text-dark" for="number"><strong>{{'AGREEMENTS.AGREEMENT_DATA.NUMBER' | translate}}</strong></label>
+        <input type="tel" class="form-control br-10 py-4" formControlName="number" id="number" readonly
+          placeholder="não pode editar o número">
+      </div>
+      <div class="col-md-10">
+        <label class="text-dark" for="object"><strong>{{'AGREEMENTS.OBJECT' | translate}}</strong></label>
+        <input type="text" [maxlength]="50" class="form-control br-10 py-4" formControlName="object" id="object"
+          placeholder="Edite seu objeto">
+      </div>
+      <div class="col-md-2 mt-4">
+        <label for="municipio"><strong>{{'AGREEMENTS.NEW_AGREEMENT.STATE' | translate}}</strong></label>
+        <select (change)="getCity(states.value)" formControlName="state" #states class="form-control br-10 h50">
+          <option [disabled]="true" [value]="response.states" [selected]="true">{{response.states}}</option>
+          <option *ngFor="let estados of statesList" [value]="estados">{{estados}}</option>
+        </select>
+      </div>
+      <div class="col-md-5 mt-4">
+        <label for="municipio"><strong>{{'AGREEMENTS.AGREEMENT_DATA.AGREEMENT_CITY' | translate}}</strong></label>
+        <select formControlName="city" class="form-control br-10 h50" id="municipio">
+          <option [disabled]="true" [value]="response.city" [selected]="true">{{response.city}}</option>
+          <option *ngFor="let cidades of citiesList" [value]="cidades">{{cidades}}</option>
+        </select>
+      </div>
+      <div class="col-md-5 mt-4">
+        <label class="text-dark" for="value"><strong>{{'AGREEMENTS.AGREEMENT_DATA.PRICE' | translate}}</strong></label>
+        <input type="tel" formControlName="price" class="form-control br-10
+          py-4" id="value" separatorLimit="100000000" prefix="R$" mask="0000" mask="separator.2" thousandSeparator="." 
+        
+          placeholder="Edite o valor">
+      </div>
+      <div class="col-md-4 mt-4">
+        <label class="text-dark" for="datesub"><strong>{{'AGREEMENTS.AGREEMENT_DATA.SIGNATURE_DATE' | translate}}</strong></label>
+        <input type="text" mask="00/00/0000" formControlName="datesub" class="form-control br-10 py-4" id="datesub"
+          placeholder="Edite a data">
+      </div>
+      <div class="col-md-4 mt-4">
+        <label class="text-dark" for="datemat"><strong>{{'AGREEMENTS.AGREEMENT_DATA.EFFECTIVE_DATE' | translate}}</strong></label>
+        <input type="text" mask="00/00/0000" formControlName="datemat" class="form-control br-10 py-4" id="datemat"
+          placeholder="Edite a data">
+      </div>
+      <div class="col-md-4 mt-4">
+        <label class="text-dark text-capitalize" for="situation"><strong>{{'AGREEMENTS.NEW_AGREEMENT.SITUATION.TITLE' | translate}}</strong></label>
+        <select formControlName="situation" #situation class="form-control br-10 h50" id="situation">
+          <option [selected]="response.status === agreementStatusEnum.canceled" [value]="agreementStatusEnum.canceled"
+            class="f-size-16">{{'AGREEMENTS.NEW_AGREEMENT.SITUATION.CANCELED' | translate}}</option>
+          <option [selected]="response.status === agreementStatusEnum.concluded" [value]="agreementStatusEnum.concluded"
+            class="f-size-16">{{'AGREEMENTS.NEW_AGREEMENT.SITUATION.COMPLETED' | translate}}</option>
+          <option [selected]="response.status === agreementStatusEnum.inExecution"
+            [value]="agreementStatusEnum.inExecution" class="f-size-16">{{'AGREEMENTS.NEW_AGREEMENT.SITUATION.IN_EXECUTION' | translate}}</option>
+        </select>
+      </div>
+      <div class="col-md-12 mt-4">
+        <label class="text-dark" for="association"><strong>{{'AGREEMENTS.ASSOCIATION' | translate}}</strong></label>
+        <select formControlName="association" class="form-control br-10 h50" id="association">
+          <option [selected]="true" [disabled]="true" [value]="response.association._id">{{response.association.name}}
+          </option>
+          <option *ngFor="let item of associationList" [value]="item._id">{{item.name}}</option>
+        </select>
+      </div>
+      <div class="col-md-12 mt-4">
+        <label class="text-dark" for="review"><strong>{{'SIDEBAR.PROJECTS' |
+          translate}}</strong></label>
+        <select formControlName="review" class="form-control br-10 h50" id="review">
+          <option [selected]="true" [disabled]="true" [value]="response.project?._id">{{response.project?.name}}
+          </option>
+          <option *ngFor="let item of userList" [value]="item._id">{{item.name}}</option>
+        </select>
+      </div>
+      <!-- <div class="col-md-12 mt-4">
+        <label class="text-dark" for="review"><strong>{{'AGREEMENTS.MANAGER' | translate}} ({{response.manager?.name || '-'}})</strong></label>
+        <select formControlName="manager" class="form-control br-10 h50" id="review">
+          <option [selected]="true" [disabled]="true" [value]="response.manager?._id">{{response.manager?.name}}
+          </option>
+          <option *ngFor="let item of userListProject" [value]="item._id">{{item.name}}</option>
+        </select>
+      </div> -->
+      <div class="col-12 mb-5">
+        <div class="row d-flex justify-content-end">
+          <div class="col-md-4 mt-4 ">
+            <button (click)="backConvenio()" type="button" class="btn btn-light br-10 w-100 color-patter h50">
+              <strong>{{'AGREEMENTS.NEW_AGREEMENT.CANCEL_BUTTON' | translate}}</strong>
+            </button>
+          </div>
+          <div class="col-md-4 mt-4 ">
+            <button type="submit" class="btn bg-pattern text-light br-10 w-100 h50">
+              <strong>{{'AGREEMENTS.NEW_AGREEMENT.SAVE_BUTTON' | translate}}</strong>
+            </button>
+            <span *ngIf="inputclear" class="text-danger">{{'AGREEMENTS.NO_INPUTS_FILLED' | translate}}</span>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

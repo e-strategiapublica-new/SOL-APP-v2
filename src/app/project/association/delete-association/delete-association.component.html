@@ -1,0 +1,24 @@
+<div class="py-5 px-5 bg-white">
+    <div class="row">
+        <div class="d-flex flex-fill justify-content-between">
+            <h4 class="m-0">{{'ADMINISTRATION_ASSOCIATION_DATA.DELETE_ASSOCIATION' | translate}}</h4>
+            <i class="fa fa-times cursor-pointer" (click)="closeModal()" aria-hidden="true"></i>
+        </div>
+    </div>
+    <form>
+        <div class="row mt-4">
+            <p class="font-poppins font-size-14 text-secondary">{{'ADMINISTRATION_ASSOCIATION_DATA.CERTAINTY' | translate}}<b class="text-capitalize"> {{association.name}}</b>?</p>
+        </div>
+
+        <div class="mt-4">
+            <div class="row">
+                <div class="col-md-6 pl-0">
+                    <button type="button" class="bg-light btn-border-none btn-lg btn-block" (click)="closeModal()">{{'ADMINISTRATION_ASSOCIATION_DATA.BACK' | translate}}</button>
+                </div>
+                <div class="col-md-6 pr-0">
+                    <button id="cancel" type="submit" class="btn btn-danger btn-lg btn-block" (click)="deleteAssociation()">{{'ADMINISTRATION_ASSOCIATION_DATA.DELETAR' | translate}}</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

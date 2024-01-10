@@ -1,0 +1,324 @@
+  <div
+	*ngIf="authService.getAuthenticatedUser().type == 'administrador' 
+	&& authService.getAuthenticatedUser().roles == 'geral' || authService.getAuthenticatedUser().type == 'administrador' 
+	&& authService.getAuthenticatedUser().roles == 'visualizador'|| authService.getAuthenticatedUser().type == 'project_manager'
+	"
+	
+	class="container-fluid">	
+
+	<div class="row mt-5">
+		<div class="col-md-4">
+			<div class="card ">
+				<div class="card-body shadow">
+					<div class="row">
+						<div class="col-md-12 text-right"><h5 class="card-title">{{"DASHBOARD.REGISTERED_ASSOCIATIONS" | translate}}</h5></div>
+					</div>
+					<div class="row mt-3">
+						<div class="col-md-7 text-left"><img src="../../../../assets/images/associacoesicon.svg"
+								style="max-height: 100px; max-width: 100px;" alt="IMG"></div>
+						<div class="col-md-5 text-right"><h1 class="card-title mt-3">{{responseDashboard.associationRegister}}</h1></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="card">
+				<div class="card-body shadow">
+					<div class="row">
+						<div class="col-md-12 text-right"><h5 class="card-title">{{"DASHBOARD.REGISTERED_SUPPLIERS" | translate}}</h5></div>
+					</div>
+					<div class="row mt-3">
+						<div class="col-md-7 text-left"><img src="../../../../assets/images/fornecedoresicon.svg"
+								style="max-height: 78px; max-width: 78px;" alt="IMG"></div>
+						<div class="col-md-5 text-right"><h1 class="card-title mt-3">{{responseDashboard.supplierRegister}}</h1></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="card">
+				<div class="card-body shadow">
+					<div class="row">
+						<div class="col-md-12 text-right"><h5 class="card-title">{{"DASHBOARD.ONGOING_BIDDING" | translate}}</h5></div>
+					</div>
+					<div class="row mt-3">
+						<div class="col-md-7 text-left"><img src="../../../../assets/images/licitacoesicon.svg"
+								style="max-height: 100px; max-width: 100px;" alt="IMG"></div>
+						<div class="col-md-5 text-right"><h1 class="card-title mt-3">{{responseDashboard.bidInProgress}}</h1></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row mt-5">
+		<div class="col-md-12">
+			<div id="map" style="height: 500px;">
+			</div>
+		</div>
+	</div>
+	
+	
+</div>
+
+<!-- <div *ngIf="authService.getAuthenticatedUser().type == 'administrador'"
+	class="container-fluid">
+	<div class="row mt-5">
+		<div class="col-md-4">
+			<div class="card ">
+				<div class="card-body shadow">
+					<div class="row">
+						<div class="col-md-12 text-right"><h5 class="card-title">{{"SIDEBAR.AGREEMENTS" | translate}}</h5></div>
+
+					</div>
+					<div class="row mt-3">
+						<div class="col-md-7 text-left"><img src="../../../../assets/images/associacoesicon.svg"
+								style="max-height: 100px; max-width: 100px;" alt="IMG"></div>
+						<div class="col-md-5 text-right"><h1 class="card-title mt-3">{{convenios}}</h1></div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="card">
+				<div class="card-body shadow">
+					<div class="row">
+						<div class="col-md-12 text-right"><h5 class="card-title">{{"DASHBOARD.PENDING_BIDS" | translate}}</h5></div>
+
+					</div>
+					<div class="row mt-3">
+						<div class="col-md-7 text-left"><img src="../../../../assets/images/fornecedoresicon.svg"
+								style="max-height: 78px; max-width: 78px;" alt="IMG"></div>
+						<div class="col-md-5 text-right"><h1 class="card-title mt-3">{{licitacoesPendentesSize}}</h1></div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="card">
+				<div class="card-body shadow">
+					<div class="row">
+						<div class="col-md-12 text-right"><h5 class="card-title">{{"DASHBOARD.BIDS_UNDER_REVIEW" | translate}}</h5></div>
+
+					</div>
+					<div class="row mt-3">
+						<div class="col-md-7 text-left"><img src="../../../../assets/images/licitacoesicon.svg"
+								style="max-height: 100px; max-width: 100px;" alt="IMG"></div>
+						<div class="col-md-5 text-right"><h1 class="card-title mt-3">{{licitacoesEmAnaliseSize}}</h1></div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row mt-5">
+		<div class="col-md-12">
+			<div id="map" style="height: 500px;">
+			</div>
+		</div>
+	</div>
+</div>  -->
+
+<div *ngIf="authService.getAuthenticatedUser().type == 'associacao'">
+	<div class="row mt-5">
+		<div class="col-md-12">
+			<h1>Dashboard</h1>
+			<hr class="bg-primary">
+		</div>
+	</div>
+  <form [formGroup]="form">
+		<div class="row mt-4">
+			<div class="col-md-9">
+				<input type="text" class="form-control text-secondary input-height-border" formControlName="search"
+				placeholder="{{'BUTTON_TEXT.INPUT_SEARCH_LICITACOES_NUMBER' | translate}}">
+			</div>
+			<div class="col-md-3">
+				<button type="button" class="btn btn-dark btn-lg btn-block mt-3 mt-md-0"
+					(click) = "onLicitacaoRegister()">{{"ASSOCIATION_BIDDING.NEW_BIDDING" | translate}}</button>
+			</div>
+
+		</div>
+
+		<div *ngFor="let item of licitacoesListFilter | paginate: { itemsPerPage: itensPerPage, currentPage: currentPage }" class="row p-3 user-data-border mt-5 cursor-pointer">
+
+			<div class="row col-12 p-2" (click)="associationDetailBids(item);">
+				<div class="col-12 col-md-10">
+					<h5 class="text-dark"> <b> {{"SIDEBAR.BIDDING" | translate}} nº {{item.bid_count}}/{{item.createdAt | date:'yyyy'}} </b></h5>
+				</div>
+				<div class="col-12 col-md-2">
+					<h6 class="font-poppins f-size-14 text-secondary">Status</h6>
+					<h5 *ngIf="item.status ==='awaiting'" class="f-size-16 text-warning">{{"CREATE_BIDDING_STATUS.PENDING_RELEASE" | translate}}</h5>
+					<h5 *ngIf="item.status ==='tiebreaker'" class="f-size-16 text-warning">{{"CREATE_BIDDING_STATUS.WAITING_TIEBREAKER" | translate}}</h5>
+					<h5 *ngIf="item.status ==='analysis'" class="f-size-16 text-info">{{"CREATE_BIDDING_STATUS.UNDER_REVIEW" | translate}}</h5>
+					<h5 *ngIf="item.status ==='deserted'" class="f-size-16 text-danger">{{"CREATE_BIDDING_STATUS.DESERTED" | translate}}</h5>
+					<h5 *ngIf="item.status ==='canceled'" class="f-size-16 text-danger">{{"CREATE_BIDDING_STATUS.CANCELED" | translate}}</h5>
+					<h5 *ngIf="item.status ==='failed'" class="f-size-16 text-danger">{{"CREATE_BIDDING_STATUS.FAILED" | translate}}</h5>
+					<h5 *ngIf="item.status ==='draft'" class="f-size-16 text-dark">{{"CREATE_BIDDING_STATUS.DRAFT" | translate}}</h5>
+					<h5 *ngIf="item.status ==='released'" class="f-size-16 text-success">{{"CREATE_BIDDING_STATUS.LAUNCHED" | translate}}</h5>
+					<h5 *ngIf="item.status ==='open'" class="f-size-16 text-success">{{"CREATE_BIDDING_STATUS.OPEN" | translate}}</h5>
+					<h5 *ngIf="item.status ==='completed'" class="f-size-16 text-success">{{"CREATE_BIDDING_STATUS.COMPLETED" | translate}}</h5>
+					<h5 *ngIf="item.status ==='reopened'" class="f-size-16 text-success">{{"CREATE_BIDDING_STATUS.REOPENED" | translate}}</h5>
+					<h5 *ngIf="item.status ==='returned'" class="f-size-16 text-info">{{"CREATE_BIDDING_STATUS.RETURNED" | translate}}</h5>
+				</div>
+			</div>
+
+			<div class="col-12 col-lg-12 p-2 text-capitalize" (click)="associationDetailBids(item);">
+				<h6 class="font-poppins f-size-16 text-secondary">{{item.description}}</h6>
+			</div>
+
+			<div class="row col-12 p-2">
+				<div class="col-12 col-md-10" (click)="associationDetailBids(item);">
+					<h6 *ngIf="item.status !== 'draft' && item.status !== 'awaiting' && item.status !== 'returned'" class="font-poppins f-size-14 text-dark">
+						{{"DASHBOARD.DURATION" | translate}}</h6>
+					<h6 *ngIf="item.status !== 'draft' && item.status !== 'awaiting' && item.status !== 'returned'" class="font-poppins f-size-16 text-secondary">
+						{{item.start_at | date: 'dd/MM/yyyy'}} - {{item.end_at | date: 'dd/MM/yyyy'}}</h6>
+				</div>
+				<div class="col-12 col-md-2">
+					<button (click)="editBids(item);" *ngIf="item.status ==='draft' || item.status ==='returned'" type="button"
+						class="bg-light btn-lg btn-block mb-4 text-small text-dark">
+						{{"BUTTON_TEXT.EDIT" | translate}}</button>
+				</div>
+			</div>
+		</div>
+		<div *ngIf="licitacoesListFilter.length >= 1" class="row">
+			<div class="col-12 d-flex justify-content-end">
+				<pagination-controls (pageChange)="currentPage= $event" previousLabel="{{'BUTTON_TEXT.PREVIOUS' | translate}}"
+				nextLabel="{{'BUTTON_TEXT.NEXT' | translate}}"></pagination-controls>
+			</div>
+		</div>
+	</form>
+</div>
+
+<div *ngIf="authService.getAuthenticatedUser().type == 'fornecedor'" class="container-fluid">
+	<div class="row mt-5">
+		<div class="col-md-11">
+			<div class="row d-flex justify-content-between align-items-center">
+				<div class="col-md-3">
+					<h1 class="text-dark"><strong>Dashboard</strong></h1>
+				</div>
+				<div class="col-md-4">
+					<button *ngIf="!loadMore" type="button" (click)="goLicitacoes()" class="btn bg-pattern w-100 text-light br-10 h50"><strong>
+							{{"SUPPLIER_BIDDING.SEARCH_BIDS" | translate}}</strong></button>
+				</div>
+			</div>
+			<hr class="bg-primary">
+		</div>
+	</div>
+	<div class="row ">
+		<ng-container *ngIf="!loadMore else paginateLicitacoes">
+			<div *ngFor="let item of licitacoesListFirst10"
+				(click)="detailBids(item)" class="col-md-11 border mt-2 br-10 py-3 m-3 cursor-pointer">
+				<div class="row">
+					<div class="col-md-10">
+						<h2 class="mb-0 text-dark"><strong>{{"SIDEBAR.BIDDING" | translate}} n° {{item.bid_count}} / {{item.createdAt | date: 'yyyy'}}</strong></h2>
+					</div>
+					<div class="col-md-2 text-capitaliz">
+						<h6 class="font-poppins f-size-14 text-secondary">Status</h6>
+						<h5 *ngIf="item.status ==='awaiting'" class="f-size-16 text-warning">{{"CREATE_BIDDING_STATUS.PENDING_RELEASE" | translate}}</h5>
+						<h5 *ngIf="item.status ==='tiebreaker'" class="f-size-16 text-warning">{{"CREATE_BIDDING_STATUS.WAITING_TIEBREAKER" | translate}}</h5>
+						<h5 *ngIf="item.status ==='analysis'" class="f-size-16 text-info">{{"CREATE_BIDDING_STATUS.UNDER_REVIEW" | translate}}</h5>
+						<h5 *ngIf="item.status ==='deserted'" class="f-size-16 text-danger">{{"CREATE_BIDDING_STATUS.DESERTED" | translate}}</h5>
+						<h5 *ngIf="item.status ==='canceled'" class="f-size-16 text-danger">{{"CREATE_BIDDING_STATUS.CANCELED" | translate}}</h5>
+						<h5 *ngIf="item.status ==='failed'" class="f-size-16 text-danger">{{"CREATE_BIDDING_STATUS.FAILED" | translate}}</h5>
+						<h5 *ngIf="item.status ==='draft'" class="f-size-16 text-dark">{{"CREATE_BIDDING_STATUS.DRAFT" | translate}}</h5>
+						<h5 *ngIf="item.status ==='released'" class="f-size-16 text-success">{{"CREATE_BIDDING_STATUS.LAUNCHED" | translate}}</h5>
+						<h5 *ngIf="item.status ==='open'" class="f-size-16 text-success">{{"CREATE_BIDDING_STATUS.OPEN" | translate}}</h5>
+						<h5 *ngIf="item.status ==='completed'" class="f-size-16 text-success">{{"CREATE_BIDDING_STATUS.COMPLETED" | translate}}</h5>
+						<h5 *ngIf="item.status ==='reopened'" class="f-size-16 text-success">{{"CREATE_BIDDING_STATUS.REOPENED" | translate}}</h5>
+						<h5 *ngIf="item.status ==='returned'" class="f-size-16 text-info">{{"CREATE_BIDDING_STATUS.RETURNED" | translate}}</h5>
+					</div>
+					<div class="col-md-12 mt-2 ">
+						<h6 class="font-poppins f-size-14 text-secondary">{{"SIDEBAR.ASSOCIATION" | translate}}</h6>
+						<h5 class="f-size-16">{{item?.association?.association?.name || '--'}}</h5>
+					</div>
+					<div class="col-md-4 mt-2 ">
+						<h6 class="font-poppins f-size-14 text-secondary">Data de
+							Início</h6>
+						<h5 class="f-size-16">{{item.start_at | date: 'dd/MM/yyyy'}}</h5>
+					</div>
+					<div class="col-md-4 mt-2 ">
+						<h6 class="font-poppins f-size-14 text-secondary">Data de
+							encerramento</h6>
+						<h5 class="f-size-16">{{item.end_at | date: 'dd/MM/yyyy'}}</h5>
+					</div>
+				</div>
+			</div>
+		</ng-container>
+
+		<ng-template #paginateLicitacoes>
+			<div class="col-md-8 mt-2">
+				<input type="text" class="form-control h50 br-10 text-dark" (keyup)="filter($event)"
+					placeholder="{{'BUTTON_TEXT.INPUT_SEARCH_SUPPLIERS' | translate}}" />
+			</div>
+	
+			<div class="col-md-3 mt-2">
+				<div class="form-group">
+						<select class="form-control br-10 h50" (change)="changeSelectedFilter($event)">
+								<option selected value="listAll">{{'ADMINISTRATION_BIDDING.LIST_ALL' | translate}}</option>
+								<!-- <option value="awaiting">{{'ADMINISTRATION_BIDDING.AWAITING' | translate}}</option> -->
+								<option value="tiebreaker">{{'ADMINISTRATION_BIDDING.TIEBREAKER' | translate}}</option>
+								<option value="analysis">{{'ADMINISTRATION_BIDDING.ANALYSIS' | translate}}</option>
+								<option value="deserted">{{'ADMINISTRATION_BIDDING.DESERTED' | translate}}</option>
+								<option value="canceled">{{'ADMINISTRATION_BIDDING.CANCELED' | translate}}</option>
+								<option value="failed">{{'ADMINISTRATION_BIDDING.FAILED' | translate}}</option>
+								<option value="draft">{{'ADMINISTRATION_BIDDING.DRAFT' | translate}}</option>
+								<option value="released">{{'ADMINISTRATION_BIDDING.RELEASED' | translate}}</option>
+								<option value="open">{{'ADMINISTRATION_BIDDING.OPEN' | translate}}</option>
+								<option value="completed">{{'ADMINISTRATION_BIDDING.COMPLETED' | translate}}</option>
+								<option value="reopened">{{'ADMINISTRATION_BIDDING.REOPENED' | translate}}</option>
+								<!-- <option value="returned">{{'CREATE_BIDDING_STATUS.RETURNED' | translate}}</option> -->
+						</select>
+				</div>
+			</div>
+			
+			<div *ngFor="let item of licitacoesListFilter | paginate: { itemsPerPage: itensPerPageFornecedor, currentPage: currentPage }; let i= index;"
+				(click)="detailBids(item)" class="col-md-11 border mt-2 br-10 py-3 m-3 cursor-pointer">
+				<div class="row">
+					<div class="col-md-10">
+						<h2 class="mb-0 text-dark"><strong>{{"SIDEBAR.BIDDING" | translate}} n° {{item.bid_count}} / {{item.createdAt | date: 'yyyy'}}</strong></h2>
+					</div>
+					<div class="col-md-2 text-capitaliz">
+						<h6 class="font-poppins f-size-14 text-secondary">Status</h6>
+						<h5 *ngIf="item.status ==='awaiting'" class="f-size-16 text-warning">{{"CREATE_BIDDING_STATUS.PENDING_RELEASE" | translate}}</h5>
+						<h5 *ngIf="item.status ==='tiebreaker'" class="f-size-16 text-warning">{{"CREATE_BIDDING_STATUS.WAITING_TIEBREAKER" | translate}}</h5>
+						<h5 *ngIf="item.status ==='analysis'" class="f-size-16 text-info">{{"CREATE_BIDDING_STATUS.UNDER_REVIEW" | translate}}</h5>
+						<h5 *ngIf="item.status ==='deserted'" class="f-size-16 text-danger">{{"CREATE_BIDDING_STATUS.DESERTED" | translate}}</h5>
+						<h5 *ngIf="item.status ==='canceled'" class="f-size-16 text-danger">{{"CREATE_BIDDING_STATUS.CANCELED" | translate}}</h5>
+						<h5 *ngIf="item.status ==='failed'" class="f-size-16 text-danger">{{"CREATE_BIDDING_STATUS.FAILED" | translate}}</h5>
+						<h5 *ngIf="item.status ==='draft'" class="f-size-16 text-dark">{{"CREATE_BIDDING_STATUS.DRAFT" | translate}}</h5>
+						<h5 *ngIf="item.status ==='released'" class="f-size-16 text-success">{{"CREATE_BIDDING_STATUS.LAUNCHED" | translate}}</h5>
+						<h5 *ngIf="item.status ==='open'" class="f-size-16 text-success">{{"CREATE_BIDDING_STATUS.OPEN" | translate}}</h5>
+						<h5 *ngIf="item.status ==='completed'" class="f-size-16 text-success">{{"CREATE_BIDDING_STATUS.COMPLETED" | translate}}</h5>
+						<h5 *ngIf="item.status ==='reopened'" class="f-size-16 text-success">{{"CREATE_BIDDING_STATUS.REOPENED" | translate}}</h5>
+						<h5 *ngIf="item.status ==='returned'" class="f-size-16 text-info">{{"CREATE_BIDDING_STATUS.RETURNED" | translate}}</h5>
+					</div>
+					<div class="col-md-12 mt-2 ">
+						<h6 class="font-poppins f-size-14 text-secondary">{{"SIDEBAR.ASSOCIATION" | translate}}</h6>
+						<h5 class="f-size-16">{{item?.association?.association?.name || '--'}}</h5>
+					</div>
+					<div class="col-md-4 mt-2 ">
+						<h6 class="font-poppins f-size-14 text-secondary">Data de
+							Início</h6>
+						<h5 class="f-size-16">{{item.start_at | date: 'dd/MM/yyyy'}}</h5>
+					</div>
+					<div class="col-md-4 mt-2 ">
+						<h6 class="font-poppins f-size-14 text-secondary">Data de
+							encerramento</h6>
+						<h5 class="f-size-16">{{item.end_at | date: 'dd/MM/yyyy'}}</h5>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="col-md-12 d-flex justify-content-end">
+					<pagination-controls (pageChange)="currentPage= $event"
+						previousLabel="{{'BUTTON_TEXT.PREVIOUS' | translate}}" nextLabel="{{'BUTTON_TEXT.NEXT' | translate}}"></pagination-controls>
+				</div>
+			</div>
+		</ng-template>
+	</div>
+</div>
+
+<!-- <div *ngIf="authService.getAuthenticatedUser().type == 'project_manager'" class="container-fluid">
+	<app-project-manager-convenios></app-project-manager-convenios>
+</div> -->

@@ -1,0 +1,84 @@
+<div class="container-fluid mb-5">
+	<div class="row mt-5">
+		<div class="col-md-12">
+			<h1>{{"PROFILE.TITLE" | translate}}</h1>
+			<hr class="bg-primary">
+		</div>
+	</div>
+
+	<div class="row mt-3">
+		<div class="col-12">
+			<div class="col-lg-6 col-sm-10">
+				<div class="row p-3 user-data-border">
+
+					<div class="col-12 col-lg-12 p-2 text-capitalize">
+						<h6 class="font-poppins f-size-14 text-secondary">{{"PROFILE.PROFILE_NAME" | translate}}</h6>
+						<h5 class="f-size-16">{{authService.getAuthenticatedUser().name}}</h5>
+					</div>
+					<div class="col-12 col-lg-12 p-2">
+						<h6 class="font-poppins f-size-14 text-secondary">Email</h6>
+						<h5 class="f-size-16">{{authService.getAuthenticatedUser().email}}</h5>
+					</div>
+
+					<div class="col-md-8 mt-4">
+						<button type="button" class="bg-light btn-lg btn-block mb-4 text-small"
+							(click)="open(content);">{{"BUTTON_TEXT.CHANGE_PASSWORD" | translate}}</button>
+					</div>
+					<div class="col-md-4 mt-4">
+						<button type="button" class="bg-light btn-lg btn-block mb-4 text-small"
+							[routerLink]="['/pages/update-profile']">{{"BUTTON_TEXT.EDIT" | translate}}</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<ng-template class="container-fluid" #content let-modal>
+		<div class="p-5 bg-light">
+			<div class="col-12 d-flex justify-content-between">
+				<h3 class="tfa-title m-0">{{"PROFILE.CHANGE_PASSWORD_TITLE" | translate}}</h3>
+				<h5 (click)="exit()" class="cursor-pointer">X</h5>
+				<!-- <img src="../../../assets/icons/times-blue-icon.svg" (click)="exit()" style="cursor: pointer;"> -->
+			</div>
+
+			<div class="pt-5 text-center mb-3">{{"PROFILE.CHANGE_PASSWORD_SUBTITLE" | translate}}</div>
+
+			<div>
+				<form [formGroup]="changePassword">
+					<div class="mb-2">
+						<label for="password"
+							class="font-archivo font-size-16 font-weight-medium text-secondary m-0"><b>{{"PROFILE.CURRENT_PASSWORD" | translate}}</b></label>
+						<input type="password" formControlName="password" style="text-indent:20px;" class="form-control"
+							id="password" placeholder="Digite sua senha">
+
+					</div>
+					<div class="mb-2">
+						<label for="newPassword"
+							class="font-archivo font-size-16 font-weight-medium text-secondary m-0"><b>{{"PROFILE.NEW_PASSWORD" | translate}}</b></label>
+						<input type="password" formControlName="newPassword" style="text-indent:20px;" class="form-control"
+							id="newPassword" placeholder="Digite nova senha">
+
+					</div>
+
+					<div>
+						<label for="confirmNewPassword"
+							class="font-archivo font-size-16 font-weight-medium text-secondary m-0"><b>{{"PROFILE.CONFIRM_NEW_PASSWORD" | translate}}</b></label>
+						<input type="password" formControlName="confirmNewPassword" style="text-indent:20px;" class="form-control"
+							id="confirmNewPassword" placeholder="Confirme nova senha">
+
+					</div>
+
+					<div class="d-flex justify-content-center">
+						<div class="col-md-6 mt-4">
+							<button type="button" class="bg-light btn-lg btn-block mb-4 text-small"
+								(click)="exit()">{{"BUTTON_TEXT.CANCEL" | translate}}</button>
+						</div>
+						<div class="col-md-6 mt-4">
+							<button [disabled]="changePassword.invalid" type="button" class="bg-light btn-lg btn-block mb-4 text-small"
+								(click)="savePassword()">{{"BUTTON_TEXT.SAVE" | translate}}</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</ng-template>

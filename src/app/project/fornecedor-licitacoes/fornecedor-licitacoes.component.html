@@ -1,0 +1,85 @@
+
+<div class="container-fluid"> 
+	<div class="row mt-5"> 
+		<div class="col-md-12"> 
+			<h1 class="text-dark"><strong>{{"SIDEBAR.BIDDINGS" | translate}}</strong></h1>
+			<hr class="bg-primary"> 
+		</div>
+	</div>
+	<form [formGroup]="form">
+		<div class="row ">
+			<div class="col-md-8 mt-2">
+				<input type="text" class="form-control h50 br-10 text-dark" formControlName="search"
+						placeholder="{{'BUTTON_TEXT.INPUT_SEARCH_LICITACOES' | translate}}" />
+		</div>
+		<div class="col-md-3 mt-2">
+				<div class="form-group">
+						<select class="form-control br-10 h50" (change)="changeSelectedFilter($event)">
+								<option selected value="listAll">{{'ADMINISTRATION_BIDDING.LIST_ALL' | translate}}</option>
+								<option value="awaiting">{{'ADMINISTRATION_BIDDING.AWAITING' | translate}}</option>
+								<option value="tiebreaker">{{'ADMINISTRATION_BIDDING.TIEBREAKER' | translate}}</option>
+								<option value="analysis">{{'ADMINISTRATION_BIDDING.ANALYSIS' | translate}}</option>
+								<option value="deserted">{{'ADMINISTRATION_BIDDING.DESERTED' | translate}}</option>
+								<option value="canceled">{{'ADMINISTRATION_BIDDING.CANCELED' | translate}}</option>
+								<option value="failed">{{'ADMINISTRATION_BIDDING.FAILED' | translate}}</option>
+								<option value="released">{{'ADMINISTRATION_BIDDING.RELEASED' | translate}}</option>
+								<option value="open">{{'ADMINISTRATION_BIDDING.OPEN' | translate}}</option>
+								<option value="completed">{{'ADMINISTRATION_BIDDING.COMPLETED' | translate}}</option>
+								<option value="reopened">{{'ADMINISTRATION_BIDDING.REOPENED' | translate}}</option>
+								<option value="returned">{{'CREATE_BIDDING_STATUS.RETURNED' | translate}}</option>
+						</select>
+				</div>
+		</div>
+
+			<div *ngFor="let item of licitacoesListFilter | paginate: { itemsPerPage: itensPerPage, currentPage: currentPage }; let i= index;"
+				(click)="detailBids(item)" class="col-md-11 cursor-pointer border mt-2 br-10 py-3 m-3">
+				<div class="row">
+					<div class="col-md-10">
+						<h2 class="mb-0 text-dark"><strong>{{"SIDEBAR.BIDDING" | translate}} n° {{item.bid_count}} / {{item.createdAt | date:
+								'yyyy'}}</strong></h2>
+					</div>
+					<div class="col-md-2 text-capitaliz">
+						<h6 class="font-poppins f-size-14 text-secondary">Status</h6>
+						<h5 *ngIf="item.status ==='awaiting'" class="f-size-16 text-warning">{{'ADMINISTRATION_BIDDING.AWAITING' | translate}}</h5>
+						<h5 *ngIf="item.status ==='tiebreaker'" class="f-size-16 text-warning">{{'ADMINISTRATION_BIDDING.TIEBREAKER' | translate}}</h5>
+						<h5 *ngIf="item.status ==='analysis'" class="f-size-16 text-info">{{'ADMINISTRATION_BIDDING.ANALYSIS' | translate}}</h5>
+						<h5 *ngIf="item.status ==='deserted'" class="f-size-16 text-danger">{{'ADMINISTRATION_BIDDING.DESERTED' | translate}}</h5>
+						<h5 *ngIf="item.status ==='canceled'" class="f-size-16 text-danger">{{'ADMINISTRATION_BIDDING.CANCELED' | translate}}</h5>
+						<h5 *ngIf="item.status ==='failed'" class="f-size-16 text-danger">{{'ADMINISTRATION_BIDDING.FAILED' | translate}}</h5>
+						<h5 *ngIf="item.status ==='draft'" class="f-size-16 text-dark">{{'ADMINISTRATION_BIDDING.DRAFT' | translate}}</h5>
+						<h5 *ngIf="item.status ==='released'" class="f-size-16 text-success">{{'ADMINISTRATION_BIDDING.RELEASED' | translate}}</h5>
+						<h5 *ngIf="item.status ==='open'" class="f-size-16 text-success">{{'ADMINISTRATION_BIDDING.OPEN' | translate}}</h5>
+						<h5 *ngIf="item.status ==='completed'" class="f-size-16 text-success">{{'ADMINISTRATION_BIDDING.COMPLETED' | translate}}</h5>
+						<h5 *ngIf="item.status ==='reopened'" class="f-size-16 text-success">{{'ADMINISTRATION_BIDDING.REOPENED' | translate}}</h5>
+						<h5 *ngIf="item.status ==='returned'" class="f-size-16 text-info">{{"CREATE_BIDDING_STATUS.RETURNED" | translate}}</h5>
+					</div>
+					<div class="col-md-12 mt-2 ">
+						<h6 class="font-poppins f-size-14 text-secondary">{{"SIDEBAR.ASSOCIATION" | translate}}</h6>
+						<h5>{{ item?.association?.association?.name || '' }}</h5>
+					</div>
+					<div class="col-md-4 mt-2 ">
+						<h6 class="font-poppins f-size-14 text-secondary">{{"CREATE_BIDDING.START_DATE" | translate}}</h6>
+						<h5 class="f-size-16">{{item.start_at | date: 'dd/MM/yyyy, h:mm a'}}</h5>
+					</div>
+					<div class="col-md-4 mt-2 ">
+						<h6 class="font-poppins f-size-14 text-secondary">{{"CREATE_BIDDING.CLOSING_DATE" | translate}}</h6>
+						<h5 class="f-size-16">{{item.end_at | date: 'dd/MM/yyyy'}}</h5>
+					</div>
+				</div>
+			</div>
+			<div *ngIf="licitacoesId <= 0 || licitacoesList <= 0 || licitacoesListFilter.length <= 0" class="col-md-11 cursor-pointer  mt-2 br-10 py-3 m-3">
+				<img src="../../../assets/images/notfound.webp" class="w-100 h-auto" />
+				<p class="w-100 text-center">
+					{{"SUPPLIER_BIDDING.NO_BIDS_ADDED" | translate}}
+				</p>
+			</div>
+			<div class="col-md-12">
+				<div class="col-md-12 d-flex justify-content-end">
+					<pagination-controls (pageChange)="currentPage= $event" previousLabel="{{'BUTTON_TEXT.PREVIOUS' | translate}}"
+						nextLabel="{{'BUTTON_TEXT.NEXT' | translate}}"></pagination-controls>
+				</div>
+			</div>
+
+		</div>
+	</form>
+</div>

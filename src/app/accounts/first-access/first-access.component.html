@@ -1,0 +1,116 @@
+<!-- <article class="grid-45-55 d-flex justify-content-center">
+   <section class="bg-redefine cel shadow d-flex align-items-center justify-content-center flex-column">
+    <div class="row">
+      <div class="col-md-12"><img src="../../../assets/images/bg01.svg" style="max-height: 250px;" alt></div>
+    </div>
+    <div class="row mt-5">
+      <div class="col-md-2">&nbsp;</div>
+      <div class="col-md-8 text-dark text-center">
+        <h6>{{"FIRST_ACCESS.TITLE" | translate}}</h6>
+      </div>
+      <div class="col-md-2">&nbsp;</div>
+    </div>
+    <div class="row mt-2">
+      <div class="col-md-12 text-dark" style="font-size: 12px;">{{"FIRST_ACCESS.FIRST_PASSWORD" | translate}}</div>
+    </div>
+  </section> -->
+<!-- <section class="bg-light">
+    <header class="d-flex justify-content-between align-items-center p-4">
+
+    </header>
+    <ul class="m-0 d-flex flex-column px-5 mt-5">
+      <li class="mt-2 px-5 text-center">
+        <img src="../../../assets/images/sol-logo.svg" style="max-height: 150px;" alt>
+      </li>
+    </ul>
+    <br>
+    <section class="px-5">
+      <form class="ml-lg-5 mr-5" [formGroup]="form" (ngSubmit)="onSubmit()">
+        <h2 class="mt-4 text-secondary font-poppins"><b>{{"FIRST_ACCESS.TITLE" | translate}}</b></h2>
+        <p class="mt-3 font-poppins font-size-14 text-secondary">{{"FIRST_ACCESS.SUBTITLE" | translate}}</p>
+        <div class="mt-5">
+          <label for="email"
+            class="font-archivo font-size-16 font-weight-medium text-secondary m-0"><b>E-mail</b></label>
+          <input type="text" style="text-indent:20px;" class="form-control email" id="email" formControlName="email"
+            placeholder="email@email.com" src="../../../assets/img-co2/icon-email.svg">
+
+          <div *ngIf="form.controls['email'].errors?.['required'] && isSubmit" class="div-msg-error mt-2">
+            <img src="../../../assets/images/icon-alert.svg" class="img-msg-error" alt>
+            <p class="font-poppins font-size-14 m-0">{{"ERROR_MESSAGES.REQUIRED_EMAIL" | translate}}</p>
+          </div>
+          <div *ngIf="form.controls['email'].errors?.['email'] && isSubmit" class="div-msg-error mt-2">
+            <img src="../../../assets/images/icon-alert.svg" class="img-msg-error" alt>
+            <p class="font-poppins font-size-14 m-0">{{"ERROR_MESSAGES.INVALID_EMAIL" | translate}}</p>
+          </div>
+        </div>
+        <div class="mt-4">
+          <div class="row">
+            <div class="col-md-6">
+              <button type="button" class="bg-light btn-lg btn-block mb-4" [routerLink]="['/']">{{"BUTTON_TEXT.CANCEL" | translate}}</button>
+            </div>
+            <div class="col-md-6">
+              <button type="submit" class="btn btn-dark btn-lg btn-block mb-4">{{"BUTTON_TEXT.CONFIRM" | translate}}</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </section>
+  </section> -->
+
+<!-- <section class="bg-redefine cel shadow d-flex align-items-center justify-content-center flex-column">
+    <div class="row">
+      <div class="col-md-12"><img src="../../../assets/images/bg01.svg" style="max-height: 250px;" alt></div>
+    </div>
+    <div class="row mt-5">
+      <div class="col-md-2">&nbsp;</div>
+      <div class="col-md-8 text-dark text-center">
+        <h6>{{"FIRST_ACCESS.TITLE" | translate}}</h6>
+      </div>
+      <div class="col-md-2">&nbsp;</div>
+    </div>
+    <div class="row mt-2">
+      <div class="col-md-12 text-dark" style="font-size: 12px;">{{"FIRST_ACCESS.FIRST_PASSWORD" | translate}}</div>
+    </div>
+    i
+  </section> 
+</article> -->
+<article class="container-first-access-100">
+  <section class="wrap-first-access100 position-relative">
+    <app-change-lang-auth backgroundColor="#FAFAFA" fontColor="#000"></app-change-lang-auth>
+    <ul class="m-0 d-flex flex-column px-5 mt-3">
+      <img class="img-fluid" src="../../../assets/images/sol-azul-amarela.svg" style="max-height: 250px" alt>
+    </ul>
+    <section class="px-md-5">
+      <form class="ml-lg-5 mr-md-5" [formGroup]="form" (ngSubmit)="onSubmit()">
+        <h2 class="mt-4 text-dark font-poppins"><b>{{"FIRST_ACCESS.TITLE" | translate}}</b></h2>
+        <p class="mt-3 font-poppins font-size-14 text-dark">{{"FIRST_ACCESS.SUBTITLE" | translate}}</p>
+        <div class="mt-5">
+          <label for="email" class="font-archivo font-size-16 font-weight-medium text-dark m-0"><b>E-mail</b></label>
+          <input type="text" style="text-indent:20px;" class="form-control email" id="email" formControlName="email"
+            placeholder="email@email.com" src="../../../assets/img-co2/icon-email.svg">
+
+          <div *ngIf="form.controls['email'].errors?.['required'] && isSubmit" class="div-msg-error mt-2">
+            <img src="../../../assets/images/icon-alert.svg" class="img-msg-error" alt>
+            <p class="font-poppins font-size-14 m-0">{{"ERROR_MESSAGES.REQUIRED_EMAIL" | translate}}</p>
+          </div>
+          <div *ngIf="form.controls['email'].errors?.['email'] && isSubmit" class="div-msg-error mt-2">
+            <img src="../../../assets/images/icon-alert.svg" class="img-msg-error" alt>
+            <p class="font-poppins font-size-14 m-0">{{"ERROR_MESSAGES.INVALID_EMAIL" | translate}}</p>
+          </div>
+        </div>
+        <div class="mt-4">
+          <div class="row">
+            <div class="col-md-6">
+              <button type="button" class=" btn-lg btn-block mb-4" style="border-radius: 25px;" [routerLink]="['/']">{{"BUTTON_TEXT.CANCEL" |
+                translate}}</button>
+            </div>
+            <div class="col-md-6">
+              <button type="submit" class="btn btn-dark btn-lg btn-block mb-4" style="border-radius: 25px;">{{"BUTTON_TEXT.CONFIRM" |
+                translate}}</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </section>
+  </section>
+</article>

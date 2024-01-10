@@ -1,0 +1,77 @@
+<div class="container">
+    <div class="row mt-5 ">
+        <div class="col-md-12">
+            <div class="row d-flex justify-content-between">
+                <div class="col-md-4">
+                    <h1 class="text-dark"><strong>Contrato</strong></h1>
+
+                </div>
+            </div>
+            <hr class="bg-primary">
+
+        </div>
+    </div>
+    <div class="row ">
+
+        <div class="col-md-11">
+
+            <br />
+            <div class="row" *ngIf="searchTool">
+                <div class="col-md-3">
+                    <label class="f-size-14 text-dark" for="valorde"><strong>Valor de</strong></label>
+                    <input type="tel" placeholder="R$" class="form-control w-100 h50 br-16" id="valorde"
+                        separatorLimit="100000000" prefix="R$" mask="0000" mask="separator.2" thousandSeparator="," />
+                </div>
+                <div class="col-md-3">
+                    <label class="f-size-14 text-dark" for="valorde"><strong>Valor Até</strong></label>
+                    <input type="tel" placeholder="R$" class="form-control w-100 h50 br-16" id="valorde"
+                        separatorLimit="100000000" prefix="R$" mask="0000" mask="separator.2" thousandSeparator="," />
+                </div>
+                <div class="col-md-3 mt-4">
+                    <button type="button"
+                        class="bg-pattern mt-1 text-light w-100 h50 br-10"><strong>Pesquisar</strong></button>
+                </div>
+                <hr class="bg-primary mt-4">
+
+            </div>
+        </div>
+
+        <div *ngFor="let item of licitacoesList | paginate: { itemsPerPage: itensPerPage, currentPage: currentPage }; let i= index;"
+            (click)="detailBids(item)" class="col-md-11 border mt-2 br-10 py-3 m-3">
+            <div class="row">
+                <div class="col-md-10">
+                    <h2 class="mb-0 text-dark"><strong>{{item.numero}}</strong></h2>
+                </div>
+                <div class="col-md-2 text-capitaliz">
+                    <h6 class="font-poppins f-size-14 text-secondary">Status</h6>
+                    <h5 *ngIf="item.status ==='Aberta'" class="f-size-16 text-primary">{{item.status}}</h5>
+                    <h5 *ngIf="item.status ==='Cancelada'" class="f-size-16 text-danger">{{item.status}}</h5>
+                    <h5 *ngIf="item.status ==='Deserta'" class="f-size-16 text-danger">{{item.status}}</h5>
+                    <h5 *ngIf="item.status ==='Concluída'" class="f-size-16 text-success">{{item.status}}</h5>
+                    <h5 *ngIf="item.status ==='Em Rascunho'" class="f-size-16 text-dark">{{item.status}}</h5>
+                    <h5 *ngIf="item.status ==='Aguardando Liberação'" class="f-size-16" style="color: yellow">
+                        {{item.status}}</h5>
+                    <h5 *ngIf="item.status ==='Em Análise'" class="f-size-16 text-warning">{{item.status}}</h5>
+                </div>
+                <div class="col-md-12 mt-2 ">
+                    <h6 class="font-poppins f-size-14 text-secondary">Licitação</h6>
+                    <h5 class="f-size-16">{{item.association}}</h5>
+                </div>
+                <div class="col-md-4 mt-2 ">
+                    <h6 class="font-poppins f-size-14 text-secondary">Valor</h6>
+                    <h5 class="f-size-16">{{item.datastart}}</h5>
+                </div>
+                <div class="col-md-4 mt-2 ">
+                    <h6 class="font-poppins f-size-14 text-secondary">Data de
+                        encerramento</h6>
+                    <h5 class="f-size-16">{{item.dataend}}</h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="col-md-12 d-flex justify-content-end">
+                <pagination-controls (pageChange)="currentPage= $event"></pagination-controls>
+            </div>
+        </div>
+    </div>
+</div>

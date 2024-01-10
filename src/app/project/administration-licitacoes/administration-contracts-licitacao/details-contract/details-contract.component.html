@@ -1,0 +1,101 @@
+<div class="container mb-5">
+  <div class="row mt-5">
+    <div class="col-md-12">
+      <h1><strong>{{'ADMINISTRATION_CONTRACTS.CONTRACT' | translate}}</strong></h1>
+      <hr class="bg-primary">
+    </div>
+
+    <div class="row mt-1 mb-3 arrow">
+       <div class="col-12">
+           <i class="fa fa-arrow-left f-size-24 cursor-pointer" (click)="back()" aria-hidden="true"></i>
+       </div>
+    </div>
+
+    <div class="col-md-11 border mt-3 br-10 py-3 ">
+      <div class="row px-2">
+        <div class="col-md-6 mt-3 ">
+          <h6 class="font-poppins f-size-14 text-secondary">{{'ADMINISTRATION_CONTRACTS.CONTRACT' | translate}}</h6>
+          <h5 class="f-size-16">{{loteList?.contract_number+'/'+(loteList?.createdAt | date:'yyyy')}}</h5>
+        </div>
+        <div class="col-md-3 mt-3 text-capitalize">
+          <h6 class="font-poppins f-size-14 text-secondary">{{'SIDEBAR.BIDDING' | translate}}</h6>
+          <h5 class="f-size-16">{{loteList?.bid_number?.description}}</h5>
+        </div>
+        <div class="col-md-3 mt-3 text-capitalize">
+          <h6 class="font-poppins f-size-14 text-secondary">{{'ASSOCIATION_CONTRACTS.STATUS' | translate}}</h6>
+          <h5 class="f-size-16 text-dark"> {{handlerStatus(loteList?.status)}}</h5>
+        </div>
+        <div class="col-md-6 mt-3 ">
+          <h6 class="font-poppins f-size-14 text-secondary">{{'ADMINISTRATION_BIDDING.ASSOCIATION' | translate}}</h6>
+          <h5 class="f-size-16">{{loteList?.association_id?.name || loteList?.bid_number?.association?.name}}</h5>
+        </div>
+        <div class="col-md-3 mt-3 ">
+          <h6 class="font-poppins f-size-14 text-secondary">{{'ASSOCIATION_CONTRACTS.VALUE' | translate}}</h6>
+          <h5 class="f-size-16">{{loteList?.value | currency: 'BRL'}}</h5>
+        </div>
+        <div class="col-md-3"></div>
+        <div class="col-md-12 mt-3">
+          <div class="row d-flex justify-content-between">
+            <div class="col-md-4">
+              <h2><strong>{{'ASSOCIATION_CONTRACTS.SIGNATURES' | translate}}</strong></h2>
+            </div>
+            <div class="col-md-12">
+              <hr class="bg-primary">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12 mt-3">
+          <div *ngIf="loteList?.status === 'Assinado'" class="row d-flex justify-content-between">
+            <div class="col-md-6">
+              <div class="row">
+                <div class="col-md-6">
+                  <h6 class="font-poppins f-size-14 text-secondary">{{'ADMINISTRATION_BIDDING.ASSOCIATION' | translate}}
+                  </h6>
+                  <h5 class="f-size-16">{{loteList?.value}}</h5>
+                </div>
+                <div class="col-md-6">
+                  <h6 class="font-poppins f-size-14 text-secondary">{{'ASSOCIATION_CONTRACTS.SUPPLIER' | translate}}
+                  </h6>
+                  <h5 class="f-size-16">{{loteList?.value}}</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row d-flex justify-content-between">
+            <div class="col-md-12">
+              <h6 class="font-poppins f-size-14 text-secondary">{{'ADMINISTRATION_BIDDING.ASSOCIATION' | translate}}
+              </h6>
+              <h5 class="f-size-16">{{(loteList?.association_sign_date | date:'dd/MM/yyyy')|| 'Aguardando assinatura'}}
+              </h5>
+            </div>
+            <div class="col-md-12">
+              <h6 class="font-poppins f-size-14 text-secondary">{{'ASSOCIATION_CONTRACTS.SUPPLIER' | translate}}</h6>
+              <h5 class="f-size-16">{{(loteList?.supplier_sign_date | date:'dd/MM/yyyy')|| 'Aguardando assinatura'}}
+              </h5>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex mt-4">
+        <button class="btn btn-dark  br-10 text-center font-weight-bold" (click)="downloadPdf()" style="width: 250px;">{{"ASSOCIATION_CONTRACTS.BUTTON_CONTRACT" | translate}}</button>
+      </div>
+    </div>
+    <div class="col-md-12 mt-3">
+      <div *ngIf="loteList?.status === 'Assinado'" class="row d-flex justify-content-between">
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-md-6">
+              <h6 class="font-poppins f-size-14 text-secondary">{{"ASSOCIATION_AGREEMENTS.ASSOCIATION" | translate}}
+              </h6>
+              <h5 class="f-size-16">{{loteList?.value}}</h5>
+            </div>
+            <div class="col-md-6">
+              <h6 class="font-poppins f-size-14 text-secondary">{{"ASSOCIATION_CONTRACTS.SUPPLIER" | translate}}</h6>
+              <h5 class="f-size-16">{{loteList?.value}}</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

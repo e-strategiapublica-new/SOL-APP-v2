@@ -1,0 +1,61 @@
+<div class="container-fluid mb-5">
+    <div class="row mt-5">
+        <div class="col-md-12">
+            <h1>{{'ITEMS.DATA_SECTION_TITLE' | translate}}</h1>
+            <hr class="bg-primary">
+        </div>
+    </div>
+
+    <div class="row mt-1">
+        <div class="col-12">
+            <i class="fa fa-arrow-left f-size-24 cursor-pointer" [routerLink]="['/pages/items']"
+                aria-hidden="true"></i>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-12">
+            <div class="col-md-12 col-lg-12 col-xl-10">
+                <div class="row p-3 user-data-border">
+
+                    <div class="col-12 col-lg-4 p-2 text-capitalize">
+                        <h6 class="font-poppins f-size-14 text-secondary">{{"ITEMS.DETAIL_GROUP_TITLE" | translate}}</h6>
+                        <h5 class="f-size-16">{{item.group.code+' '+item.group.segment}}</h5>
+                    </div>
+
+                    <div class="col-12 col-lg-4 p-2">
+                        <h6 class="font-poppins f-size-14 text-secondary">{{"ITEMS.DETAIL_CLASS_TITLE" | translate}}</h6>
+                        <h5 class="f-size-16">{{item.class.code+' '+item.class.description}}</h5>
+                    </div>
+
+                    <div class="col-12 col-lg-4 p-2">
+                        <h6 class="font-poppins f-size-14 text-secondary">PDM</h6>
+                        <h5 class="f-size-16">{{item.pdm.code+' '+item.pdm.name}}</h5>
+                    </div>
+
+                    <div class="col-12 col-lg-4 p-2">
+                        <h6 class="font-poppins f-size-14 text-secondary">{{"ITEMS.DETAIL_CODE_TITLE" | translate}}</h6>
+                        <h5 class="f-size-16">{{item.code}}</h5>
+                    </div>
+
+                    <div class="col-12 col-lg-4 p-2">
+                        <h6 class="font-poppins f-size-14 text-secondary">{{"ITEMS.DETAIL_NAME_TITLE" | translate}}</h6>
+                        <h5 class="f-size-16">{{item.name}}</h5>
+                    </div>
+                  
+                    <div class="col-12 col-lg-4 p-2">
+                        <h6 class="font-poppins f-size-14 text-secondary">{{"ITEMS.DETAIL_PROPERTY_LIST_TITLE" | translate}}</h6>
+                        <h5 *ngFor="let item of item.propertyListValue" class="f-size-16">{{item.property+': '+item.value}}</h5>
+                    </div>
+
+                    <div class="col-4 col-lg-4 p-2">
+                        <h6 class="font-poppins f-size-14 text-secondary">{{"ITEMS.DETAIL_CREATED_AT_TITLE" | translate}}</h6>
+                        <h5 class="f-size-16">{{item.createdAt}}</h5>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

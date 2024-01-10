@@ -1,0 +1,71 @@
+<div class="container-fluid">
+  <div class="row mt-5">
+    <div class="col-md-12">
+      <h1 class="text-dark"><strong>{{"CATEGORIES_SEGMENTS.SECTION_TITLE" | translate}}</strong></h1>
+      <hr class="bg-primary">
+    </div>
+  </div>
+  <form [formGroup]="form">
+    
+    <div class="row mt-4">
+      <div class="col-md-9">
+              <!-- formControlName="search" -->
+          
+        <input class="form-control text-secondary input-height-border" type="search" name="search" [(ngModel)]="filterTerm" formControlName="search" placeholder="{{'CATEGORIES_SEGMENTS.SEARCH_CATEGORIES' | translate}}" value="Search">
+          
+
+
+      </div>
+      
+      
+      <div class="col-md-3" *ngIf="authService.getAuthenticatedUser().type == 'administrador'">
+        <button type="button" class="btn btn-dark btn-lg btn-block" [routerLink]="['/pages/categorias/registrar-categoria']">
+          {{"CATEGORIES_SEGMENTS.NEW_CATEGORY" | translate}}
+        </button>
+      </div>  
+      
+
+    </div>
+
+
+    <div class="row mt-4">
+      <div class="col-md-12">
+        <div class="table-responsive-sm">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th class="bg-pattern text-light" scope="col">{{"CATEGORIES_SEGMENTS.GROUP_TYPE_TITLE" | translate}}</th><th class="bg-pattern text-light" scope="col">{{"CATEGORIES_SEGMENTS.CODE_TITLE" | translate}}</th>
+                <th class="bg-pattern text-light" scope="col">{{"CATEGORIES_SEGMENTS.DESCRIPTION" | translate}}</th>
+                <th class="bg-pattern text-light" scope="col">{{"AGREEMENTS.ACTIONS" | translate}}</th>
+                <th class="br-tabele2 bg-pattern text-light" scope="col"></th>
+              </tr>
+            </thead>
+            <tbody> 
+              <tr class="border-right border-left"
+                *ngFor="let item of categoryFilterList | filter: filterTerm | paginate: { itemsPerPage: itensPerPage, currentPage: currentPage }">                                
+                <td class="text-capitalize">{{item.category_name}}</td>                
+                <td class="text-capitalize">{{item.code}}</td>
+                <td class="text-capitalize">{{item.segment}}</td>
+                <td class="table_icon" *ngIf="authService.getAuthenticatedUser().type == 'administrador'">
+                  <button class="btn btn-outline-secondary" *ngIf="authService.getAuthenticatedUser().type !== 'project_manager'" (click)="editCategory(item)">
+                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                  </button>
+                </td>
+                <td class="table_icon" *ngIf="authService.getAuthenticatedUser().type == 'administrador'">
+                  <button class="btn btn-danger" (click)="delete(item, item._id)">
+                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="row">
+            <div class="col-md-12"> <pagination-controls (pageChange)="currentPage = $event"
+                previousLabel="{{'BUTTON_TEXT.PREVIOUS' | translate}}" nextLabel="{{'BUTTON_TEXT.NEXT' | translate}}"></pagination-controls>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

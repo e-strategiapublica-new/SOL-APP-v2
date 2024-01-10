@@ -1,0 +1,129 @@
+<div class="container-fluid mb-5">
+	<div class="row mt-5">
+		<div class="col-md-12">
+			<h1>{{ "PROJECT.PROJECT_DATA" | translate }}</h1>
+			<hr class="bg-primary">
+		</div>
+	</div>
+
+	<div class="row mt-1">
+		<div class="col-12">
+			<i class="fa fa-arrow-left f-size-24 cursor-pointer" [routerLink]="['/pages/projetos']"
+				aria-hidden="true"></i>
+		</div>
+	</div>
+
+	<div class="row mt-3">
+		<div class="col-12">
+			<div class="col-md-12 col-lg-12 col-xl-10">
+				<div class="row p-3 user-data-border">
+
+					<div class="col-12 col-lg-4 p-2">
+						<h6 class="font-poppins f-size-14 text-secondary">{{'PROJECT.PROJECT_NAME' | translate}}</h6>
+						<h5 class="f-size-16">{{projects?.name}}</h5>
+					</div>
+					<div class="col-12 col-lg-4 p-2">
+						<h6 class="font-poppins f-size-14 text-secondary">{{'PROJECT.MANAGER_PROJECT' | translate}}</h6>
+						<h5 class="f-size-16">{{projects?.project_manager.name}}</h5>
+					</div>
+<!-- 					<div class="col-12 col-lg-4 p-2">
+						<h6 class="font-poppins f-size-14 text-secondary">{{'PROJECT.AGREEMENT' | translate}}</h6>
+						<h5 *ngFor="let item of convenios;" class="f-size-16">{{item?.register_number}} -
+							{{item?.register_object}}</h5>
+					</div> -->
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row mt-5 p-3 user-data-border">
+
+		<div class="col-12 p-3">
+			<h5><b>{{ "ADMINISTRATION_ASSOCIATION_DATA.LEGAL" | translate }}</b></h5>
+			<hr>
+		</div>
+
+		<div class="col-12 col-lg-4 p-2 text-capitalize">
+			<h6 class="font-poppins f-size-14 text-secondary">{{ "REGISTER_SUPPLIER.NAME" | translate }}</h6>
+			<h5 class="f-size-16">{{projects?.legalRepresentative?.name}}</h5>
+		</div>
+		<div class="col-12 col-lg-4 p-2 text-capitalize">
+			<h6 class="font-poppins f-size-14 text-secondary">{{ "REGISTER_SUPPLIER.ID_NUMBER" | translate }}</h6>
+			<h5 class="f-size-16">{{projects?.legalRepresentative?.cpf ! | mask : '000.000.000-00'}}</h5>
+		</div>
+
+		<div class="col-12 p-2 mt-5">
+			<h5> <b> {{ "EDIT_SUPPLIER.ADDRESS" | translate }} </b></h5>
+			<hr>
+		</div>
+
+		<div class="col-12 col-lg-4 p-2 text-capitalize">
+			<h6 class="font-poppins f-size-14 text-secondary">{{ "SUPPLIER_BIDDING.ZIP_CODE" | translate }}</h6>
+			<h5 class="f-size-16">{{projects?.legalRepresentative?.address?.zipCode! | mask : '00.000-000'}}</h5>
+		</div>
+		<div class="col-12 col-lg-4 p-2 text-capitalize">
+			<h6 class="font-poppins f-size-14 text-secondary">{{ "REGISTER_SUPPLIER.STATE" | translate }}</h6>
+			<h5 class="f-size-16">{{projects?.legalRepresentative?.address?.state}}</h5>
+		</div>
+		<div class="col-12 col-lg-4 p-2">
+			<h6 class="font-poppins f-size-14 text-secondary">{{ "SUPPLIER.COUNTY" | translate }}</h6>
+			<h5 class="f-size-16">{{projects?.legalRepresentative?.address?.city}}</h5>
+		</div>
+
+		<div class="col-12 col-lg-4 p-2">
+			<h6 class="font-poppins f-size-14 text-secondary">{{ "REGISTER_SUPPLIER.NEIGHBORHOOD" | translate }}</h6>
+			<h5 class="f-size-16">{{projects?.legalRepresentative?.address?.neighborhood}}</h5>
+		</div>
+		<div class="col-12 col-lg-4 p-2">
+			<h6 class="font-poppins f-size-14 text-secondary">{{ "ADMINISTRATION_ASSOCIATION_DATA.PUBLIC_PLACE" |
+				translate }}</h6>
+			<h5 class="f-size-16">{{projects?.legalRepresentative?.address?.publicPlace}}</h5>
+		</div>
+		<div class="col-12 col-lg-4 p-2">
+			<h6 class="font-poppins f-size-14 text-secondary">{{ "ADMINISTRATION_ASSOCIATION_DATA.STREET_NUMBER" |
+				translate }}</h6>
+			<h5 class="f-size-16">{{projects?.legalRepresentative?.address?.number}}</h5>
+		</div>
+
+		<div class="col-12 col-lg-4 p-2">
+			<h6 class="font-poppins f-size-14 text-secondary">{{ "ADMINISTRATION_ASSOCIATION_DATA.COMPLEMENTS" |
+				translate }}</h6>
+			<h5 class="f-size-16">{{projects?.legalRepresentative?.address?.complement}}</h5>
+		</div>
+		<div class="col-12 col-lg-4 p-2">
+			<h6 class="font-poppins f-size-14 text-secondary">{{ "ADMINISTRATION_ASSOCIATION_DATA.POINT" | translate }}
+			</h6>
+			<h5 class="f-size-16">{{projects?.legalRepresentative?.address?.referencePoint}}</h5>
+		</div>
+
+	</div>
+	
+	<div class="row mt-5 p-3 user-data-border">
+
+		<div class="col-12 p-3">
+			<h5><b>{{ "PROJECT.PROJECT_REVIEWER" | translate }}</b></h5>
+			<hr>
+		</div>
+		<div class="col-12 col-lg-4 p-2 text-capitalize">
+			<h6 class="font-poppins f-size-14 text-secondary">{{ "REGISTER_SUPPLIER.NAME" | translate }}</h6>
+			<h5 class="f-size-16">{{projects?.project_manager.name}}</h5>
+		</div>
+		<div class="col-12 col-lg-4 p-2 text-capitalize">
+			<h6 class="font-poppins f-size-14 text-secondary">{{ "REGISTER_SUPPLIER.NAME" | translate }}</h6>
+			<h5 class="f-size-16">{{projects?.project_manager.email}}</h5>
+		</div>
+	</div>
+	<div class="row mt-5 p-3 user-data-border">
+
+		<div class="col-12 p-3">
+			<h5><b>{{ "PROJECT.PROJECT_VIEWER" | translate }}</b></h5>
+			<hr>
+		</div>
+		<div class="col-12 col-lg-4 p-2 text-capitalize">
+			<h6 class="font-poppins f-size-14 text-secondary">{{ "REGISTER_SUPPLIER.NAME" | translate }}</h6>
+			<h5 class="f-size-16">{{projects?.reviewer_list?.[0].name}}</h5>
+		</div>
+		<div class="col-12 col-lg-4 p-2 text-capitalize">
+			<h6 class="font-poppins f-size-14 text-secondary">{{ "REGISTER_SUPPLIER.NAME" | translate }}</h6>
+			<h5 class="f-size-16">{{projects?.reviewer_list?.[0].email}}</h5>
+		</div>
+	</div>

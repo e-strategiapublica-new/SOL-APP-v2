@@ -1,0 +1,48 @@
+<div class="container-fluid">
+  <div class="row mt-5">
+    <div class="col-md-12">
+      <h1><strong>{{'AGREEMENTS.AGREEMENTS' | translate}}</strong></h1>
+      <hr class="bg-primary">
+    </div>
+  </div>
+  <form>
+    <div class="row mt-4">
+      <div class="col-md-12">
+        <input type="text" class="form-control text-secondary input-height-border"
+          [placeholder]="'AGREEMENTS.SEARCH_PLACEHOLDER' | translate">
+      </div>
+    </div>
+    <div class="row mt-4">
+      <div class="col-md-12">
+        <div class="table-responsive-sm">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th class="br-tabele bg-pattern text-light" scope="col">{{'AGREEMENTS.NAME' | translate}}</th>
+                <th class="bg-pattern text-light" scope="col">{{'AGREEMENTS.OBJECT' | translate}}</th>
+                <th class="bg-pattern text-light" scope="col">{{'AGREEMENTS.ASSOCIATION' | translate}}</th>
+                <th class="bg-pattern text-light" scope="col">{{'AGREEMENTS.PROOFREADER' | translate}}</th>
+                <th class="bg-pattern text-light" scope="col">{{'AGREEMENTS.ACTIONS' | translate}}</th>
+                <th class="bg-pattern text-light" scope="col"></th>
+                <th class="br-tabele2 bg-pattern text-light" scope="col"></th>
+              </tr>
+              <tbody *ngFor="let item of convenios">
+                <tr class="border-right border-left">
+                  <th class="text-capitalize" scope="row" (click)="detalheConvenios(item)">{{item?.register_number}}</th>
+                  <td class="text-capitalize" (click)="detalheConvenios(item)">{{item?.register_object}}</td>
+                  <td class="text-capitalize" (click)="detalheConvenios(item)">{{item?.association.name}}</td>
+                  <!-- <td class="text-capitalize" (click)="detalheConvenios(item)">{{item?.reviewer.name}}</td> -->
+                  <td><i class="bi bi-eye-fill" (click)="detalheConvenios(item)"></i></td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="row">
+              <div class="col-md-12"> <pagination-controls (pageChange)="currentPage = $event" [previousLabel]="'AGREEMENTS.PREVIOUS' | translate"
+                  [nextLabel]="'AGREEMENTS.NEXT' | translate"></pagination-controls>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>

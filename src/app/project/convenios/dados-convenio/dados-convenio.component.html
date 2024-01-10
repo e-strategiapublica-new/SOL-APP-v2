@@ -1,0 +1,116 @@
+<div class="container-fluid mb-5">
+	<div class="row mt-5">
+		<div class="col-md-12">
+			<h1 class="text-dark"><strong>{{'AGREEMENTS.AGREEMENT_DATA.TITLE' | translate}}</strong></h1>
+			<hr class="bg-primary">
+		</div>
+	</div>
+	<div class="row mt-1">
+        <div class="col-12">
+            <i class="fa fa-arrow-left f-size-24 cursor-pointer" [routerLink]="['/pages/convenios']"
+                aria-hidden="true"></i>
+        </div>
+    </div>
+
+	<div class="row mt-3">
+		<div class="col-12">
+			<div class="col-md-12 col-lg-12 col-xl-10">
+				<div class="row p-3 user-data-border">
+					<div class="col-12 col-lg-4 p-2 text-capitalize">
+						<h6 class="font-poppins f-size-14 text-secondary">{{'AGREEMENTS.AGREEMENT_DATA.NUMBER' |
+							translate}}</h6>
+						<h5 class="f-size-16">{{convenio.register_number}}</h5>
+					</div>
+					<div class="col-12 col-lg-4 p-2 text-capitalize">
+						<h6 class="font-poppins f-size-14 text-secondary">{{'AGREEMENTS.OBJECT' | translate}}</h6>
+						<h5 class="f-size-16">{{convenio.register_object}}</h5>
+					</div>
+					<div class="col-12 col-lg-4 p-2">
+						<h6 class="font-poppins f-size-14 text-secondary">{{'AGREEMENTS.AGREEMENT_DATA.SITUATION' |
+							translate}}</h6>
+						<h5 class="f-size-16">{{handleAgreementStatus(convenio.status)}}</h5>
+					</div>
+					<div class="col-12 col-lg-4 p-2">
+						<h6 class="font-poppins f-size-14 text-secondary">{{'AGREEMENTS.AGREEMENT_DATA.AGREEMENT_CITY' |
+							translate}}</h6>
+						<h5 class="f-size-16">{{convenio.states}} - {{convenio.city}}</h5>
+					</div>
+					<div class="col-12 col-lg-4 p-2">
+						<h6 class="font-poppins f-size-14 text-secondary">{{'AGREEMENTS.AGREEMENT_DATA.PRICE' |
+							translate}}</h6>
+						<h5 class="f-size-16">{{convenio.value | currency: 'BRL'}}</h5>
+					</div>
+					<div class="col-12 col-lg-4 p-2"></div>
+					<div class="col-12 col-lg-4 p-2">
+						<h6 class="font-poppins f-size-14 text-secondary">{{'AGREEMENTS.AGREEMENT_DATA.SIGNATURE_DATE' |
+							translate}}</h6>
+						<h5 class="f-size-16">{{convenio.signature_date | date:'dd/MM/yyyy'}}</h5>
+					</div>
+					<div class="col-12 col-lg-4 p-2">
+						<h6 class="font-poppins f-size-14 text-secondary">{{'AGREEMENTS.AGREEMENT_DATA.EFFECTIVE_DATE' |
+							translate}}</h6>
+						<h5 class="f-size-16">{{convenio.validity_date | date:'dd/MM/yyyy'}}</h5>
+					</div>
+					<div class="col-12 col-lg-4 p-2"></div>
+					<div class="col-12 col-lg-4 p-2 text-capitalize">
+						<h6 class="font-poppins f-size-14 text-secondary">{{'AGREEMENTS.ASSOCIATION' | translate}}</h6>
+						<h5 class="f-size-16">{{convenio.association.name}}</h5>
+					</div>
+					<div class="col-12 col-lg-4 p-2">
+						<h6 class="font-poppins f-size-14 text-secondary">{{'AGREEMENTS.PROOFREADER' | translate}}</h6>
+						<!-- <h5 class="f-size-16">{{convenio.reviewer.name}}</h5> -->
+					</div>
+<!-- 					<div class="col-12 col-lg-4 p-2">
+						<h6 class="font-poppins f-size-14 text-secondary">{{'AGREEMENTS.MANAGER' | translate}}</h6>
+						<h5 class="f-size-16">{{convenio.manager?.name}}</h5>
+					</div> -->
+				</div>
+				<div class="row mt-5 p-3 user-data-border">
+					<div class="col-12 p-3">
+						<div class="w-100 d-flex justify-content-between
+                            align-items-center">
+							<h4><b>{{'AGREEMENTS.AGREEMENT_DATA.WORK_PLAN' | translate}}</b></h4>
+							<button (click)="addGroup()" class="br-10 btn bg-dark text-light py-3 px-4" 
+							*ngIf="authService.getAuthenticatedUser().type == 'associacao' ">
+								<h6 class="mb-0">{{'AGREEMENTS.AGREEMENT_DATA.NEW_ITEMS_GROUP' |
+									translate}}</h6>
+							</button>
+						</div>
+						<hr>
+					</div>
+					<table *ngIf="convenio.workPlan.length > 0" class="table table-hover">
+						<thead>
+							<tr>
+								<th class="br-tabele bg-pattern text-light" scope="col">
+									{{'AGREEMENTS.AGREEMENT_DATA.GROUP_NAME' | translate}}</th>
+								<th class="bg-pattern text-light" scope="col">
+									{{'AGREEMENTS.AGREEMENT_DATA.TOTAL_COST_ITEMS' | translate}}</th>
+								<th class="bg-pattern text-light" scope="col"></th>
+								<th class="br-tabele2 bg-pattern text-light" scope="col"></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="border" *ngFor="let item of convenio.workPlan">
+								<td (click)="detailGroup(item)" class="text-capitalize">{{item.name}}</td>
+								<td (click)="detailGroup(item)">
+									<span class="text-capitalize">{{item.product.length || 0}}</span>
+								</td>
+								<td class="table_icon" *ngIf="authService.getAuthenticatedUser().type !== 'administrador' ">
+									<i class="fa h4 text-pattern mb-0 fa-pencil-square-o" (click)="editPlano(item)"
+										[routerLink]="['/pages/item-group/edit-group']" aria-hidden="true"></i>
+								</td>
+								<td class="table_icon" *ngIf="authService.getAuthenticatedUser().type !== 'administrador' ">
+									<i class="fa h4 text-danger mb-0 fa-close" aria-hidden="true"
+										(click)="deleteGroup(item)"></i>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<div *ngIf="convenio.workPlan.length <= 0" class="col-md-12 text-center">
+						<p class>{{'AGREEMENTS.AGREEMENT_DATA.NO_PLANS_CREATED' | translate}}</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

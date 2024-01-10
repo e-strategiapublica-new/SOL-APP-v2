@@ -1,0 +1,43 @@
+<section class="container-fluid">
+    <form [formGroup]="form">
+    <div class="row">
+            <div class="col-12 mt-5">
+                <h3 class="font-weight-bold">{{ "GENERATED_REPORTS.TITLE" | translate }}</h3>
+                <hr color="green">
+            </div>
+            <div class="col-md-9">
+                <input type="text"  (keydown.enter)="$event.preventDefault()" class="form-control text-secondary input-height-border" formControlName="search"
+                   placeholder="{{'GENERAL_REPORTS.SEARCH_FOR_REPORT_PLACEHOLDER' | translate}}">
+            </div>
+            <!-- <div class="col-md-4 col-sm-6">
+            <select name="" class="form-control" id="">
+                <option value="" selected>{{ "ADMINISTRATION_BIDDING.LIST_ALL" | translate }}</option>
+            </select>
+            </div> -->
+      
+        <div class="col-12 mt-5">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th class="br-tabele bg-pattern text-light" scope="col">{{ "GENERATED_REPORTS.REPORT" | translate }}</th>
+                        <th class="bg-pattern text-light" scope="col">{{ "REPORT.DATA" | translate }}</th>
+                        <th class="br-tabele2 bg-pattern text-light" scope="col">{{ "CREATE_BIDDING.FILE" | translate }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr
+                        *ngFor="let item of responseFilter | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }">
+                        <td>{{item.name}}</td>
+                        <td>{{item.createdAt | date: 'dd/MM/yyyy'}}</td>
+                        <td><button class="btn btn-outline-dark" (click)="donwload(item)"  >{{
+                                "GENERATED_REPORTS.DOWNLOAD_REPORT" | translate }}</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="text-center">
+                <pagination-controls (pageChange)="currentPage = $event"></pagination-controls>
+            </div>
+        </div>
+    </div>
+</form>
+</section>

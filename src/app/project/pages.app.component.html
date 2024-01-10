@@ -1,0 +1,12 @@
+<div class="d-flex bg-blue-sixth" id="wrapper" [ngClass]="{ toggled: isToogled }" style="min-height: 100vh;">
+  <app-sidebar></app-sidebar>
+  <div id="page-content-wrapper" >
+   <app-navbar></app-navbar>
+   <!-- <app-change-lang></app-change-lang> -->
+      <div class="d-flex flex-column container-fluid">
+        <section class="container-fluid">
+          <router-outlet></router-outlet>
+        </section>
+      </div>
+    </div>
+ </div>

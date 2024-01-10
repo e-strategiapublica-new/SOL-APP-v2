@@ -1,0 +1,154 @@
+<div class="container">
+  <div class="row mt-5">
+    <div class="col-md-12">
+      <h1 class="text-dark"><strong>{{'INTEGRATIONS.INTEGRATIONS' | translate}}</strong></h1>
+      <hr class="bg-primary">
+    </div>
+  </div>
+  <div class="row "> 
+    <form [formGroup]="form"
+      *ngFor="let item of endpointList | paginate: { itemsPerPage: itensPerPage, currentPage: currentPage }; let i= index;"
+      class="col-md-11 border mt-2 br-10 py-3 m-3">
+      <div class="row ">
+        
+        <!-- entpoint name -->
+        <div class="col-md-6">
+          <h3><strong *ngIf="item.endpointType === 'association'">{{'ENDPOINT_NAME.ASSOCIATION' |
+              translate}}</strong></h3>
+          <h3><strong *ngIf="item.endpointType === 'agreement'">{{'ENDPOINT_NAME.AGREEMENT' |
+              translate}}</strong></h3>
+          <h3><strong *ngIf="item.endpointType === 'costItems'">{{'ENDPOINT_NAME.COSTITEMS' |
+              translate}}</strong></h3>
+        </div>
+
+        <!-- status -->
+        <div class="col-md-6 d-flex flex-column align-items-end">
+          <h6 class="text-dark mb-0">Status</h6>
+          <p [ngClass]="handlerColorByStauts(item.status)" class="d-flex align-items-center">
+            <i [ngClass]="handlerIconsByStatus(item.status)" class="pr-1"></i>
+            <span *ngIf="item.status === 'success'">{{'ENDPOINT_STATUS.SUCCESS' |
+              translate}}</span>
+            <span *ngIf="item.status === 'error'">{{'ENDPOINT_STATUS.ERROR' |
+              translate}}</span>
+            <span *ngIf="item.status === 'running'">{{'ENDPOINT_STATUS.RUNNING' |
+              translate}}</span>
+            <span *ngIf="item.status === 'stopped'">{{'ENDPOINT_STATUS.STOPPED' |
+              translate}}</span>
+          </p>
+        </div>
+
+        
+        
+        <div class="col-md-12">
+          <div *ngIf="idList !== i" class="row">
+            <div class="col-md-12">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="row d-flex">
+                    <div class="col-md-4 d-block">
+                      <h6 class="text-dark">Endpoint</h6>
+                      <h6 class="color-pattern">{{item.endpointPath}}</h6>
+                    </div>
+                    <div class="col-md-4 d-block">
+                      <h6 (click)="showToken(item)" class="text-dark cursor-pointer d-flex align-items-center">
+                        {{'INTEGRATIONS.TOKEN' |
+                        translate}}
+                        <i class="bi bi-eye pl-1"></i>
+                      </h6>
+                      <h6 class="color-pattern" style="line-break: anywhere;" *ngIf="seeToken.get(item._id)">
+                        {{item.token}}
+                      </h6>
+                      <h6 class="color-pattern" *ngIf="!seeToken.get(item._id)">******</h6>
+                    </div>
+                    <div class="col-md-4 d-block">
+                      <h6 class="text-dark d-flex align-items-center">
+                        {{'INTEGRATIONS.FREQUENCY' |
+                        translate}}
+                      </h6>
+                      <h6 class="color-pattern">{{item.frequency}}</h6>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="row d-flex justify-content-end">
+                  <div class="col-md-4">
+                    <button type="button" (click)="handlerEdit(i, item)"
+                      class="b-pattern my-2 bg-light color-pattern w-100 br-10 h50">
+                      <strong>{{'BUTTON_TEXT.EDIT' | translate}}</strong>
+                    </button>
+                  </div>
+                  <div class="col-md-4">
+                    <button type="button" class="bg-pattern my-2 text-light w-100 br-10 h50" (click)='forceJob(item)'>
+                      <strong>{{'INTEGRATIONS.FORCE_INTEGRATION' | translate}}</strong>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="idList === i" class="row">
+            <div class="col-md-12">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="row d-flex">
+                    <div class="col-md-4 d-block">
+                      <label for="Endpoint" class="form-label h6 text-dark">Endpoint</label>
+                      <input type="url" formControlName="endpoint" class="form-control h50 br-10" id="Endpoint"
+                        placeholder="EX: https://" />
+                    </div>
+                    <div class="col-md-4 d-block">
+                      <label for="TOKEN"
+                        class="cursor-pointer form-label d-flex h6 align-items-centerh6 text-dark">{{'INTEGRATIONS.TOKEN'
+                        | translate}} <i class="bi bi-eye pl-1"></i></label>
+                      <input type="text" formControlName="token" class="form-control h50 br-10" id="TOKEN"
+                        placeholder="{{'INTEGRATIONS.TOKEN' | translate}}" />
+                    </div>
+                    <div class="col-md-4 d-block">
+                      <label for="frequency"
+                        class="cursor-pointer h6 form-label d-flex align-items-centerh6 text-dark">{{'INTEGRATIONS.FREQUENCY'
+                        | translate}} </label>
+                      <input type="text" formControlName="frequency" class="form-control h50 br-10" id="frequency"
+                        placeholder="{{'INTEGRATIONS.FREQUENCY' | translate}}" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="row d-flex justify-content-end">
+                  <div class="col-md-4 buttons">
+                    
+                    <button type="button" (click)="handlerCancel()"
+                      class="b-pattern my-2 bg-light color-pattern w-100 br-10 h50 cancel">
+                      <strong>{{'BUTTON_TEXT.CANCEL' |
+                        translate}}</strong>
+                    </button>
+
+                    <button type="button" (click)="handlerSave(i, item)"
+                      class="b-pattern my-2 bg-light color-pattern w-100 br-10 h50">
+                      <strong>{{'BUTTON_TEXT.SAVE' |
+                        translate}}</strong>
+                    </button>
+                  </div>
+                  <!-- <div class="col-md-4">
+                    <button type="button" class="bg-pattern my-2 text-light w-100 br-10 h50" (click)='forceJob(item)'>
+                      <strong>{{'INTEGRATIONS.FORCE_INTEGRATION'
+                        | translate}}</strong>
+                    </button>
+                  </div> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+    <div *ngIf="endpointList.length > 5" class="col-md-12">
+      <div class="col-md-12 d-flex justify-content-end">
+        <pagination-controls (pageChange)="currentPage= $event" previousLabel="{{'BUTTON_TEXT.PREVIOUS' | translate}}"
+          nextLabel="{{'BUTTON_TEXT.NEXT' | translate}}"></pagination-controls>
+      </div>
+    </div>
+  </div>
+</div>

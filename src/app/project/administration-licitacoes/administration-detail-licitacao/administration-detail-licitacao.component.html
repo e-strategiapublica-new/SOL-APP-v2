@@ -1,0 +1,201 @@
+<div class="container mb-5">
+    <div class="row mt-5">
+        <div class="col-md-12">
+            <h1><strong>{{'ADMINISTRATION_BIDDING.BIDDING' | translate}}</strong></h1>
+            <hr class="bg-primary">
+        </div>
+        <div class="row mt-1 mb-3" *ngIf="authService.getAuthenticatedUser().type !== 'project_manager'">
+            <div class="col-12 ml-3">
+                <i class="fa fa-arrow-left f-size-24 cursor-pointer" (click)="back()" aria-hidden="true"></i>
+            </div>
+        </div>
+        <div class="row mt-1 mb-3" *ngIf="authService.getAuthenticatedUser().type === 'project_manager'">
+            <div class="col-12 ml-3">
+                <i class="fa fa-arrow-left f-size-24 cursor-pointer" [routerLink]="['/pages/licitacoes/gestor-revisor-licitacao']" aria-hidden="true"></i>
+            </div>
+        </div>
+        
+        <div class="col-12 border br-10 py-3 ml-3">
+            <div class="col-12 user-data-border mb-1">
+                <h3 class="text-danger text-center f-size-16 pt-1" *ngIf="response.status === 'returned'">{{response.declined_reason}}</h3>
+            </div>
+            <div class="row px-2">
+                <div class="col-md-10">
+                    <h2 class="mb-0 text-dark"><strong>{{response.bid_count}}/{{response.createdAt | date:'yyyy'}}</strong></h2>
+                </div>
+                <div class="col-md-2 text-capitaliz">
+                    <h6 class="font-poppins f-size-14 text-secondary">Status</h6>
+                    <h5 *ngIf="response.status ==='awaiting'" class="f-size-16 text-warning">{{'ADMINISTRATION_BIDDING.AWAITING' | translate}}</h5>
+                    <h5 *ngIf="response.status ==='tiebreaker'" class="f-size-16 text-warning">{{'ADMINISTRATION_BIDDING.TIEBREAKER' | translate}}</h5>
+                    <h5 *ngIf="response.status ==='analysis'" class="f-size-16 text-info">{{'ADMINISTRATION_BIDDING.ANALYSIS' | translate}}</h5>
+                    <h5 *ngIf="response.status ==='deserted'" class="f-size-16 text-danger">{{'ADMINISTRATION_BIDDING.DESERTED' | translate}}</h5>
+                    <h5 *ngIf="response.status ==='canceled'" class="f-size-16 text-danger">{{'ADMINISTRATION_BIDDING.CANCELED' | translate}}</h5>
+                    <h5 *ngIf="response.status ==='failed'" class="f-size-16 text-danger">{{'ADMINISTRATION_BIDDING.FAILED' | translate}}</h5>
+                    <h5 *ngIf="response.status ==='draft'" class="f-size-16 text-dark">{{'ADMINISTRATION_BIDDING.DRAFT' | translate}}</h5>
+                    <h5 *ngIf="response.status ==='released'" class="f-size-16 text-success">{{'ADMINISTRATION_BIDDING.RELEASED' | translate}}</h5>
+                    <h5 *ngIf="response.status ==='open'" class="f-size-16 text-success">{{'ADMINISTRATION_BIDDING.OPEN' | translate}}</h5>
+                    <h5 *ngIf="response.status ==='completed'" class="f-size-16 text-success">{{'ADMINISTRATION_BIDDING.COMPLETED' | translate}}</h5>
+                    <h5 *ngIf="response.status ==='reopened'" class="f-size-16 text-success">{{'ADMINISTRATION_BIDDING.REOPENED' | translate}}</h5>
+                    <h5 *ngIf="response.status ==='returned'" class="f-size-16 text-info">{{"CREATE_BIDDING_STATUS.RETURNED" | translate}}</h5>
+                </div>
+                <div class="col-md-10 mt-3 ">
+                    <h6 class="font-poppins f-size-14 text-secondary">{{'ADMINISTRATION_BIDDING.ASSOCIATION' | translate}}</h6>
+                    <h5 class="f-size-16">{{response.association?.name}}</h5>
+                </div>
+                <div *ngIf="response.proofreader" class="col-md-2 mt-3 text-capitaliz">
+                    <h6 class="font-poppins f-size-14 text-secondary">{{'ADMINISTRATION_BIDDING.REVIWER' | translate}}</h6>
+                    <h5 class="f-size-16">{{response.proofreader?.name}}</h5>
+                </div>
+                <div class="col-md-4 mt-3 ">
+                    <h6 class="font-poppins f-size-14 text-secondary">{{'ADMINISTRATION_BIDDING.MODALITY' | translate}}</h6>
+                    <h5 *ngIf="response.modality ==='openClosed'" class="f-size-16 text-dark">{{'ADMINISTRATION_BIDDING.PUBLIC' | translate}}</h5>
+                    <h5 *ngIf="response.modality ==='openInvite'" class="f-size-16 text-dark">{{'ADMINISTRATION_BIDDING.INVITATION_OPEN' | translate}}</h5>
+                    <h5 *ngIf="response.modality ==='closedInvite'" class="f-size-16 text-dark">{{'ADMINISTRATION_BIDDING.INVITATION_CLOSED' |
+                        translate}}</h5>
+                </div>
+                <div class="col-md-4 mt-3 ">
+                    <h6 class="font-poppins f-size-14 text-secondary">{{'ADMINISTRATION_BIDDING.CLASSIFICATION' | translate}}</h6>
+                    <h5 class="f-size-16">{{response.classification}}</h5>
+                </div>
+                <div class="col-md-4"></div>
+                <div class="col-md-4 mt-3 ">
+                    <h6 class="font-poppins f-size-14 text-secondary">{{'ADMINISTRATION_BIDDING.START_AT' | translate}}</h6>
+                    <h5 *ngIf="response.status !== 'returned' && response.status !== 'awaiting' && response.status !== 'draft' && !showDate"
+                        class="f-size-16">{{response.start_at | date: 'dd/MM/yyyy'}}</h5>
+                    <h5 *ngIf="showDate" class="f-size-16">{{response.start_at | date: 'dd/MM/yyyy'}}</h5>
+                </div>
+                <div class="col-md-4 mt-3 ">
+                    <h6 class="font-poppins f-size-14 text-secondary">{{'ADMINISTRATION_BIDDING.END_AT' | translate}}</h6>
+                    <h5 *ngIf="response.status !== 'returned' && response.status !== 'awaiting' && response.status !== 'draft' && !showDate"
+                        class="f-size-16">{{response.end_at | date: 'dd/MM/yyyy'}}</h5>
+                    <h5 *ngIf="showDate" class="f-size-16">{{response.end_at | date: 'dd/MM/yyyy'}}</h5>
+                </div>
+                <div class="col-md-4">
+                    <h6 class="font-poppins f-size-14 text-secondary">{{'ADMINISTRATION_BIDDING_DETAIL.DEADLINE_DELIVERY' | translate}}</h6>
+                    <h5 class="f-size-16">{{response.days_to_delivery}}</h5>
+                </div>
+                <div class="col-md-4 mt-3 ">
+                    <h6 class="font-poppins f-size-14 text-secondary">{{'ADMINISTRATION_BIDDING_DETAIL.LOCAL_DELIVERY' | translate}}</h6>
+                    <h5 class="f-size-16">{{response.local_to_delivery}}</h5>
+                </div>
+                <div class="col-md-4 mt-3 ">
+                    <h6 class="font-poppins f-size-14 text-secondary">{{'ADMINISTRATION_BIDDING_DETAIL.DAYS_TIEBREAKER' | translate}}</h6>
+                    <h5 class="f-size-16">{{response.days_to_tiebreaker}}</h5>
+                </div>
+                <div class="col-md-4"></div>
+                <div class="col-md-4 mt-3 ">
+                    <h6 class="font-poppins f-size-14 text-secondary">{{'ADMINISTRATION_BIDDING_DETAIL.TYPE_BID' | translate}}</h6>
+                    <h5 *ngIf="response.bid_type ==='individualPrice'" class="f-size-16">{{'ADMINISTRATION_BIDDING_DETAIL.INDIVIDUAL_PRICE' |
+                        translate}}</h5>
+                    <h5 *ngIf="response.bid_type ==='allotmentPrice'" class="f-size-16">{{'ADMINISTRATION_BIDDING_DETAIL.ALLOTMENT_PRICE' |
+                        translate}}</h5>
+                    <h5 *ngIf="response.bid_type ==='globalPrice'" class="f-size-16">{{'ADMINISTRATION_BIDDING_DETAIL.GLOBAL_PRICE' | translate}}</h5>
+                </div>
+                <div class="col-md-4 mt-3 ">
+                    <h6 class="font-poppins f-size-14 text-secondary">{{'ADMINISTRATION_BIDDING_DETAIL.AGREEMENT' | translate}}</h6>
+                    <h5 class="f-size-16">{{response.agreement?.register_number+" - "+response.agreement?.register_object }}</h5>
+                </div>
+                <div *ngIf="response.status === 'deserted' || response.status === 'canceled' || response.status === 'failed'"
+                    class="col-md-8 mt-3 ">
+                    <h6 class="font-poppins f-size-14 text-secondary">{{'ADMINISTRATION_BIDDING_DETAIL.REASON' | translate}}</h6>
+                    <h5 class="f-size-16">--</h5>
+                </div>
+                <div class="col-md-4">
+                    <button (click)="openModal('lote', null)" class="br-10 w-100 h50 btn border btn-light"><strong>{{'ADMINISTRATION_BIDDING_DETAIL.ALLOTMENT_AGREEMENT'
+                            | translate}}</strong></button>
+                </div>
+                <div class="col-md-8 mt-1">
+                    <h6 class="font-poppins f-size-14 text-secondary">{{'ADMINISTRATION_BIDDING_DETAIL.DETAIL' | translate}}</h6>
+                    <h5 class="f-size-16">{{response.description}}</h5>
+                </div>
+                <div *ngIf="response.status === 'completed'" class="col-md-4 d-flex align-self-end">
+                    <button (click)="openModal('contract', null)"
+                        class="br-10 w-100 h50 border btn btn-light"><strong>{{'ADMINISTRATION_BIDDING_DETAIL.CONTRACT_AGREEMENT' | translate}}</strong></button>
+
+                </div>
+                <div class="col-md-12 mt-1">
+                    <div class="row d-flex justify-content-end">
+                        <div class="col-md-4 mt-3">
+                            <button *ngIf=" response.status === 'returned' " (click)="openModal('edital', null)"
+                                class="br-10 w-100 h50 border btn btn-light"><strong>Baixar Rascunho do Edital</strong></button>
+
+                            <button *ngIf="response.status !== 'draft' && 
+                                response.status !== 'returned' " (click)="openModal('edital', null)" class="br-10 w-100 h50 border btn btn-light">
+                                <strong>{{'ADMINISTRATION_BIDDING_DETAIL.DOWNLOAD_EDITAL' | translate}}
+
+                                </strong>
+                            </button>
+                            <button *ngIf="response.status === 'draft'" (click)="openModal('edital', null)"
+                                class="br-10 w-100 h50 border btn btn-light"><strong>{{'DOWNLOAD_EDITAL_DRAFT' | translate}}</strong></button>
+
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="response.status === 'completed' || response.status === 'reopened'"
+                    class="col-md-12">
+                    <div class="row d-flex justify-content-end">
+                        <div class="col-md-4 mt-3">
+                            <button (click)="openModal('ata', null)"
+                                class="br-10 w-100 h50 border btn btn-light"><strong>{{'ADMINISTRATION_BIDDING_DETAIL.DOWNLOAD_ATA' | translate}}</strong></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 mt-1">
+                    <div class="row d-flex justify-content-end" >
+                        <div class="col-md-4 mt-3">
+                            <button  (click)="openModal('dados_complementares', null)" *ngIf="response.additionalDocuments.length !== 0"
+                                class="br-10 w-100 h50 border btn btn-light"><strong>{{'DOWNLOAD_COMPLEMENTARY_ARCHIVES' | translate}}</strong></button>
+                                <button  disabled  *ngIf="response.additionalDocuments.length === 0"
+                                class="br-10 w-100 h50 border btn btn-light"><strong>{{'ADMINISTRATION_BIDDING_DETAIL.WITHOUT_ADDITIONAL_DOCUMENT' | translate}}</strong></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-11 mt-3" *ngIf="authService.getAuthenticatedUser().roles === 'gerente_geral_projetos' || authService.getAuthenticatedUser().roles === 'revisor_projetos' ">
+            <div *ngIf="(response.status ==='awaiting')">
+                <div class="row">
+                    <div class="col-md-5 mt-2"></div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-3 px-1">
+                        <button (click)="openModal('recusa', response)"
+                            class="btn mt-2 h50 br-10 btn-danger w-100"><strong>{{'ADMINISTRATION_BIDDING_DETAIL.REJECT_BID' | translate}}</strong></button>
+                    </div>
+                    <div class="col-md-3 px-1 nowrap d-flex align-items-center">
+                        <button class="btn mt-2 h50 br-10 btn-success w-100" (click)="releasedBid()"><strong>{{'ADMINISTRATION_BIDDING_DETAIL.RELEASE_BID'
+                                | translate}}</strong></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-11 mt-3" *ngIf="authService.getAuthenticatedUser().type === 'project_manager' || authService.getAuthenticatedUser().type === 'administrador'">
+            <div *ngIf="response.status === 'analysis'">
+                <div class="row">
+                    <div class="col-md-3 px-0">
+                        <button (click)="openModal('proposal', response)"
+                            class="btn mt-2 h50 br-10 w3-white text-dark border-dark w-100"> <strong>{{'ADMINISTRATION_BIDDING_DETAIL.VIEW_PROPOSAL' |
+                                translate}}</strong></button>
+                    </div>
+                    <div class="col-md-4"></div>
+
+                </div>
+            </div>
+            <div class="col-md-8 mt-1" *ngIf="response.status === 'deserted'">
+                <h5 class="f-size-16">{{'ADMINISTRATION_BIDDING_DETAIL.WITHOUT_PROPOSAL' | translate}}</h5>
+            </div>
+        </div>
+        <div class="col-md-11 mt-3" *ngIf="authService.getAuthenticatedUser().type !== 'project_manager'">
+            <div *ngIf="response.status === 'deserted' || response.status === 'canceled' || response.status === 'failed'"
+                class="col-md-11 mt-3">
+                <div class="row">
+
+                    <div class="col-md-4"></div>
+                    <div class="col-md-5 mt-2 px-0" *ngIf="response.status !== 'deserted'">
+                        <button (click)="openModal('cancel', null)"
+                            class="btn h50 br-10 w-100 bg-pattern text-light"><strong>{{'ADMINISTRATION_BIDDING_DETAIL.REQUEST_RESPOND' | translate}}</strong></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

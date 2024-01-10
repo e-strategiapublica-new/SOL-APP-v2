@@ -1,0 +1,1246 @@
+<div class="container-fluid">
+	<div class="row mt-5">
+		<div class="col-md-12">
+			<h1>{{"CREATE_BIDDING.TITLE" | translate}}</h1>
+			<hr class="bg-primary">
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-12">
+			<div id="stepper1" class="bs-stepper card bg-light">
+				<div class="bs-stepper-header">
+					<div class="step" data-target="#test-l-1">
+						<button class="step-trigger">
+							<span class="bs-stepper-circle">1</span>
+							<span class="bs-stepper-label">{{"STEP_BID_REGISTER.MODEL" | translate}}</span>
+						</button>
+					</div>
+					<div class="line"></div>
+					<div class="step" data-target="#test-l-2">
+						<button
+							[disabled]="formModel.controls['biddingType'].value === '' || formModel.controls['modality'].value === '' || formModel.controls['description'].value === '' || formModel.controls['insurance'].value === '' || formModel.controls['classification'].value === ''"
+							class="step-trigger">
+							<span class="bs-stepper-circle">2</span>
+							<span class="bs-stepper-label">{{"STEP_BID_REGISTER.DATAS" | translate}}</span>
+						</button>
+					</div>
+					<div class="line"></div>
+					<div class="step" data-target="#test-l-3">
+						<button
+							[disabled]="formModel.controls['biddingType'].value === '' || formModel.controls['insurance'].value === '' || formModel.controls['classification'].value === '' || formDate.invalid"
+							class="step-trigger">
+							<span class="bs-stepper-circle">3</span>
+							<span class="bs-stepper-label">{{"CREATE_BIDDING.LOT_PRICE" | translate}}</span>
+						</button>
+					</div>
+					<div class="line"></div>
+					<div class="step" data-target="#test-l-4">
+						<button class="step-trigger"
+							[disabled]="formModel.controls['modality'].value === '' || formModel.controls['modality'].value === 'openClosed'">
+							<span class="bs-stepper-circle">4</span>
+							<span class="bs-stepper-label">{{"SUPPLIER.SUPPLIER" | translate}}</span>
+						</button>
+					</div>
+					<div class="line"></div>
+					<div class="step" data-target="#test-l-5">
+						<button [disabled]="!resumo" class="step-trigger">
+							<span class="bs-stepper-circle" style="background-color: #319F61 !important;">5</span>
+							<span class="bs-stepper-label">{{"STEP_BID_REGISTER.RESUME" | translate}}</span>
+						</button>
+					</div>
+				</div>
+				<div class="bs-stepper-content">
+					<div id="test-l-1" class="content">
+						<form [formGroup]="formModel">
+							<div class="row">
+								<div class="col-lg-8">
+									<div class="row">
+										<div class="col-sm-12 col-md-8 mt-3">
+											<label for="biddingType"
+												class="font-archivo font-size-16 font-weight-medium text-secondary m-0"><b>{{"CREATE_BIDDING.BIDDING_TYPE"
+													| translate}}</b><span class="f-size-16
+									text-danger">*</span></label>
+											<select type="text" (focus)="viewMessage('biddingType')"
+												formControlName="biddingType" style="text-indent:20px;"
+												(change)="setModality($event.target)" class="form-control"
+												id="biddingType">
+												<option selected readonly disabled [value]="''">{{"BUTTON_TEXT.SELECT"
+													|
+													translate}}
+												</option>
+												<option value="individualPrice">{{"CREATE_BIDDING.INDIVIDUAL_PRICE"
+													|
+													translate}}
+												</option>
+												<option value="allotmentPrice">{{"CREATE_BIDDING.LOT_PRICE" |
+													translate}}
+												</option>
+												<option value="globalPrice">{{"CREATE_BIDDING.GLOBAL_PRICE" |
+													translate}}
+												</option>
+											</select>
+
+											<div *ngIf="formModel.controls['biddingType'].errors?.['required'] && isSubmit"
+												class="div-msg-error mt-2">
+												<img src="../../../assets/images/icon-alert.svg" class="img-msg-error"
+													alt>
+												<p class="font-poppins font-size-14 m-0">
+													{{"BIDDING_ERROR_MESSAGES.BIDDING_TYPE" |
+													translate}}</p>
+											</div>
+										</div>
+										<div class="col-sm-12 col-md-4 mt-3">
+											<label for="modality"
+												class="font-archivo font-size-16 font-weight-medium text-secondary m-0"><b>{{"CREATE_BIDDING.MODALITY"
+													| translate}}</b><span class="f-size-16
+													text-danger">*</span></label>
+											<select type="text" (focus)="viewMessage('modality')"
+												formControlName="modality" style="text-indent:20px;"
+												class="form-control" id="modality">
+												<option selected readonly disabled [value]="''">{{"BUTTON_TEXT.SELECT"
+													|
+													translate}}
+												</option>
+												<option value="openClosed">{{"CREATE_BIDDING.OPEN_PUBLIC" |
+													translate}}
+												</option>
+												<option value="openInvite">{{"CREATE_BIDDING.OPEN_INVITATION" |
+													translate}}</option>
+												<option value="closedInvite">{{"CREATE_BIDDING.CLOSED_INVITATION" |
+													translate}}</option>
+											</select>
+
+											<div *ngIf="formModel.controls['modality'].errors?.['required'] && isSubmit"
+												class="div-msg-error mt-2">
+												<img src="../../../assets/images/icon-alert.svg" class="img-msg-error"
+													alt>
+												<p class="font-poppins font-size-14 m-0">
+													{{"BIDDING_ERROR_MESSAGES.MODALITY" |
+													translate}}</p>
+											</div>
+										</div>
+										<div class="mt-3 col-12">
+											<label for="description"
+												class="font-archivo font-size-16 font-weight-medium text-secondary m-0"><b>{{"CREATE_BIDDING.DESCRIPTION"
+													|
+													translate}}</b><span class="f-size-16 text-danger">*</span></label>
+											<textarea formControlName="description" (focus)="viewMessage('description')"
+												class="form-control custom-textarea" id="message" rows="3"
+												placeholder="{{'BUTTON_TEXT.TYPE_THE_DESCRIPTION' | translate}}"></textarea>
+
+											<div *ngIf="formModel.controls['description'].errors?.['required'] && isSubmit"
+												class="div-msg-error mt-2">
+												<img src="../../../assets/images/icon-alert.svg" class="img-msg-error"
+													alt>
+												<p class="font-poppins font-size-14 m-0">
+													{{"BIDDING_ERROR_MESSAGES.DESCRIPTION" |
+													translate}}</p>
+											</div>
+										</div>
+										<div class="col-sm-12 col-md-4 mt-3">
+											<label for="insurance"
+												class="font-archivo font-size-16 font-weight-medium text-secondary m-0"><b>{{"CREATE_BIDDING.AGREEMENT"
+													| translate}}</b><span class="f-size-16
+													text-danger">*</span></label>
+											<select type="text" formControlName="insurance"
+												(focus)="viewMessage('insurance')" style="text-indent:20px;" #insurance
+												(change)="changeAgreement(insurance.value)" class="form-control"
+												id="insurance">
+												<option selected readonly disabled [value]="''">{{"BUTTON_TEXT.SELECT"
+													|
+													translate}}
+												</option>
+												<option *ngFor="let convenio of convenioList" [value]="convenio._id">{{
+													convenio.register_number+" - "+convenio.register_object }}</option>
+											</select>
+
+											<div *ngIf="formModel.controls['insurance'].errors?.['required'] && isSubmit"
+												class="div-msg-error mt-2">
+												<img src="../../../assets/images/icon-alert.svg" class="img-msg-error"
+													alt>
+												<p class="font-poppins font-size-14 m-0">
+													{{"BIDDING_ERROR_MESSAGES.AGREEMENT" |
+													translate}}</p>
+											</div>
+										</div>
+										<div class="col-sm-12 col-md-8 mt-3">
+											<label for="classification"
+												class="font-archivo font-size-16 font-weight-medium text-secondary m-0"><b>{{"CREATE_BIDDING.CLASSIFICATION"
+													| translate}}</b><span class="f-size-16
+													text-danger">*</span></label>
+
+											<select type="text" formControlName="classification"
+												(focus)="viewMessage('classification')" style="text-indent:20px;"
+												(change)="changeClassification()" class="form-control"
+												id="classification">
+
+												<option selected readonly disabled [value]="''">{{"BUTTON_TEXT.SELECT"
+													|
+													translate}}
+												</option>
+												
+												<!--
+												<option *ngIf="classification.includes('bens')" value="bens">
+													{{"CREATE_BIDDING.OF_GOODS"
+													| translate}}
+												</option>
+												
+												<option *ngIf="classification.includes('obras')" value="obras">
+													{{"CREATE_BIDDING.OF_WORKS" | translate}}
+												</option>
+												
+												<option *ngIf="classification.includes('servicos')" value="servicos">
+													{{"CREATE_BIDDING.OF_Services" | translate}}
+												</option>
+
+												-->
+
+												<option value="bens">
+													{{"CREATE_BIDDING.OF_GOODS"
+													| translate}}
+												</option>
+												
+												<option value="obras">
+													{{"CREATE_BIDDING.OF_WORKS" | translate}}
+												</option>
+												
+												<option value="servicos">
+													{{"CREATE_BIDDING.OF_Services" | translate}}
+												</option>
+
+											</select>
+
+											<div *ngIf="formModel.controls['classification'].errors?.['required'] && isSubmit"
+												class="div-msg-error mt-2">
+												<img src="../../../assets/images/icon-alert.svg" class="img-msg-error"
+													alt>
+												<p class="font-poppins font-size-14 m-0">
+													{{"BIDDING_ERROR_MESSAGES.CLASSIFICATION" |
+													translate}}</p>
+											</div>
+										</div>
+										<div class="col-sm-12 col-md-13 mt-3">
+											<label for="adicionalSite"
+												class="font-archivo font-size-16 font-weight-medium text-secondary m-0"><b>{{"CREATE_BIDDING.WEBSITE"
+													| translate}}</b></label>
+											<input type="text" formControlName="adicionalSite"
+												(focus)="viewMessage('adicionalSite')" style="text-indent:20px;"
+												class="form-control" id="adicionalSite"
+												placeholder="{{'BUTTON_TEXT.TYPE' | translate}}">
+										</div>
+										<div class="col-12 mt-3">
+											<h5>{{"CREATE_BIDDING.ADDITIONAL_FILES" | translate}}</h5>
+											<h6>{{"CREATE_BIDDING.REQUIREMENTS" | translate}} <span
+													class="f-size-16 text-danger"></span></h6>
+										</div>
+
+										<div class="col-11 upload-file-container cursor-pointer mx-3">
+											<div class="d-flex align-items-center justify-content-center py-4">
+												<div>
+													<img src="../../../assets/images/upload-icon.svg"
+														class="img-msg-error" alt>
+												</div>
+												<div>
+													<input #pdfLote type="file"
+														(change)="onSelectAdditionalFiles($event)" accept=".pdf"
+														multiple="multiple">
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-4 mt-3">
+									<div class="d-flex flex-column" *ngIf="viewBiddingTypeMsg">
+										<p><b>{{'STEP_BID_REGISTER.TYPE_BID' | translate}}</b>
+											{{'STEP_BID_REGISTER.EX_TYPE_BID'
+											| translate}}</p>
+										<p><b>{{'STEP_BID_REGISTER.ITEM_PRICE' | translate}}</b>
+											{{'STEP_BID_REGISTER.EX_ITEM_PRICE'
+											| translate}}</p>
+										<p><b>{{'STEP_BID_REGISTER.ALLOTMENT_PRICE' | translate}}</b>
+											{{'STEP_BID_REGISTER.EX_ALLOTMENT_PRICE'
+											| translate}}</p>
+										<p><b>{{'STEP_BID_REGISTER.GLOBAL_PRICE' | translate}}</b>
+											{{'STEP_BID_REGISTER.EX_GLOBAL_PRICE'
+											| translate}}</p>
+
+									</div>
+									<div class="d-flex flex-column" *ngIf="viewModalityMsg">
+										<p><b>{{'STEP_BID_REGISTER.MODALITY_BID' | translate}}</b>
+											{{'STEP_BID_REGISTER.EX_MODALITY_BID' | translate}}</p>
+										<p><b>{{'STEP_BID_REGISTER.PUBLIC_OPEN' | translate}}</b>
+											{{'STEP_BID_REGISTER.EX_PUBLIC_OPEN' | translate}}</p>
+										<p><b>{{'STEP_BID_REGISTER.OPEN_INVITATION' | translate}}</b>
+											{{'STEP_BID_REGISTER.EX_OPEN_INVITATION' | translate}}</p>
+										<p><b>{{'STEP_BID_REGISTER.CLOSED_INVITATION' | translate}}</b>
+											{{'STEP_BID_REGISTER.CLOSED_INVITATION' | translate}}</p>
+									</div>
+									<div class="d-flex flex-column" *ngIf="viewDescriptionMsg">
+										<p><b>{{'ADMINISTRATION_BIDDING.DESCRIPTION' | translate}}:</b>
+											{{'STEP_BID_REGISTER.TITLE_DESCRIPTION' | translate}}
+										</p>
+									</div>
+									<div class="d-flex flex-column" *ngIf="viewInsuranceMsg">
+										<p><b>{{'CREATE_BIDDING.AGREEMENT' | translate}}:</b>
+											{{'STEP_BID_REGISTER.ESPECIFIC_AGREEMENT' | translate}}
+										</p>
+									</div>
+									<div class="d-flex flex-column" *ngIf="viewClassificationMsg">
+										<p><b>{{'STEP_BID_REGISTER.CLASSIFICATION_BID' |
+												translate}}:</b>{{'STEP_BID_REGISTER.EX_CLASSIFICATION_BID' |
+											translate}}
+										</p>
+										<p><b>{{'STEP_BID_REGISTER.ASSETS_BID' | translate}}</b>
+											{{'STEP_BID_REGISTER.EX_ASSETS_BID' | translate}}
+										</p>
+										<p><b>{{'STEP_BID_REGISTER.BID_WORK' | translate}}:</b>
+											{{'STEP_BID_REGISTER.EX_BID_WORK' | translate}}
+										</p>
+										<p><b>{{'STEP_BID_REGISTER.BID_SERVICE' | translate}}:</b>
+											{{'STEP_BID_REGISTER.EX_BID_SERVICE' | translate}}
+										</p>
+									</div>
+									<div class="d-flex flex-column" *ngIf="viewAdicionalSiteMsg">
+										<p><b>{{'STEP_BID_REGISTER.OPCIONAL_SITE' | translate}}:</b>
+											{{'STEP_BID_REGISTER.EX_OPCIONAL_SITE' | translate}} </p>
+									</div>
+								</div>
+								<div class="col-md-8 d-flex justify-content-end">
+									<button (click)="next('step1')"
+										[disabled]="formModel.controls['biddingType'].value === '' || formModel.controls['modality'].value === '' || formModel.controls['description'].value === '' || formModel.controls['insurance'].value === '' || formModel.controls['classification'].value === ''"
+										class="btn btn-dark btn-lg btn-block mt-4"
+										style="max-width: 300px;">{{'BUTTON_TEXT.NEXT' | translate}}</button>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div id="test-l-2" class="content">
+						<form [formGroup]="formDate">
+							<div class="row">
+								<div class="col-lg-8">
+									<div class="row">
+										<!-- <div class="col-sm-12 col-md-4 mt-3">
+											<label for="initialDate"
+												class="font-archivo font-size-16 font-weight-medium text-secondary m-0"><b>{{"CREATE_BIDDING.START_DATE"
+													| translate}}</b><span class="f-size-16
+													text-danger">*</span></label>
+											<input type="date" formControlName="initialDate" style="text-indent:20px;"
+												class="form-control" id="initialDate"
+												min="{{today | date:'yyyy-MM-dd'}}"
+												(input)="getYear($event,'initialDate' )" [max]="date">
+
+											<div *ngIf="formDate.controls['initialDate'].errors?.['required'] && isSubmit"
+												class="div-msg-error mt-2">
+												<img src="../../../assets/images/icon-alert.svg" class="img-msg-error"
+													alt>
+												<p class="font-poppins font-size-14 m-0">
+													{{"BIDDING_ERROR_MESSAGES.START_DATE" |
+													translate}}</p>
+											</div>
+										</div> -->
+
+										<div class="col-sm-12 col-md-6 mt-3">
+											<label for="closureDate"
+												class="font-archivo font-size-16 font-weight-medium text-secondary m-0"><b>{{'STEP_BID_REGISTER.DEADLINE_END'
+													| translate}}</b><span class="f-size-16
+													text-danger">*</span></label>
+											<input type="number" formControlName="closureDate" style="text-indent:20px;"
+												class="form-control" id="closureDate" min="0" max="120"
+												(keyup)="checkClosureDate($event)"
+												placeholder="{{'BUTTON_TEXT.TYPE' | translate}}">
+											<div *ngIf="formDate.controls['closureDate'].errors && formDate.controls['closureDate'].dirty"
+												class="div-msg-error mt-2">
+												<img src="../../../assets/images/icon-alert.svg" class="img-msg-error"
+													alt>
+												<p class="font-poppins font-size-14 m-0">
+													{{"BIDDING_ERROR_MESSAGES.CLOSE_DATE_ERROR" | translate}}</p>
+											</div>
+						
+										</div>
+
+										<div class="col-sm-12 col-md-6 mt-3">
+											<label for="timebreakerDays"
+												class="font-archivo font-size-16 font-weight-medium text-secondary m-0"><b>{{"CREATE_BIDDING.DAYS_TIEBREAKER"
+													| translate}}</b><span class="f-size-16
+													text-danger">*</span></label>
+											<input type="number" formControlName="timebreakerDays"
+												style="text-indent:20px;" class="form-control" id="timebreakerDays"
+												min="0" max="10" (input)="checkValue($event)"
+												placeholder="{{'BUTTON_TEXT.TYPE' | translate}}">
+
+											<div *ngIf="formDate.controls['timebreakerDays'].errors && formDate.controls['timebreakerDays'].dirty"
+												class="div-msg-error mt-2">
+												<img src="../../../assets/images/icon-alert.svg" class="img-msg-error"
+													alt>
+												<p class="font-poppins font-size-14 m-0">
+													{{"BIDDING_ERROR_MESSAGES.TIEBREAKER_DATE_ERROR" |
+													translate}}</p>
+											</div>
+										</div>
+
+										<div class="col-sm-12 col-md-6 mt-3">
+											<label for="executionDays"
+												class="font-archivo font-size-16 font-weight-medium text-secondary m-0"><b>{{"CREATE_BIDDING.EXECUTION_DAYS"
+													| translate}}</b><span class="f-size-16
+													text-danger">*</span></label>
+
+											<input type="number" formControlName="executionDays"
+												style="text-indent:20px;" class="form-control" min="1" max="720"
+												(input)="checkValue($event)" id="executionDays"
+												placeholder="{{'BUTTON_TEXT.TYPE' | translate}}">
+
+											<div  *ngIf="formDate.controls['executionDays'].errors && formDate.controls['executionDays'].dirty"
+												class="div-msg-error mt-2">
+												<img src="../../../assets/images/icon-alert.svg" class="img-msg-error"
+													alt>
+												<p class="font-poppins font-size-14 m-0">
+													{{"BIDDING_ERROR_MESSAGES.EXECUTION_DATE_ERROR" |
+													translate}}</p>
+											</div>
+										</div>
+										<div class="col-sm-12 col-md-6 mt-3">
+											<label for="deliveryPlace"
+												class="font-archivo font-size-16 font-weight-medium text-secondary m-0"><b>{{"CREATE_BIDDING.DELIVERY_PLACE"
+													| translate}}</b></label>
+											<input type="text" formControlName="deliveryPlace" style="text-indent:20px;"
+												class="form-control" id="deliveryPlace"
+												placeholder="{{'BUTTON_TEXT.TYPE' | translate}}">
+											<div *ngIf="formDate.controls['deliveryPlace'].errors?.['required'] && isSubmit"
+												class="div-msg-error mt-2">
+												<img src="../../../assets/images/icon-alert.svg" class="img-msg-error"
+													alt>
+												<p class="font-poppins font-size-14 m-0">
+													{{"BIDDING_ERROR_MESSAGES.DELIVERY_PLACE" |
+													translate}}</p>
+											</div>
+										</div>
+										<div class="col-md-6 mt-3">
+											<label for="stateSelect"
+												class="font-archivo font-size-16 font-weight-medium text-secondary m-0 font-weight-bold">{{'STEP_BID_REGISTER.SELECT_STATE'
+												| translate}}</label>
+											<ng-select [items]="estados" id="stateSelect" bindLabel="name"
+												placeholder="{{'BUTTON_TEXT.SELECT' | translate}}"
+												(change)="selecionarEstado($event)" formControlName="stateSelect">
+											</ng-select>
+										</div>
+										<div class="col-md-6 mt-3">
+											<label for="citySelect"
+												class="font-archivo font-size-16 font-weight-medium text-secondary m-0 font-weight-bold">{{'STEP_BID_REGISTER.SELECT_CITY'
+												| translate}}</label>
+											<ng-select [items]="cidades" id="citySelect" bindLabel="name"
+												placeholder="{{'BUTTON_TEXT.SELECT' | translate}}"
+												(change)="selecionarCidade($event)" formControlName="citySelect">
+											</ng-select>
+										</div>
+
+									</div>
+								</div>
+								<div class="col-lg-4 mt-3">
+									<!-- <p><b>{{'STEP_BID_REGISTER.DATE_START' | translate}}:</b>
+										{{'STEP_BID_REGISTER.EX_DATE_START' | translate}}</p> -->
+									<p><b>{{'STEP_BID_REGISTER.DATE_END' | translate}}:</b>
+										{{'STEP_BID_REGISTER.EX_DATE_END' | translate}}</p>
+									<p><b>{{'STEP_BID_REGISTER.DAYS_TIEBREAKER' | translate}}:</b>
+										{{'STEP_BID_REGISTER.EX_DAYS_TIEBREAKER' | translate}}</p>
+									<p><b>{{'STEP_BID_REGISTER.DEADLINE_DELIVERY' | translate}}:</b>
+										{{'STEP_BID_REGISTER.EX_DEADLINE_DELIVERY' | translate}}</p>
+									<p><b>{{'STEP_BID_REGISTER.LOCAL_DELIVERY' | translate}}:</b>
+										{{'STEP_BID_REGISTER.EX_LOCAL_DELIVERY' | translate}}</p>
+								</div>
+								<div class="col-md-8 d-flex justify-content-end">
+									<button (click)="next('step2')"
+										[disabled]="formModel.controls['biddingType'].value === '' || formModel.controls['insurance'].value === '' || formModel.controls['classification'].value === '' || formDate.invalid"
+										class="btn btn-dark btn-lg btn-block mt-4"
+										style="max-width: 300px;">{{'BUTTON_TEXT.NEXT' | translate}}</button>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div id="test-l-3" class="content">
+						<div class="row">
+
+							<div class="col-lg-8">
+								<form *ngIf="!disableEditLot" class="mr-5" [formGroup]="formAddLots">
+
+									<div class="row" *ngIf="checkBidType !== 'individualPrice'">
+										<div class="col-12 mt-3">
+											<h4>{{"CREATE_BIDDING.ADD_LOTS" | translate}}</h4>
+										</div>
+									</div>
+
+									<div class="row">
+
+										<!-- Nombre del lote -->
+										<div class="col-sm-12 col-md-12 mt-3" *ngIf="checkBidType !== 'individualPrice'">
+											<label for="batchName"
+												class="font-archivo font-size-16 font-weight-medium text-secondary m-0"><b>{{"CREATE_BIDDING.LOT_NAME"
+													| translate}}</b></label>
+											<input type="text" formControlName="batchName" style="text-indent:20px;"
+												class="form-control" id="batchName"
+												placeholder="{{'BUTTON_TEXT.TYPE' | translate}}">
+										</div>
+
+										<!-- Plazo de entrega (días) -->
+										<div class="col-sm-12 col-md-6 mt-3" *ngIf="checkBidType !== 'individualPrice'">
+											<label for="deliveryTimeDays"
+												class="font-archivo font-size-16 font-weight-medium text-secondary m-0"><b>{{"CREATE_BIDDING.DELIVERY_DEADLINE"
+													| translate}}</b></label>
+											<input type="number" formControlName="deliveryTimeDays"
+												style="text-indent:20px;" class="form-control" id="deliveryTimeDays"
+												min="0" placeholder="{{'BUTTON_TEXT.TYPE' | translate}}"
+												(keyup)="validationDeliveryTimeDays($event); validateDaysInput();">
+
+											<div *ngIf="daysToDeliveryValidator" class="div-msg-error mt-2">
+												<img src="../../../assets/images/icon-alert.svg" class="img-msg-error"
+													alt>
+												<p class="font-poppins font-size-14 m-0">
+													{{"CREATE_BIDDING.DELIVERY_TIME_ERROR_MESSAGE"
+													| translate}}</p>
+											</div>
+										</div>
+
+										<div class="col-sm-12 col-md-6 mt-3" *ngIf="checkBidType !== 'individualPrice'">
+											<label for="deliveryPlaceLots"
+												class="font-archivo font-size-16 font-weight-medium text-secondary m-0"><b>{{"CREATE_BIDDING.LOT_DELIVERY_PLACE"
+													| translate}}</b></label>
+											<input type="text" formControlName="deliveryPlaceLots"
+												style="text-indent:20px;" class="form-control" id="deliveryPlaceLots"
+												placeholder="{{'BUTTON_TEXT.TYPE' | translate}}">
+										</div>
+
+										<!-- Items -->
+										<div class="col-12 mt-3">
+											<h5>{{"CREATE_BIDDING.ADD_ITEM" | translate}}</h5>
+										</div>
+										<div class="col-sm-6 col-md-6 mt-4">
+											
+											<select type="text" formControlName="item" style="text-indent:20px;" #itemId
+												class="form-control" (change)="setItemValue(itemId.value)" id="item">
+
+												<option selected readonly disabled [value]="''">
+													{{"BUTTON_TEXT.SELECT"|translate}}
+												</option>
+												
+												<option *ngFor="let item of lotItemsList" [value]="item.id">
+													{{item.name+' ('+item.quantity+' '+item.unit+')'}} 
+												</option>
+
+											</select>
+
+										</div>
+
+														
+										<!-- Quantity -->
+										<div class="col-sm-6 col-md-6">
+											<label for="quantity"
+												class="font-archivo font-size-16 font-weight-medium text-secondary m-0"><b>{{"CREATE_BIDDING.QUANTITY"
+													| translate}}</b></label>
+											
+											<input type="number" formControlName="quantity" style="text-indent:20px;"
+												class="form-control" id="quantity"
+												min="0"
+												[max]="quantityAgreement || '0'">
+
+											<div class="d-flex justify-content-center mt-2"
+												*ngIf="formAddLots.controls['item'].value !== undefined && formAddLots.controls['item'].value !== '' && formAddLots.controls['item'].value !== null">
+												<label for="quantity"
+													class="font-archivo font-size-16 font-weight-medium text-secondary m-0">
+
+													<b *ngIf="quantityItem !== 0">
+														{{'STEP_BID_REGISTER.MAX' |
+														translate}}.&nbsp;{{quantityItem}}&nbsp;{{unit}}s
+													</b>
+
+													<b *ngIf="quantityItem === 0">{{'STEP_BID_REGISTER.NOT_HAVE_UNITY' |
+														translate}}</b>
+												</label>
+												<h4 class="text-secondary m-0 text-center"></h4>
+											</div>
+										</div>																		
+										<!-- items agregados -->
+										<div *ngIf="item.length > 0" class="col-12 mt-3">
+											<h4>{{"CREATE_BIDDING.ADDED_ITEMS" | translate}}</h4>
+											<div class="row mt-4">
+												<div class="col-md-12">
+													<div class="table-responsive-sm">
+														<table class="table table-hover">
+															<thead>
+																<tr>
+																	<th scope="col">{{'SIDEBAR.ITEMS' | translate}}</th>
+																	<th scope="col">{{"CREATE_BIDDING.QUANTITY" |
+																		translate}}</th>
+																	<th scope="col"></th>
+																	<th scope="col"></th>
+																</tr>
+															</thead>
+															<tbody>
+																<tr *ngFor="let items of item; let i = index;">
+																	<th class="text-capitalize" scope="row">{{
+																		items.name ||
+																		'-'}}</th>
+																	<td class="text-capitalize">{{items.quantity}}&nbsp;{{items.unit}}(s)
+																	</td>
+																	<td class="table_icon">
+																		<div class="col-lg-12"></div>
+																	</td>
+																	<td class="table_icon">
+																		<button class="btn btn-danger"
+																			(click)="removeItem(i)">
+																			<i class="fa fa-trash-o"
+																				aria-hidden="true"></i>
+																		</button>
+																	</td>
+
+																</tr>
+															</tbody>
+
+														</table>
+													</div>
+												</div>
+											</div>
+										</div>
+
+										<!-- Botón Agregar Item -->
+										<div class="col-md-4 mt-4 float-right ml-auto"
+											*ngIf="checkBidType ===  'individualPrice'">
+											<button type="button"
+												[disabled]=" formAddLots.controls['quantity'].value === 0 || formAddLots.controls['quantity'].value === '' || formAddLots.controls['quantity'].value === null || formAddLots.controls['quantity'].value === undefined"
+												class="bg-light btn-lg btn-block mb-4 text-small"
+												(click)="addItem()">{{'CREATE_BIDDING.ADD_ITEM' | translate}}</button>
+										</div>
+
+										<div class="col-md-4 mt-4 float-right ml-auto"
+											*ngIf="checkBidType !==  'individualPrice'">
+											<button
+												[disabled]="!isFormValid() || daysToDeliveryValidator || formAddLots.controls['quantity'].value === 0 || formAddLots.controls['quantity'].value === '' || formAddLots.controls['quantity'].value === null || formAddLots.controls['quantity'].value === undefined"
+												(click)="addItem();"
+												class="bg-light btn-lg btn-block mb-4 text-small">
+												+ {{"BUTTON_TEXT.ADD" | translate}}
+											</button>
+										</div>
+
+										<div class="col-12 mt-3">
+											<h5>{{"CREATE_BIDDING.LOT_FILES" | translate}}</h5>
+											<h6>{{"CREATE_BIDDING.REQUIREMENTS" | translate}} <span
+													class="f-size-16 text-danger"></span></h6>
+										</div>
+
+										<div class="col-12 upload-file-container cursor-pointer">
+											<div class="d-flex align-items-center justify-content-center py-4">
+												<div>
+													<img src="../../../assets/images/upload-icon.svg"
+														class="img-msg-error" alt>
+												</div>
+												<div>
+													<input #pdfLote type="file" #miInputFile
+														(change)="onSelectFileProductImage($event)" accept=".pdf">
+												</div>
+											</div>
+										</div>
+
+										<!-- Botón crear Lote -->
+										<div class="col-md-4 mt-4 float-right ml-auto"
+											*ngIf="checkBidType !==  'individualPrice'">
+											<button [disabled]="item.length == 0" type="button"
+												class="bg-light btn-lg btn-block mb-4 text-small"
+												(click)="addLot()">{{"CREATE_BIDDING.CREATE_LOT"
+												| translate}}</button>
+										</div>										
+
+										<div *ngIf="lots.length > 0" class="col-12 mt-3">
+											
+											<h4 *ngIf="checkBidType !==  'individualPrice'">
+												{{"CREATE_BIDDING.LOTS_CREATED"
+												| translate}} 
+											</h4>
+
+											<ng-container *ngIf="checkBidType ===  'individualPrice'">
+												<h4>{{'CREATE_BIDDING.LOT_TITLE' | translate}}</h4>
+											</ng-container>
+
+											<!-- Lote de artículos (Tipo Artículos y Lote) -->
+											<div class="container">
+												<table class="table ">
+													<thead>
+														<tr>
+															<th scope="col">{{"CREATE_BIDDING.LOT_NAME" |
+																translate}}
+															</th>
+															<th scope="col">{{"CREATE_BIDDING.QUANTITY_ITEMS" |
+																translate}}
+															</th>
+															<th scope="col">{{"CREATE_BIDDING.FILE" |
+																translate}}
+															</th>
+														</tr>
+													</thead>
+
+													<tbody>
+														<tr *ngFor="let lot of lots; let i= index;">
+															
+															<th class="text-capitalize" scope="row">
+																{{lot.allotment_name}}
+															</th>
+															<td class="text-capitalize">
+																{{lot.add_item.length}}
+															</td>
+															<td>
+																{{fileName}}
+															</td>
+															<td class="table_icon">
+																<button class="btn btn-danger"
+																	(click)="removeLot(i)">
+																	<i class="fa fa-trash-o"
+																		aria-hidden="true"></i>
+																</button>
+															</td>
+															
+														</tr> 
+													</tbody>
+												</table>
+											</div>
+												
+										</div>
+									</div>
+
+								</form>
+								<form *ngIf="disableEditLot" class="mr-5" [formGroup]="formAddLots">
+
+									<div class="row" *ngIf="checkBidType !== 'individualPrice'">
+										<div class="col-12 mt-3">
+											<h4>{{"CREATE_BIDDING.ADD_LOTS" | translate}}</h4>
+										</div>
+									</div>
+
+									<div class="row">
+
+										<div class="col-sm-12 col-md-12 mt-3" *ngIf="checkBidType !== 'individualPrice'">
+											<label for="batchName"
+												class="font-archivo font-size-16 font-weight-medium text-secondary m-0"><b>{{"CREATE_BIDDING.LOT_NAME"
+													| translate}}</b></label>
+											<input type="text" formControlName="batchName" style="text-indent:20px;"
+												class="form-control" id="batchName"
+												placeholder="{{'BUTTON_TEXT.TYPE' | translate}}">
+										</div>
+
+										<div class="col-sm-12 col-md-6 mt-3" *ngIf="checkBidType !== 'individualPrice'">
+											<label for="deliveryTimeDays"
+												class="font-archivo font-size-16 font-weight-medium text-secondary m-0"><b>{{"CREATE_BIDDING.DELIVERY_DEADLINE"
+													| translate}}</b></label>
+											<input type="number" formControlName="deliveryTimeDays"
+												style="text-indent:20px;" class="form-control" id="deliveryTimeDays"
+												min="0" placeholder="{{'BUTTON_TEXT.TYPE' | translate}}"
+												(keyup)="validationDeliveryTimeDays($event); validateDaysInput();">
+
+											<div *ngIf="daysToDeliveryValidator" class="div-msg-error mt-2">
+												<img src="../../../assets/images/icon-alert.svg" class="img-msg-error"
+													alt>
+												<p class="font-poppins font-size-14 m-0">
+													{{"CREATE_BIDDING.DELIVERY_TIME_ERROR_MESSAGE"
+													| translate}}</p>
+											</div>
+										</div>
+
+										<div class="col-sm-12 col-md-6 mt-3" *ngIf="checkBidType !== 'individualPrice'">
+											<label for="deliveryPlaceLots"
+												class="font-archivo font-size-16 font-weight-medium text-secondary m-0"><b>{{"CREATE_BIDDING.LOT_DELIVERY_PLACE"
+													| translate}}</b></label>
+											<input type="text" formControlName="deliveryPlaceLots"
+												style="text-indent:20px;" class="form-control" id="deliveryPlaceLots"
+												placeholder="{{'BUTTON_TEXT.TYPE' | translate}}">
+										</div>
+
+										<div class="col-12 mt-3">
+											<h5>{{"CREATE_BIDDING.ADD_ITEM" | translate}}</h5>
+										</div>
+										<div class="col-sm-12 col-md-7 mt-3">
+											
+											<select type="text" formControlName="item" style="text-indent:20px;" #itemId
+												class="form-control" (change)="setItemValue(itemId.value)" id="item">
+												
+												<option selected readonly disabled [value]="''">
+													{{"BUTTON_TEXT.SELECT"|translate}}
+												</option>
+												
+												<option *ngFor="let item of costItemsListFilter" [value]="item?._id">{{item.code+' '+item.name }} 
+												</option>
+
+											</select>
+
+										</div>
+
+										<div class="col-sm-12 col-md-2">
+											<label for="quantity"
+												class="font-archivo font-size-16 font-weight-medium text-secondary m-0"><b>{{"CREATE_BIDDING.QUANTITY"
+													| translate}}</b></label>
+											<input type="number" style="text-indent:20px;"
+												class="form-control" id="quantity"
+												placeholder="{{'BUTTON_TEXT.TYPE' | translate}}" min="0"
+												[max]="quantityAgreement || '0'">
+											<div class="d-flex justify-content-center mt-2"
+												*ngIf="formAddLots.controls['item'].value !== undefined && formAddLots.controls['item'].value !== '' && formAddLots.controls['item'].value !== null">
+												<label for="quantity"
+													class="font-archivo font-size-16 font-weight-medium text-secondary m-0">
+													<b *ngIf="quantityItem !== 0">{{'STEP_BID_REGISTER.HAVE' |
+														translate}} {{quantityItem}} {{'STEP_BID_REGISTER.UNITY' |
+														translate}}</b>
+													<b *ngIf="quantityItem === 0">{{'STEP_BID_REGISTER.NOT_HAVE_UNITY' |
+														translate}}</b>
+												</label>
+												<h4 class="text-secondary m-0 text-center"></h4>
+											</div>
+										</div>
+
+										<div class="d-flex align-self-end w100 col-md-3"
+											*ngIf="checkBidType !==  'individualPrice' && !editItemControl">
+											<button
+												[disabled]="!isFormValid() || daysToDeliveryValidator || formAddLots.controls['quantity'].value === 0 || formAddLots.controls['quantity'].value === '' || formAddLots.controls['quantity'].value === null || formAddLots.controls['quantity'].value === undefined"
+												(click)="addItem();"
+												class="w-100 py-2 br-10 align-self-end com btn btn-dark">
+												+ {{"BUTTON_TEXT.ADD" | translate}}
+											</button>
+										</div>
+
+										<div class="d-flex align-self-end w100 col-md-3"
+											*ngIf="checkBidType !==  'individualPrice' && editItemControl">
+											<button [disabled]="!isFormValid() || daysToDeliveryValidator"
+												(click)="editItemSelected();"
+												class="w-100 py-2 br-10 align-self-end com btn btn-dark">
+												+ {{"BUTTON_TEXT.EDIT" | translate}}
+											</button>
+										</div>
+
+										<div *ngFor="let item of lotToEdit?.add_item; let i = index"
+											class="col-12 d-flex align-items-center justify-content-between border mt-3 p-2"
+											style="border-radius: 9px;">
+											<div class="d-flex align-items-center">
+												<i class="bi bi-flag mr-3"></i>
+												<span>{{item.item}}</span>
+												<span class="ml-3">{{item.quantity}}</span>
+											</div>
+											<div class="d-flex">
+												<i class="bi bi-pencil mr-3 cursor-pointer"
+													(click)="editItem(item)"></i>
+												<i class="bi bi-trash cursor-pointer" (click)="deleteItem(item)"></i>
+											</div>
+										</div>
+
+										<div *ngIf="item.length > 0" class="col-12 mt-3">
+											<h4>{{"CREATE_BIDDING.ADDED_ITEMS" | translate}}</h4>
+											<div class="row mt-4">
+												<div class="col-md-12">
+													<div class="table-responsive-sm">
+														<table class="table table-hover">
+															<thead>
+																<tr>
+																	<th scope="col">{{'SIDEBAR.ITEMS' | translate}}</th>
+																	<th scope="col">{{"CREATE_BIDDING.QUANTITY" |
+																		translate}}</th>
+																	<th scope="col"></th>
+																	<th scope="col"></th>
+																</tr>
+															</thead>
+															<tbody>
+																<tr *ngFor="let items of item; let i = index;">
+																	<th class="text-capitalize" scope="row">{{
+																		items.item ||
+																		'-'}}</th>
+																	<td class="text-capitalize">{{ items.quantity }}
+																		{{'SUPPLIER_BIDDING.UNITS' | translate}}</td>
+																	<td class="table_icon">
+																		<div class="col-lg-12"></div>
+																	</td>
+																	<td class="table_icon">
+																		<button class="btn btn-danger"
+																			(click)="removeItem(i)">
+																			<i class="fa fa-trash-o"
+																				aria-hidden="true"></i>
+																		</button>
+																	</td>
+
+																</tr>
+															</tbody>
+
+														</table>
+													</div>
+												</div>
+											</div>
+										</div>
+
+										<div class="col-12 mt-3">
+											<h5>{{"CREATE_BIDDING.LOT_FILES" | translate}}</h5>
+											<h6>{{"CREATE_BIDDING.REQUIREMENTS" | translate}} <span
+													class="f-size-16 text-danger"></span></h6>
+										</div>
+
+										<div class="col-12 upload-file-container cursor-pointer">
+											<div class="d-flex align-items-center justify-content-center py-4">
+												<div>
+													<img src="../../../assets/images/upload-icon.svg"
+														class="img-msg-error" alt>
+												</div>
+												<div>
+													<input #pdfLote type="file" #miInputFile
+														(change)="onSelectFileProductImage($event)" accept=".pdf">
+												</div>
+											</div>
+										</div>
+
+										<div class="col-md-4 mt-4 float-right ml-auto"
+											*ngIf="checkBidType !==  'individualPrice'">
+											<button [disabled]="formAddLots.invalid" type="button"
+												class="bg-light btn-lg btn-block mb-4 text-small"
+												(click)="saveEdit()">Salvar edição</button>
+										</div>
+
+										<div class="col-md-4 mt-4 float-right ml-auto"
+											*ngIf="checkBidType ===  'individualPrice'">
+											<button type="button"
+												[disabled]="itemSelected || formAddLots.controls['quantity'].value === 0 || formAddLots.controls['quantity'].value === '' || formAddLots.controls['quantity'].value === null || formAddLots.controls['quantity'].value === undefined"
+												class="bg-light btn-lg btn-block mb-4 text-small"
+												(click)="addItem()">{{'CREATE_BIDDING.ADD_ITEM' | translate}}</button>
+										</div>
+
+										<div *ngIf="lots.length > 0" class="col-12 mt-3">
+											<h4 *ngIf="checkBidType !==  'individualPrice'">
+												{{"CREATE_BIDDING.LOTS_CREATED"
+												| translate}} </h4>
+											<h4 *ngIf="checkBidType ===  'individualPrice'">
+												{{'STEP_BID_REGISTER.CREATE_ITENS' | translate}}</h4>
+
+											<div class="row mt-4">
+												<div class="col-md-12">
+													<div class="table-responsive-sm">
+														<table class="table table-hover">
+															<thead>
+																<tr>
+																	<th scope="col">{{"CREATE_BIDDING.LOT_NAME" |
+																		translate}}</th>
+																	<th scope="col">{{"CREATE_BIDDING.QUANTITY_ITEMS" |
+																		translate}}</th>
+																	<th scope="col">{{"CREATE_BIDDING.FILE" |
+																		translate}}
+																	</th>
+																	<th scope="col"></th>
+																	<th scope="col"></th>
+																</tr>
+															</thead>
+															<tbody>
+																<tr *ngFor="let lot of lots; let i= index;">
+																	<th class="text-capitalize" scope="row">
+																		a {{lot.allotment_name}}</th>
+																	<td class="text-capitalize">{{lot.add_item.length}}
+																	</td>
+																	<td class="text-capitalize">{{lot.specification}}
+																	</td>
+																	<td *ngIf="lot.files" class="text-capitalize">
+																		{{'CREATE_BIDDING.FILE' | translate}}.pdf</td>
+																	<td *ngIf="!lot.files" class="text-capitalize">-
+																	</td>
+																	<td class="table_icon">
+																		<div class="col-lg-12">
+
+																		</div>
+																	</td>
+																	<td class="table_icon">
+																		<button class="btn btn-danger"
+																			(click)="removeLot(i)">
+																			<i class="fa fa-trash-o"
+																				aria-hidden="true"></i>
+																		</button>
+																	</td>
+
+																	<td class="table_icon">
+																		<button class="btn btn-lg"
+																			*ngIf="checkBidType !== 'individualPrice'"
+																			(click)="editLot(i)">
+																			<i class="fa fa-pencil-square-o"
+																				aria-hidden="true"></i>
+																		</button>
+																	</td>
+
+																</tr>
+
+															</tbody>
+														</table>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+
+								</form>
+							</div>
+							<div class="col-lg-4 mt-3">
+								<p>
+									{{'STEP_BID_REGISTER.EXPLICATION_ONE' | translate}}
+								</p>
+								<p>
+									{{'STEP_BID_REGISTER.EXPLICATION_TWO' | translate}}
+								</p>
+							</div>							
+
+							<div class="col-md-8 d-flex justify-content-end">
+								<button [disabled]="lots.length == 0" (click)="next('step3')" class="btn btn-dark btn-lg btn-block mt-4" style="max-width: 300px;">{{'BUTTON_TEXT.NEXT' | translate}}</button>
+							</div>
+						</div>
+					</div>
+					<div id="test-l-4" class="content">
+						<form [formGroup]="formAddLots">
+							<div class="row">
+								<div class="col-lg-8">
+									<div class="row">
+										<div *ngIf="formModel.controls['modality'].value !== 'openClosed'"
+											class="col-12 mt-3">
+											<h4>{{"CREATE_BIDDING.INVITE_SUPPLIERS" | translate}}</h4>
+										</div>
+										<div *ngIf="formModel.controls['modality'].value !== 'openClosed'"
+											class="col-sm-12 col-md-9 mt-3">
+											<ng-select [items]="supplierList"
+												notFoundText="Nenhum fornecedor encontrado" bindValue="_id"
+												bindLabel="name" placeholder="{{'BUTTON_TEXT.SELECT' | translate}}"
+												formControlName="inviteSuppliers" [closeOnSelect]="true">
+											</ng-select>
+										</div>
+
+										<div *ngIf="formModel.controls['modality'].value !== 'openClosed'"
+											class="d-flex align-self-end w100 col-md-3">
+											<button class="w-100 py-2 br-10 align-self-end com btn btn-dark"
+												(click)="addSupplier()">
+												+ {{"BUTTON_TEXT.ADD" | translate}}
+											</button>
+										</div>
+
+										<div class="col-12 mt-3">
+											<div *ngFor="let item of invitedSupplier; let i = index">
+												<div class="d-flex justify-content-between">
+													<div>
+														{{ item.name }} {{"CREATE_BIDDING.INVITED_SUPPLIER" |
+														translate}}.
+													</div>
+													<div>
+														<div (click)="removeSupplier(i)" class="f-size-16 text-danger">X
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-4 mt-4">
+									<p>{{'STEP_BID_REGISTER.SEE_REGISTER' | translate}}
+									</p>
+									<p>{{'STEP_BID_REGISTER.EX_SELECT' | translate}}</p>
+								</div>
+								<div class="col-md-8 d-flex justify-content-end">
+									<button (click)="next('step4')" class="btn btn-dark btn-lg btn-block mt-4"
+										style="max-width: 300px;">{{'BUTTON_TEXT.NEXT' | translate}}</button>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div id="test-l-5" class="content">
+						<div class="row border rounded p-4">
+							<div class="col-md-6 mt-3">
+								<h6 class="font-poppins f-size-14 text-secondary">
+									{{'ADMINISTRATION_BIDDING_DETAIL.TYPE_BID' | translate}}
+								</h6>
+								<h5 *ngIf="formModel.controls['biddingType'].value ==='individualPrice'"
+									class="f-size-16">
+									{{'ADMINISTRATION_BIDDING_DETAIL.INDIVIDUAL_PRICE' | translate}}</h5>
+								<h5 *ngIf="formModel.controls['biddingType'].value ==='allotmentPrice'"
+									class="f-size-16">
+									{{'ADMINISTRATION_BIDDING_DETAIL.ALLOTMENT_PRICE' | translate}}</h5>
+								<h5 *ngIf="formModel.controls['biddingType'].value ==='globalPrice'" class="f-size-16">
+									{{'ADMINISTRATION_BIDDING_DETAIL.GLOBAL_PRICE' | translate}}</h5>
+							</div>
+							<div class="col-md-6 mt-3">
+								<h6 class="font-poppins f-size-14 text-secondary">{{'ADMINISTRATION_BIDDING.MODALITY'
+									|
+									translate}}</h6>
+								<h5 *ngIf="formModel.controls['modality'].value ==='openClosed'"
+									class="f-size-16 text-dark">
+									{{'ADMINISTRATION_BIDDING.PUBLIC' | translate}}</h5>
+								<h5 *ngIf="formModel.controls['modality'].value ==='openInvite'"
+									class="f-size-16 text-dark">
+									{{'ADMINISTRATION_BIDDING.INVITATION_OPEN' | translate}}</h5>
+								<h5 *ngIf="formModel.controls['modality'].value ==='closedInvite'"
+									class="f-size-16 text-dark">
+									{{'ADMINISTRATION_BIDDING.INVITATION_CLOSED' | translate}}</h5>
+							</div>
+							<div class="col-md-6 mt-3">
+								<h6 class="font-poppins f-size-14 text-secondary">{{'ADMINISTRATION_BIDDING.DESCRIPTION'
+									| translate}}
+								</h6>
+								<p class="text-dark">{{formModel.controls['description'].value}}</p>
+							</div>
+
+							<div class="col-md-6 mt-3">
+								<h6 class="font-poppins f-size-14 text-secondary">{{'ASSOCIATION_AGREEMENTS.ASSOCIATION'
+									| translate}}
+								</h6>
+								<p class="f-size-16 text-dark">{{associationSelected?.association?.name}}</p>
+							</div>
+
+							<div class="col-md-6 mt-3">
+								<h6 class="font-poppins f-size-14 text-secondary">
+									{{'ADMINISTRATION_BIDDING.CLASSIFICATION' | translate}}
+								</h6>
+								<h6 class="f-size-16 text-dark">{{formModel.controls['classification'].value}}</h6>
+							</div>
+
+							<div class="col-md-6 mt-3">
+								<h6 class="font-poppins f-size-14 text-secondary">
+									{{'CREATE_BIDDING.WEBSITE' | translate}}
+								</h6>
+								<h6 class="f-size-16 text-dark">{{formModel.controls['adicionalSite'].value}}</h6>
+							</div>
+
+							<!-- <div class="col-md-6 mt-3">
+								<h6 class="font-poppins f-size-14 text-secondary">
+									{{'CREATE_BIDDING.START_DATE' | translate}}
+								</h6>
+								<h6 class="f-size-16 text-dark">{{formDate.controls['initialDate'].value
+									| date:
+									'dd/MM/yyyy' || '-'}}</h6>
+							</div> -->
+
+							<div class="col-md-6 mt-3">
+								<h6 class="font-poppins f-size-14 text-secondary">
+									{{'STEP_BID_REGISTER.DEADLINE_END' | translate}}
+								</h6>
+								<h6 class="f-size-16 text-dark">{{formDate.controls['closureDate'].value}}
+									{{'SUPPLIER_BIDDING.DAYS' | translate}}</h6>
+							</div>
+
+							<div class="col-md-6 mt-3">
+								<h6 class="font-poppins f-size-14 text-secondary">
+									{{'ADMINISTRATION_BIDDING_DETAIL.DAYS_TIEBREAKER' |
+									translate}}</h6>
+								<h6 class="f-size-16 text-dark">{{formDate.controls['timebreakerDays'].value}}</h6>
+							</div>
+
+							<div class="col-md-6 mt-3">
+								<h6 class="font-poppins f-size-14 text-secondary">
+									{{'ADMINISTRATION_BIDDING_DETAIL.DEADLINE_DELIVERY' |
+									translate}}</h6>
+								<h6 class="f-size-16 text-dark">{{formDate.controls['executionDays'].value}}
+									{{'SUPPLIER_BIDDING.DAYS' | translate}}</h6>
+							</div>
+
+							<div class="col-md-6 mt-3">
+								<h6 class="font-poppins f-size-14 text-secondary">{{'CREATE_BIDDING.DELIVERY_PLACE'
+									|
+									translate}}</h6>
+								<p class="text-dark">{{formDate.controls['deliveryPlace'].value}}</p>
+							</div>
+
+							<div class="col-md-6 mt-3">
+								<h6 class="font-poppins f-size-14 text-secondary">{{'AGREEMENTS.NEW_AGREEMENT.STATE' |
+									translate}}
+								</h6>
+								<p class="text-dark">{{formDate.controls['stateSelect'].value}}</p>
+							</div>
+
+							<div class="col-md-6 mt-3">
+								<h6 class="font-poppins f-size-14 text-secondary">{{'SUPPLIER_BIDDING.CITY' |
+									translate}}</h6>
+								<p class="text-dark">{{formDate.controls['citySelect'].value}}</p>
+							</div>
+
+							<div class="col-12 px-0">
+								<ng-container *ngFor="let allotment of lots let i=index">			
+									<div class="row mt-4 user-data-border w-100 mx-0 py-2" >
+										<div class="col-12 py-2 px-0 px-sm-3">
+										
+											<div class="d-flex align-items-start justify-content-between">
+												<div class="col-6 p-0">
+													<h6>{{"CREATE_BIDDING.LOT_NAME" | translate}}</h6>
+													<h6>{{allotment.allotment_name}}</h6>
+												</div>
+												<div class="col-5 p-0">
+													<h6>{{"SIDEBAR.ITEMS" | translate}}</h6>
+													<h6>{{allotment.add_item.length}}</h6>
+												</div>
+												<div class="col-md-1 p-0 d-flex justify-content-end">
+													<i class="bi"
+														[ngClass]="{'bi-caret-down-fill': !allotment.isSectionOpen, 'bi-caret-up': allotment.isSectionOpen}"
+														(click)="toggleSectionAllotment(allotment)"></i>
+												</div>
+											</div>										
+
+											<div class="content" [ngClass]="{ 'open': allotment.isSectionOpen }">
+												<hr>
+												<h4 class="pb-3">{{"SUPPLIER_BIDDING.LIST_ITEMS" |
+													translate}}</h4>								
+												<div class="row col-12 mb-3 p-0 mx-0">
+													<div class="col-md-12 p-0">
+														<div class="table-responsive-sm">
+															<table class="table table-hover">
+																<thead>
+																	<tr class="custom-th-contrato">
+																		<th scope="col" style="color: black;">
+																			{{'SIDEBAR.ITEMS' | translate}}</th>
+																		<th scope="col"></th>
+																		<th scope="col" style="color: black;">
+																			{{"CREATE_BIDDING.QUANTITY"
+																			| translate}}</th>
+																		<th scope="col"></th>
+																		<th scope="col" style="color: black;">
+																			{{"COST_ITEMS.UNIT_TITLE"
+																			| translate}}</th>
+																	</tr>
+																</thead>
+																<tbody>
+																	<tr class="bg-first-row"
+																		*ngFor="let lotItem of allotment.add_item">
+																		<th class="text-capitalize" scope="row">{{
+																			lotItem.name
+																			}}</th>
+																		<th scope="col"></th>
+																		<td class="text-capitalize">{{ lotItem.quantity }}
+																		</td>
+																		<th scope="col"></th>
+																		<td class="text-capitalize">{{ lotItem.unit }}(s)
+																		</td>
+																	</tr>
+																</tbody>
+															</table>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>											
+									</div>
+								</ng-container>
+							</div>
+
+							
+							<div class="col-12 mt-3">
+								<div *ngFor="let item of invitedSupplier; let i = index">
+									<div class="d-flex justify-content-between">
+										<div>
+											{{ item.name }} {{"CREATE_BIDDING.INVITED_SUPPLIER" |
+											translate}}.
+										</div>
+									</div>
+								</div>
+							</div>
+							
+
+							<div class="col-12 d-flex justify-content-end align-items-center">
+								<button (click)="onSubmitDraft()" class="btn mt-2 h50 br-10 btn-danger w-100"
+									style="max-width: 300px;"><strong>{{'STEP_BID_REGISTER.SAFE_DAFT' |
+										translate}}</strong></button>
+								<button class="btn mt-2 h50 br-10 btn-success w-100 ml-4" (click)="onSubmit()"
+									style="max-width: 300px;"><strong>{{'STEP_BID_REGISTER.FINISH_BID' |
+										translate}}</strong></button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

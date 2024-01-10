@@ -1,0 +1,74 @@
+<div class="container-fluid">
+  <div class="row mt-5">
+    <div class="col-md-12">
+      <h1><strong>{{'AGREEMENTS.AGREEMENTS' | translate}}</strong></h1>
+      <hr class="bg-primary">
+    </div>
+  </div>
+  <form [formGroup]="form">
+    <div class="row mt-4">
+      <div class="col-md-9">
+        <input type="text" class="form-control text-secondary input-height-border" formControlName="search"
+          placeholder="{{'AGREEMENTS.SEARCH_PLACEHOLDER' | translate}}">
+      </div>
+      <div class="col-md-3" 
+        *ngIf="authbase.getAuthenticatedUser().type === 'project_manager' && isManager || authbase.getAuthenticatedUser().roles === 'gerente_geral_projetos'">
+        <button type="button" class="btn btn-dark btn-lg btn-block"
+          [routerLink]="['/pages/convenios/novo-convenio']">{{'AGREEMENTS.NEW_AGREEMENT_BUTTON' | translate}}</button>
+      </div>
+
+    </div>
+    <div class="row mt-4">
+      <div class="col-md-12">
+        <div class="table-responsive-sm">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th class="br-tabele bg-pattern text-light" scope="col">{{'AGREEMENTS.AGREEMENT_DATA.NUMBER' |
+                  translate}}</th>
+                <th class="bg-pattern text-light" scope="col">{{'AGREEMENTS.OBJECT' | translate}}</th>
+                <th class="bg-pattern text-light" scope="col">{{'AGREEMENTS.ASSOCIATION' | translate}}</th>
+                <th class="bg-pattern text-light" scope="col">{{'AGREEMENTS.PROOFREADER' | translate}}</th>
+                <th class="bg-pattern text-light" scope="col" *ngIf="authbase.getAuthenticatedUser().type !== 'administrador'">{{'AGREEMENTS.ACTIONS' | translate}}</th>
+                <th class="bg-pattern text-light" scope="col"></th>
+                <th class="br-tabele2 bg-pattern text-light" scope="col"></th>
+              </tr>
+            <tbody>
+              <tr class="border-right border-left"
+                *ngFor="let item of convenioFilter | paginate: { itemsPerPage: itensPerPage, currentPage: currentPage } let i = index">
+                <th class="text-capitalize" scope="row" (click)="detalheConvenios(item)">{{item.register_number}}</th>
+                <td class="text-capitalize" (click)="detalheConvenios(item)">{{item.register_object}}</td>
+                <td class="text-capitalize" (click)="detalheConvenios(item)">{{item?.association.name}}</td>
+                <!-- <td class="text-capitalize" (click)="detalheConvenios(item)">{{item.reviewer.name}}</td> -->
+                <td (click)="detalheConvenios(item)"><i class="bi bi-eye-fill"></i></td>
+                <td class="table_icon d-flex justify-content-start align-items-center" *ngIf="user.roles !== 'geral'">
+                  <div class="dropdown"
+                  *ngIf="authbase.getAuthenticatedUser().type === 'project_manager' && user.id === item.project?.project_manager || user.id === item.manager._id">
+                    <i class="fa fa-plus color-patte0rn h4 mb-0" aria-hidden="true" id="dropdownOptions"
+                      data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+                    <div class="dropdown-menu" aria-labelledby="dropdownOptions">
+                      <a class="dropdown-item" (click)="editConvenio(item._id)">{{'TOASTRS.EDIT_BID' | translate}}</a>
+                      <a class="dropdown-item" (click)="addGroup(item._id)">{{'AGREEMENTS.ACTIONS_NEW_WORKPLAN' | translate}}</a>
+                    </div>
+                  </div>
+                </td>
+                <td class="table_icon" *ngIf="authbase.getAuthenticatedUser().type === 'project_manager' && user.id === item.project?.project_manager || user.id === item.manager._id">
+                  <button class="btn btn-danger" (click)="delete(item)">
+                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+
+          </table>
+          <div class="row">
+            <div class="col-md-12"> <pagination-controls (pageChange)="currentPage = $event"
+                [previousLabel]="'AGREEMENTS.PREVIOUS' | translate"
+                [nextLabel]="'AGREEMENTS.NEXT' | translate"></pagination-controls>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

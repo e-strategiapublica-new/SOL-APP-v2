@@ -1,0 +1,68 @@
+<div class="container-fluid mb-5">
+  <div class="row mt-5">
+    <div class="col-md-12">
+      <h1>{{'ADMINISTRATION_CONTRACTS.CONTRACT' | translate}}</h1>
+      <hr class="bg-primary">
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="col-12">
+      <div class="col-lg-8 col-sm-10">
+        <div class="row p-3 user-data-border">
+
+          <div class="col-12 col-lg-4 p-2 text-capitalize"> 
+            <h6 class="font-poppins f-size-14 text-secondary">{{'ADMINISTRATION_CONTRACTS.CONTRACT' | translate}}</h6>
+            <h5 class="f-size-16">632/2021</h5>
+          </div>
+          <div class="col-12 col-lg-4 p-2">
+            <h6 class="font-poppins f-size-14 text-secondary">{{'SIDEBAR.BIDDING' | translate}}</h6>
+            <h5 class="f-size-16">1920/2021</h5>
+          </div>
+
+          <div *ngIf="situationWaiting" class="col-12 col-lg-4 p-2">
+            <h6 class="font-poppins f-size-14 text-secondary">{{'ASSOCIATION_AGREEMENTS.STATUS' | translate}}</h6>
+            <h5 class="f-size-16 toggle-text text-dark">{{'ASSOCIATION_CONTRACTS.AWAITING_SIGNATURES' | translate}}</h5>
+          </div>
+
+          <div *ngIf="situationWaitingSupplier" class="col-12 col-lg-4 p-2">
+            <h6 class="font-poppins f-size-14 text-secondary">{{'ASSOCIATION_AGREEMENTS.STATUS' | translate}}</h6>
+            <h5 style="color:#765CDE;" class="f-size-16 toggle-text">{{'CONTRACT_MODELS.NOT_SIGNATURES' | translate}}</h5>
+          </div>
+
+          <div *ngIf="situationDone" class="col-12 col-lg-4 p-2">
+            <h6 class="font-poppins f-size-14 text-secondary">{{'ASSOCIATION_AGREEMENTS.STATUS' | translate}}</h6>
+            <h5 class="f-size-16 toggle-text text-info">{{'ADMINISTRATION_CONTRACTS.CONTRACT' | translate}}</h5>
+          </div>
+
+          <div class="col-12 col-lg-4 p-2">
+            <h6 class="font-poppins f-size-14 text-secondary">Fornecedor</h6>
+            <h5 class="f-size-16">Fornecedor 1</h5>
+          </div>
+
+          <div class="col-12 col-lg-4 p-2">
+            <h6 class="font-poppins f-size-14 text-secondary">Valor</h6>
+            <h5 class="f-size-16">R$ 1.000,00</h5>
+          </div>
+
+          <div class="col-12 p-2 mt-3">
+            <h5> <b> Assinaturas </b></h5>
+            <hr>
+          </div>
+
+          <div class="col-12 col-lg-4 p-2 text-capitalize">
+            <h6 class="font-poppins f-size-14 text-secondary">Fornecedor</h6>
+            <h5 class="f-size-16">Aguardando Assinatura</h5>
+          </div>
+          <div class="col-12 col-lg-4 p-2">
+            <h6 class="font-poppins f-size-14 text-secondary">Associação</h6>
+            <h5 class="f-size-16">Aguardando Assinatura</h5>
+          </div>
+
+          <div *ngIf="situationDone" class="col-12 col-md-4 pt-2">
+            <button type="button" class="bg-light btn-lg btn-block text-small text-dark">Baixar Contrato Original</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

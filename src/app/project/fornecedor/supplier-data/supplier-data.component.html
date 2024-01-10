@@ -1,0 +1,272 @@
+<div class="container-fluid mb-5">
+	<div class="row mt-5">
+		<div class="col-md-12">
+			<h1>{{ "SUPPLIER_DATA_PAGE.TITLE" | translate }}</h1>
+			<hr class="bg-primary">
+		</div>
+	</div>
+
+	<div class="row mt-1">
+		<div class="col-12">
+			<i class="fa fa-arrow-left f-size-24 cursor-pointer" (click)="cancel()"
+				aria-hidden="true"></i>
+		</div>
+	</div>
+
+	<div class="row mt-3">
+		<div class="col-12">
+			<div class="col-md-12 col-lg-12 col-xl-10">
+				<div class="row p-3 user-data-border">
+
+					<div class="col-12 col-lg-4 p-2 text-capitalize">
+						<h6 class="font-poppins f-size-14 text-secondary">{{ "REGISTER_SUPPLIER.NAME" | translate }}</h6>
+						<h5 class="f-size-16">{{fornecedor?.name}}</h5>
+					</div>
+					<div *ngIf="fornecedor?.type === 'pessoa_fisica'" class="col-12 col-lg-4 p-2">
+						<h6 class="font-poppins f-size-14 text-secondary">{{ "REGISTER_SUPPLIER.ID_NUMBER" | translate }}</h6>
+						<h5 class="f-size-16">{{fornecedor?.cpf! | mask : '000.000.000-00'}}</h5>
+					</div>
+					<div *ngIf="fornecedor?.type === 'pessoa_juridica'" class="col-12 col-lg-4 p-2">
+						<h6 class="font-poppins f-size-14 text-secondary">CNPJ</h6>
+						<h5 class="f-size-16">{{fornecedor?.cpf! | mask : '00.000.000/0000-00'}}</h5>
+					</div>
+
+					<div class="col-12 col-lg-4 p-2">
+						<h6 class="font-poppins f-size-14 text-secondary">{{ "ASSOCIATION_AGREEMENTS.STATUS" | translate }}</h6>
+						<h5 *ngIf="fornecedor?.block == true" class="f-size-16 text-danger">{{ "SUPPLIER_DATA_PAGE.BLOCKED" | translate }}</h5>
+						<h5 *ngIf="fornecedor?.block == false" class="f-size-16 text-success">{{ "SUPPLIER_DATA_PAGE.ACTIVE" | translate }}</h5>
+					</div>
+
+					<div class="col-12 p-2 mt-5">
+						<h5> <b> {{ "EDIT_SUPPLIER.ADDRESS" | translate }} </b></h5>
+						<hr>
+					</div>
+
+					<div class="col-12 col-lg-4 p-2 text-capitalize">
+						<h6 class="font-poppins f-size-14 text-secondary">{{ "SUPPLIER_BIDDING.ZIP_CODE" | translate }}</h6>
+						<h5 class="f-size-16">{{fornecedor?.address?.zipCode! | mask : '00.000-000'}}</h5>
+					</div>
+					<div class="col-12 col-lg-4 p-2 text-capitalize">
+						<h6 class="font-poppins f-size-14 text-secondary">{{ "REGISTER_SUPPLIER.STATE" | translate }}</h6>
+						<h5 class="f-size-16">{{fornecedor?.address?.state}}</h5>
+					</div>
+					<div class="col-12 col-lg-4 p-2">
+						<h6 class="font-poppins f-size-14 text-secondary">{{ "SUPPLIER.COUNTY" | translate }}</h6>
+						<h5 class="f-size-16">{{fornecedor?.address?.city}}</h5>
+					</div>
+
+					<div class="col-12 col-lg-4 p-2">
+						<h6 class="font-poppins f-size-14 text-secondary">{{ "REGISTER_SUPPLIER.NEIGHBORHOOD" | translate }}</h6>
+						<h5 class="f-size-16">{{fornecedor?.address?.neighborhood}}</h5>
+					</div>
+					<div class="col-12 col-lg-4 p-2">
+						<h6 class="font-poppins f-size-14 text-secondary">{{ "ADMINISTRATION_ASSOCIATION_DATA.PUBLIC_PLACE" | translate }}</h6>
+						<h5 class="f-size-16">{{fornecedor?.address?.publicPlace}}</h5>
+					</div>
+					<div class="col-12 col-lg-4 p-2">
+						<h6 class="font-poppins f-size-14 text-secondary">{{ "ADMINISTRATION_ASSOCIATION_DATA.STREET_NUMBER" | translate }}</h6>
+						<h5 class="f-size-16">{{fornecedor?.address?.number}}</h5>
+					</div>
+
+					<div class="col-12 col-lg-4 p-2">
+						<h6 class="font-poppins f-size-14 text-secondary">{{ "ADMINISTRATION_ASSOCIATION_DATA.COMPLEMENTS" | translate }}</h6>
+						<h5 class="f-size-16">{{fornecedor?.address?.complement}}</h5>
+					</div>
+					<div class="col-12 col-lg-4 p-2">
+						<h6 class="font-poppins f-size-14 text-secondary">{{ "ADMINISTRATION_ASSOCIATION_DATA.POINT" | translate }}</h6>
+						<h5 class="f-size-16">{{fornecedor?.address?.referencePoint}}</h5>
+					</div>
+
+				</div>
+
+				<div class="row mt-5 p-3 user-data-border">
+
+					<div class="col-12 p-3">
+						<h5><b>{{ "ADMINISTRATION_ASSOCIATION_DATA.LEGAL" | translate }}</b></h5>
+						<hr>
+					</div>
+
+					<div class="col-12 col-lg-4 p-2 text-capitalize">
+						<h6 class="font-poppins f-size-14 text-secondary">{{ "REGISTER_SUPPLIER.NAME" | translate }}</h6>
+						<h5 class="f-size-16">{{fornecedor?.legal_representative?.name}}</h5>
+					</div>
+					<div class="col-12 col-lg-4 p-2 text-capitalize">
+						<h6 class="font-poppins f-size-14 text-secondary">{{ "REGISTER_SUPPLIER.ID_NUMBER" | translate }}</h6>
+						<h5 class="f-size-16">{{fornecedor?.legal_representative?.cpf! | mask : '000.000.000-00'}}</h5>
+					</div>
+<!-- 					<div class="col-12 col-lg-4 p-2 text-capitalize">
+						<h6 class="font-poppins f-size-14 text-secondary">{{ "REGISTER_SUPPLIER.BRAZILIAN_IDENTITY_CARD" | translate }}</h6>
+						<h5 class="f-size-16">{{fornecedor?.legal_representative?.rg! | mask : '00.000.000-0' }}</h5>
+					</div>
+					<div class="col-12 col-lg-4 p-2">
+						<h6 class="font-poppins f-size-14 text-secondary">{{ "SUPPLIER_DATA_PAGE.ORGAN" | translate }}</h6>
+						<h5 class="f-size-16" *ngIf="fornecedor?.legalRepresentative?.document_origin">
+								{{fornecedor?.legalRepresentative?.document_origin.slice(0,3).toUpperCase()}} /
+								{{fornecedor?.legalRepresentative?.document_origin.slice(3,5).toUpperCase()}}
+						</h5>
+								<h5 class="f-size-16" *ngIf="!fornecedor?.legalRepresentative?.document_origin">
+										{{fornecedor?.legalRepresentative?.document_origin}}</h5>
+				</div> -->
+					<!-- <div class="col-12 col-lg-4 p-2 text-capitalize">
+                        <h6 class="font-poppins f-size-14 text-secondary">Estado Civil</h6>
+                        <h5 class="f-size-16">{{fornecedor?.legalmaritalStatus}}</h5>
+                    </div> -->
+					<div class="col-12 p-2 mt-5">
+						<h5> <b> {{ "EDIT_SUPPLIER.ADDRESS" | translate }} </b></h5>
+						<hr>
+					</div>
+
+					<div class="col-12 col-lg-4 p-2 text-capitalize">
+						<h6 class="font-poppins f-size-14 text-secondary">{{ "SUPPLIER_BIDDING.ZIP_CODE" | translate }}</h6>
+						<h5 class="f-size-16">{{fornecedor?.legal_representative?.address?.zipCode! | mask : '00.000-000'}}</h5>
+					</div>
+					<div class="col-12 col-lg-4 p-2 text-capitalize">
+						<h6 class="font-poppins f-size-14 text-secondary">{{ "REGISTER_SUPPLIER.STATE" | translate }}</h6>
+						<h5 class="f-size-16">{{fornecedor?.legal_representative?.address?.state}}</h5>
+					</div>
+					<div class="col-12 col-lg-4 p-2">
+						<h6 class="font-poppins f-size-14 text-secondary">{{ "SUPPLIER.COUNTY" | translate }}</h6>
+						<h5 class="f-size-16">{{fornecedor?.legal_representative?.address?.city}}</h5>
+					</div>
+
+					<div class="col-12 col-lg-4 p-2">
+						<h6 class="font-poppins f-size-14 text-secondary">{{ "REGISTER_SUPPLIER.NEIGHBORHOOD" | translate }}</h6>
+						<h5 class="f-size-16">{{fornecedor?.legal_representative?.address?.neighborhood}}</h5>
+					</div>  
+					<div class="col-12 col-lg-4 p-2">
+						<h6 class="font-poppins f-size-14 text-secondary">{{ "ADMINISTRATION_ASSOCIATION_DATA.PUBLIC_PLACE" | translate }}</h6>
+						<h5 class="f-size-16">{{fornecedor?.legal_representative?.address?.publicPlace}}</h5>
+					</div>
+					<div class="col-12 col-lg-4 p-2">
+						<h6 class="font-poppins f-size-14 text-secondary">{{ "ADMINISTRATION_ASSOCIATION_DATA.STREET_NUMBER" | translate }}</h6>
+						<h5 class="f-size-16">{{fornecedor?.legal_representative?.address?.number}}</h5>
+					</div>
+
+					<div class="col-12 col-lg-4 p-2">
+						<h6 class="font-poppins f-size-14 text-secondary">{{ "ADMINISTRATION_ASSOCIATION_DATA.COMPLEMENTS" | translate }}</h6>
+						<h5 class="f-size-16">{{fornecedor?.legal_representative?.address?.complement}}</h5>
+					</div>
+					<div class="col-12 col-lg-4 p-2">
+						<h6 class="font-poppins f-size-14 text-secondary">{{ "ADMINISTRATION_ASSOCIATION_DATA.POINT" | translate }}</h6>
+						<h5 class="f-size-16">{{fornecedor?.legal_representative?.address?.referencePoint}}</h5>
+					</div>
+
+				</div>
+
+				<!-- <div class="row mt-5 p-3 user-data-border">
+
+					<div class="col-12 p-3">
+						<h5><b>{{ "ADMINISTRATION_ASSOCIATION_DATA.POINT" | translate }}</b></h5>
+						<hr>
+					</div>
+
+					<div *ngFor="let item of fornecedor?.categories" class="col-12 p-2 text-capitalize">
+						<h5 class="font-poppins f-size-14 text-secondary mb-3 text-dark">{{item?.category_name}}</h5>
+					</div>
+
+				</div>
+
+				<div class="row mt-5 p-3 user-data-border">
+
+					<div class="col-12 p-3">
+						<h5><b>{{ "SUPPLIER_DATA_PAGE.DOCUMENTS" | translate }}</b></h5>
+						<hr>
+					</div>
+
+					<div class="col-12 col-lg-4 p-2 text-capitalize">
+						<h5 class="font-poppins f-size-14 text-secondary mb-3 text-dark">{{ "ADMINISTRATION_ASSOCIATION_DATA.POINT" | translate }}</h5>
+					</div>
+
+				</div> -->
+
+				<div class="row mt-5 p-3 user-data-border">
+
+					<div class="col-12 p-3">
+						<div class="d-flex">
+							<h5 class="col-md-6"><b>{{ "SUPPLIER_DATA_PAGE.BLOCK_EVENT" | translate }}</b></h5>
+							<button *ngIf="fornecedor?.blocked == false && !fornecedor?.blocked"  disabled="{{authService.getAuthenticatedUser().type == 'project_manager'}}" (click)="open(contentBlocked);" type="button" class="bg-dark btn-lg btn-block mb-4 text-small
+								col-md-6
+								text-white">{{ "SUPPLIER_DATA_PAGE.BLOCK_SUPPLIER" | translate }}</button>
+
+							<button *ngIf="fornecedor?.blocked == true" disabled="{{authService.getAuthenticatedUser().type == 'project_manager'}}" (click)="open(contentUnBlocked);" type="button" class="bg-dark btn-lg btn-block mb-4 text-small
+								col-md-6
+								text-white">{{ "SUPPLIER_DATA_PAGE.UNBLOCK_SUPPLIER" | translate }}</button>
+						</div>
+						<hr>
+					</div>
+
+					<div class="col-12 col-lg-12 p-2 text-capitalize">
+						<h5 *ngIf="!fornecedor?.blocked && fornecedor?.blocked === false" class="font-poppins f-size-14 text-secondary mb-3 text-dark">{{ "ADMINISTRATION_ASSOCIATION_DATA.NO_BLOCKS" | translate }}</h5>
+						<h5 *ngIf="fornecedor?.blocked === true" class="font-poppins f-size-14 text-secondary mb-3 text-dark">{{fornecedor?.blocked_reason}}</h5>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<ng-template class="container-fluid" #contentBlocked let-modal>
+	<div class="p-5 bg-light">
+		<div class="col-12 d-flex justify-content-between">
+			<h3 class="tfa-title m-0">{{ "SUPPLIER_DATA_PAGE.BLOCK_SUPPLIER" | translate }}</h3>
+			<h5 (click)="exit()" class="cursor-pointer">X</h5>
+		</div>
+
+		<div class="my-4 text-center block-messege py-1 d-flex justify-content-center">
+			<div class="pr-1"><img src="../../../../assets/images/icon-alert.svg" (click)="exit()"></div>
+			<div class="danger-text">{{ "SUPPLIER_DATA_PAGE.WILL_BLOCK" | translate }}</div>
+		</div>
+		<div>
+			<form [formGroup]="blockSupplier">
+				<div class="mb-2">
+					<label for="message" class="font-archivo font-size-16 font-weight-medium text-secondary m-0"><b>{{ "SUPPLIER_DATA_PAGE.REASON" | translate }}</b></label>
+					<textarea formControlName="blocked_reason" class="form-control custom-textarea" id="message"></textarea>
+				</div>
+
+				<div class="d-flex justify-content-center">
+					<div class="col-md-6 mt-4">
+						<button type="button" class="bg-light btn-lg btn-block mb-4 text-small border-0" (click)="exit();">{{ "BUTTON_TEXT.CANCEL" | translate }}</button>
+					</div>
+					<div class="col-md-6 mt-4">
+						<button type="button" class="btn-lg btn-block mb-4 text-small btn-block-supplier text-white border-0"
+							(click)="handleBlock();">{{ "SUPPLIER_DATA_PAGE.BLOCK_SUPPLIER" | translate }}</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</ng-template>
+
+<ng-template class="container-fluid" #contentUnBlocked let-modal>
+	<div class="p-5 bg-light">
+		<div class="col-12 d-flex justify-content-between">
+			<h3 class="tfa-title m-0">{{ "SUPPLIER_DATA_PAGE.BLOCK_SUPPLIER" | translate }}</h3>
+			<h5 (click)="exit()" class="cursor-pointer">X</h5>
+		</div>
+
+		<div class="my-4 text-center unblock-messege py-1 d-flex justify-content-center">
+			<div class="pr-1"><img src="../../../../assets/images/icon-alert-blue.svg" (click)="exit()"></div>
+			<div class="unblock-text">{{ "SUPPLIER_DATA_PAGE.WILL_UNBLOCK" | translate }}</div>
+		</div>
+
+		<div>
+			<form [formGroup]="blockSupplier">
+				<div class="mb-2">
+					<label for="message" class="font-archivo font-size-16 font-weight-medium text-secondary m-0"><b>{{ "SUPPLIER_DATA_PAGE.REASON_UNBLOCK" | translate }}</b></label>
+					<textarea formControlName="blocked_reason" class="form-control custom-textarea" id="message"></textarea>
+				</div>
+
+				<div class="d-flex justify-content-center">
+					<div class="col-md-6 mt-4">
+						<button type="button" class="bg-light btn-lg btn-block mb-4 text-small border-0" (click)="exit();">{{ "REGISTER_SUPPLIER.CANCEL" | translate }}</button>
+					</div>
+					<div class="col-md-6 mt-4">
+						<button type="button" class="btn-lg btn-block mb-4 text-small btn-unblock-supplier text-white border-0"
+							(click)="handleUnBlock();">{{ "SUPPLIER_DATA_PAGE.UNBLOCK_SUPPLIER" | translate }}</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</ng-template>

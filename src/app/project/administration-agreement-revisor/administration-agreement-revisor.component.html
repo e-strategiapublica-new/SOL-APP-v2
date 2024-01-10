@@ -1,0 +1,30 @@
+<div class="container-fluid">
+  <div class="row mt-5">
+      <div class="col-md-12">
+          <h1>{{"SIDEBAR.AGREEMENTS" | translate}}</h1>
+          <hr class="bg-primary">
+      </div>
+  </div>
+
+  <div *ngFor="let item of convenios; let i= index;" class="row p-3 user-data-border mt-5 cursor-pointer"
+      [routerLink]="['/pages/convenios/convenio-data/' + item._id]">
+
+      <div class="row col-12 p-2">
+          <div class="col-12 col-md-10">
+              <h5 class="text-dark"><span class="text-muted">{{item.value}}</span> - <b> {{item?.association?.name}} </b></h5>
+          </div>
+          <div class="col-12 col-md-2">
+              <h6 class="font-poppins f-size-14 text-secondary">Status</h6>
+              <h5 *ngIf="item?.status ==='canceled'" class="f-size-16 text-danger">{{"ASSOCIATION_AGREEMENTS.CANCELED" | translate}}</h5>
+              <h5 *ngIf="item?.status ==='concluded'" class="f-size-16 text-success">{{"ASSOCIATION_AGREEMENTS.COMPLETED" | translate}}</h5>
+              <h5 *ngIf="item?.status ==='inExecution'" class="f-size-16 text-warning">{{"ASSOCIATION_AGREEMENTS.EXECUTION" | translate}}</h5>
+          </div>
+      </div>
+
+      <div class="col-12 col-lg-12 p-2">
+          <h6 class="font-poppins f-size-14 text-dark">{{"ASSOCIATION_AGREEMENTS.AGREEMENT_NUMBER" | translate}}</h6>
+          <h6 class="font-poppins f-size-16 text-secondary">{{item?.value}}</h6>
+      </div>
+
+  </div>
+</div>

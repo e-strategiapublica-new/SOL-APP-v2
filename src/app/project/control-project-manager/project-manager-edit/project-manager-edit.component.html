@@ -1,0 +1,117 @@
+<div class="container-fluid">
+	<div class="row mt-5">
+		<div class="col-md-12">
+			<h1>Edita Gerente de Projeto</h1>
+			<hr class="bg-primary">
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-12 col-lg-10 col-xl-6">
+			<section>
+				<form class="mr-5" [formGroup]="form" (ngSubmit)="onSubmit()">
+
+					<div class="mt-3">
+						<label for="type"
+							class="font-archivo font-size-16 font-weight-medium text-secondary m-0"><b>{{"SUPPLIER_USERS.TYPE" | translate}}</b></label>
+						<input type="text" value="Gerente de Projeto" readonly style="text-indent:20px;"
+							class="form-control" id="type">
+					</div>
+
+					<div class="mt-3">
+						<label for="name"
+							class="font-archivo font-size-16 font-weight-medium text-secondary m-0"><b>{{"PROFILE.PROFILE_NAME" | translate}}</b></label>
+						<input type="text" formControlName="name" style="text-indent:20px;" class="form-control"
+							id="name" placeholder="{{'PROFILE.PROFILE_NAME' | translate}}">
+
+						<div *ngIf="form.controls['name'].errors?.['required'] && isSubmit" class="div-msg-error mt-2">
+							<img src="../../../assets/images/icon-alert.svg" class="img-msg-error" alt>
+							<p class="font-poppins font-size-14 m-0">{{"ERROR_MESSAGES.NAME_REQUIRED" | translate}}</p>
+						</div>
+						<div *ngIf="form.controls['name'].errors?.['maxlength'] && isSubmit" class="div-msg-error mt-2">
+							<img src="../../../assets/images/icon-alert.svg" class="img-msg-error" alt>
+							<p class="font-poppins font-size-14 m-0">{{"ERROR_MESSAGES.NAME_VALIDATOR" | translate}}</p>
+						</div>
+					</div>
+
+					<div class="mt-3">
+						<label for="email"
+							class="font-archivo font-size-16 font-weight-medium text-secondary m-0"><b>E-mail</b></label>
+						<input type="text" formControlName="email" style="text-indent:20px;" class="form-control email"
+							id="email" placeholder="email@email.com">
+
+						<div *ngIf="form.controls['email'].errors?.['required'] && isSubmit" class="div-msg-error mt-2">
+							<img src="../../../assets/images/icon-alert.svg" class="img-msg-error" alt>
+							<p class="font-poppins font-size-14 m-0">{{"ERROR_MESSAGES.REQUIRED_EMAIL" | translate}}</p>
+						</div>
+						<div *ngIf="form.controls['email'].errors?.['email'] && isSubmit" class="div-msg-error mt-2">
+							<img src="../../../assets/images/icon-alert.svg" class="img-msg-error" alt>
+							<p class="font-poppins font-size-14 m-0">{{"ERROR_MESSAGES.INVALID_EMAIL" | translate}}</p>
+						</div>
+					</div>
+
+					<div class="row">
+
+						<div class="col-sm-12 col-md-6 mt-3">
+							<label for="phone"
+								class="font-archivo font-size-16 font-weight-medium text-secondary m-0"><b>{{"SUPPLIER_USERS.PHONE" | translate}}</b></label>
+							<input type="text" formControlName="phone" style="text-indent:20px;" class="form-control"
+								mask="(00)0000-0000||(00) 0 0000-0000" id="phone" placeholder="(00)00000-0000">
+
+							<div *ngIf="form.controls['phone'].errors?.['required'] && isSubmit"
+								class="div-msg-error mt-2">
+								<img src="../../../assets/images/icon-alert.svg" class="img-msg-error" alt>
+								<p class="font-poppins font-size-14 m-0">{{"ERROR_MESSAGES.REQUIRED_PHONE" | translate}}</p>
+							</div>
+							<div *ngIf="form.controls['phone'].errors?.['minlength'] && isSubmit"
+								class="div-msg-error mt-2">
+								<img src="../../../assets/images/icon-alert.svg" class="img-msg-error" alt>
+								<p class="font-poppins font-size-14 m-0">{{"ERROR_MESSAGES.INVALID_PHONE" | translate}}</p>
+							</div>
+						</div>
+
+						<div class="col-sm-12 col-md-6 mt-3">
+							<label for="document"
+								class="font-archivo font-size-16 font-weight-medium text-secondary m-0"><b>{{"REGISTER_SUPPLIER.CPF_CNPJ" | translate}}</b></label>
+							<input type="text" formControlName="document" style="text-indent:20px;" class="form-control"
+								mask="000.000.000-00||00.000.000/0000-00" (keyup)="checkValidCnpj()" id="document" placeholder="000.000.000-00">
+
+							<div *ngIf="form.controls['document'].errors?.['required'] && isSubmit || regex.test(form.controls['document'].value) || !validCnpj"
+								class="div-msg-error mt-2">
+								<img src="../../../assets/images/icon-alert.svg" class="img-msg-error" alt>
+								<p class="font-poppins font-size-14 m-0">{{"ERROR_MESSAGES.REQUIRED_DOCUMENT" | translate}}</p>
+							</div>
+							<div
+								*ngIf="!form.controls['document'].errors?.['required'] && (form.controls['document'].value?.length !== 11 && form.controls['document'].value?.length !== 14) && isSubmit"
+								class="div-msg-error mt-2">
+								<img src="../../../assets/images/icon-alert.svg" class="img-msg-error" alt>
+								<p class="font-poppins font-size-14 m-0">{{"ERROR_MESSAGES.INVALID_DOCUMENT" | translate}}</p>
+							</div>
+							<div *ngIf="isCPFInvalidAndTouched() && form.controls['document'].value.length === 11"
+								class="div-msg-error mt-2">
+								<img src="../../../assets/images/icon-alert.svg" class="img-msg-error" alt>
+								<p class="font-poppins font-size-14 m-0">{{"INVALID_ID_DOCUMENT.TITLE" | translate}}</p>
+							</div>
+						</div>
+
+					</div>
+
+
+					<div class="mt-4">
+						<div class="row">
+							<div class="col-md-6">
+								<button type="button" class="bg-light btn-lg btn-block mb-4"
+									(click)="cancel()">{{"BUTTON_TEXT.CANCEL" | translate}}</button>
+							</div>
+							<div class="col-md-6">
+								<button type="submit" class="btn btn-dark btn-lg btn-block mb-4">{{"BUTTON_TEXT.SAVE" | translate}}</button>
+							</div>
+						</div>
+					</div>
+
+				</form>
+			</section>
+		</div>
+	</div>
+
+</div>

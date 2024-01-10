@@ -1,0 +1,64 @@
+<div class="container-fluid">
+	<div class="row mt-5 ">
+		<div class="col-md-12">
+			<div class="row d-flex justify-content-between">
+				<div class="col-md-4">
+					<h1 class="text-dark"><strong>{{"SIDEBAR.CONTRACTS" | translate}}</strong></h1>
+
+				</div>
+
+			</div>
+			<hr class="bg-primary">
+
+		</div>
+	</div>
+	<div class="row ">
+		<div *ngFor="let item of contratosList | paginate: { itemsPerPage: itensPerPage, currentPage: currentPage }; let i= index;"
+			class="col-md-11 border mt-2 br-10 py-3 m-3">
+			<div class="col-md-12">
+				<div class="row d-flex justify-content-start align-items-center">
+					<h2 class="mb-0 text-dark"><strong>{{"SIDEBAR.CONTRACTS" | translate}} </strong></h2>
+					<h5 class="m-0 text-dark " style="padding-left: 5%;">N.º {{item.contract_number}} / {{item.createdAt | date: 'YYYY'}}</h5>
+				</div>
+				<div class="col-md-12">
+					<div class="row d-flex justify-content-between">
+						<div class="col-md-5">
+							<div class="row">
+								<div class="col-md-4 mt-2 ">
+									<h6 class="font-poppins f-size-14 text-secondary">{{"SIDEBAR.BIDDING" | translate}}</h6>
+									<h5 class="f-size-16">{{item.bid_number?.bid_count}} / {{item.createdAt | date: 'YYYY'}}
+									</h5>
+								</div>
+								<div class="col-md-2 mt-2 ">
+									<h6 class="font-poppins f-size-14 text-secondary">{{"ASSOCIATION_CONTRACTS.VALUE" | translate}}</h6>
+									<h5 class="f-size-16">{{item.value | currency : 'BRL'}} </h5>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="row d-flex justify-content-end">
+								<div class="col-md-4 text-capitalize">
+									<h6 class="font-poppins f-size-14 text-secondary">Status</h6>
+									<h5 *ngIf="item.status ==='assinado'" class="f-size-16 text-primary">{{"ASSOCIATION_CONTRACTS.SIGNED" | translate}}</h5>
+									<h5 *ngIf="item.status ==='aguardando_assinaturas'" class="f-size-16 text-dark">{{"ASSOCIATION_CONTRACTS.AWAITING_SIGNATURES" | translate}}</h5>
+									<h5 *ngIf="item.status ==='concluido'" class="f-size-16 text-dark text-success">{{"ADMINISTRATION_CONTRACTS.CONCLUED" | translate}}</h5>
+									<h5 *ngIf="item.status ==='executado_parcialmente'" class="f-size-16 text-warning">{{"ADMINISTRATION_CONTRACTS.EXECULTING_STEPS" | translate}}</h5>
+								</div>
+								<div class="col-md-5 d-flex align-items-center">
+									<button type="button" (click)="detailContract(item)"
+										class=" w-100 h50 br-10 btn btn-dark"><strong>{{"ADMINISTRATION_BIDDING.DETAILS" | translate}}</strong></button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-12">
+			<div class="col-md-12 d-flex justify-content-end">
+				<pagination-controls (pageChange)="currentPage= $event" previousLabel="{{'BUTTON_TEXT.PREVIOUS' | translate}}"
+					nextLabel="{{'BUTTON_TEXT.NEXT' | translate}}"></pagination-controls>
+			</div>
+		</div>
+	</div>
+</div>
