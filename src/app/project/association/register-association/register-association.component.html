@@ -116,7 +116,7 @@
                                 class="font-archivo font-size-16 font-weight-medium text-secondary m-0"><b>{{'ADMINISTRATION_ASSOCIATION_DATA.STREET_NUMBER'
                                     | translate}}</b></label>
                             <input type="text" formControlName="number" style="text-indent:20px;" class="form-control"
-                                id="number" placeholder="000" #addressnumber >
+                                id="number" placeholder="S/N" #addressnumber >
 
                             <div *ngIf="formAddress.controls['number'].errors?.['required'] && isSubmit"
                                 class="div-msg-error mt-2">
@@ -416,7 +416,7 @@
                                         class="font-archivo font-size-16 font-weight-medium text-secondary m-0"><b>{{'ADMINISTRATION_ASSOCIATION_DATA.STREET_NUMBER'
                                             | translate}}</b></label>
                                     <input type="text" formControlName="number" style="text-indent:20px;" class="form-control"
-                                        id="number" placeholder="000" #addressnumberlegal>
+                                        id="number" placeholder="S/N" #addressnumberlegal>
 
                                     <div *ngIf="formLegalRepresentativeAddress.controls['number'].errors?.['required'] && isSubmit"
                                         class="div-msg-error mt-2">

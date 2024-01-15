@@ -49,7 +49,7 @@ export class RegisterAssociationComponent implements OnInit {
 
     this.formAddress = this.formBuilder.group({
       zipCode: ['', [Validators.required, Validators.minLength(8)]],
-      number: ['', [Validators.required]],
+      number: [''],
       publicPlace: ['', [Validators.required]],
       neighborhood: ['', [Validators.required]],
       city: ['', [Validators.required]],
@@ -64,15 +64,12 @@ export class RegisterAssociationComponent implements OnInit {
       name: ['', [Validators.required]],
       nationality: ['', [Validators.required]],
       maritalStatus: ['', [Validators.required]],
-      cpf: ['', [Validators.required, Validators.minLength(11)]],
-/*       rg: ['', [Validators.required, Validators.minLength(9), this.rgValidator()]],
-      document_origin: ['', [Validators.required, Validators.maxLength(9), Validators.pattern(/^[A-Za-z/]+$/)]],
-      validityData: ['', [Validators.required,this.dateValidator]] */
+      cpf: ['', [Validators.required, Validators.minLength(11)]]
     });
 
     this.formLegalRepresentativeAddress = this.formBuilder.group({
       zipCode: ['', [Validators.required, Validators.minLength(8)]],
-      number: ['', [Validators.required]],
+      number: [''],
       publicPlace: ['', [Validators.required]],
       neighborhood: ['', [Validators.required]],
       city: ['', [Validators.required]],
