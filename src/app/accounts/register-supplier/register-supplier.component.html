@@ -176,7 +176,7 @@
                             class="font-archivo font-size-16 font-weight-medium text-secondary m-0"><b>{{'REGISTER_SUPPLIER.NUMBER'
                                 | translate}}</b></label>
                         <input type="text" formControlName="number" style="text-indent:20px;" class="form-control"
-                            id="number" placeholder="000" #addressnumber (focusout)="getLatLong($event)">
+                            id="number" placeholder="S/N" #addressnumber (focusout)="getLatLong($event)">
 
                         <div *ngIf="formAddress.controls['number'].errors?.['required'] && isSubmit"
                             class="div-msg-error mt-2">
@@ -393,7 +393,7 @@
                             class="font-archivo font-size-16 font-weight-medium text-secondary m-0"><b>{{'REGISTER_SUPPLIER.NUMBER'
                                 | translate}}</b></label>
                         <input type="text" formControlName="number" style="text-indent:20px;" class="form-control"
-                            id="number" placeholder="000" #addressnumberlegal>
+                            id="number" placeholder="S/N" #addressnumberlegal>
 
                         <div *ngIf="formLegalRepresentativeAddress.controls['number'].errors?.['required'] && isSubmit"
                             class="div-msg-error mt-2">

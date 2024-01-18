@@ -70,7 +70,7 @@ export class RegisterSupplierComponent implements OnInit {
 
     this.formAddress = this.formBuilder.group({
       zipCode: ["", [Validators.required, Validators.minLength(8)]],
-      number: ["", [Validators.required]],
+      number: [""],
       publicPlace: ["", [Validators.required]],
       neighborhood: ["", [Validators.required]],
       city: ["", [Validators.required]],
@@ -93,7 +93,7 @@ export class RegisterSupplierComponent implements OnInit {
 
     this.formLegalRepresentativeAddress = this.formBuilder.group({
       zipCode: ["", [Validators.required, Validators.minLength(8)]],
-      number: ["", [Validators.required]],
+      number: [""],
       publicPlace: ["", [Validators.required]],
       neighborhood: ["", [Validators.required]],
       city: ["", [Validators.required]],
@@ -193,7 +193,7 @@ export class RegisterSupplierComponent implements OnInit {
     // newSupplier.address.latitude = this.formAddress.controls["latitude"].value;
     // newSupplier.address.longitude = this.formAddress.controls["longitude"].value;
     newSupplier.address.neighborhood = this.formAddress.controls["neighborhood"].value;
-    newSupplier.address.number = this.formAddress.controls["number"].value;
+    newSupplier.address.number = this.formAddress.controls["number"].value ?? 'S/N';
     newSupplier.address.publicPlace = this.formAddress.controls["publicPlace"].value;
     newSupplier.address.referencePoint = this.formAddress.controls["referencePoint"].value;
     newSupplier.address.state = this.formAddress.controls["state"].value;
@@ -213,7 +213,7 @@ export class RegisterSupplierComponent implements OnInit {
     newSupplier.legal_representative.address.city = this.formLegalRepresentativeAddress.controls["city"].value;
     newSupplier.legal_representative.address.neighborhood =
       this.formLegalRepresentativeAddress.controls["neighborhood"].value;
-    newSupplier.legal_representative.address.number = this.formLegalRepresentativeAddress.controls["number"].value;
+    newSupplier.legal_representative.address.number = this.formLegalRepresentativeAddress.controls["number"].value ?? 'S/N';
     newSupplier.legal_representative.address.publicPlace =
       this.formLegalRepresentativeAddress.controls["publicPlace"].value;
     newSupplier.legal_representative.address.referencePoint =
