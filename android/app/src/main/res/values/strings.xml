@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">SOL PB</string>
+    <string name="title_activity_main">SOL PB</string>
+    <string name="package_name">net.sol.app</string>
+    <string name="custom_url_scheme">net.sol.app</string>
+</resources>
