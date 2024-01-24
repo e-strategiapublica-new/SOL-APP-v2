@@ -4,7 +4,10 @@
       <app-change-lang-auth backgroundColor="#FAFAFA" fontColor="#000"></app-change-lang-auth>
       <form class="login100-form validate-form px-3 px-sm-5 pt-4 pb-4" [formGroup]="form" (ngSubmit)="onSubmit()">
         <span class="login100-form-logo mt-2">
-          <img src="../../../assets/images/sol-azul-amarela.svg" style="max-height: 250px;" alt="IMG">
+          <img src="../../../assets/images/sol-azul-amarela.svg" style="max-height: 170px;" alt="IMG">
+        </span>
+        <span class="login100-form-logo mt-2 mb-2">
+          <img src="../../../assets/images/pb-logos-project.png" style="max-height: 40px; width: auto;" alt="Projeto Cooperar LOGO">
         </span>
         <div class="wrap-input100 validate-input mt-2" data-validate="Digite seu email de acesso">
           <label for="email"
@@ -50,7 +53,7 @@
           <a class="txt1 poppins fw-bold" [routerLink]="['/accounts/primeiro-acesso']">{{"SIGN-UP.FIRST_ACCESS_BUTTON" | translate}}
           </a>
         </div>
-        <div class="text-center mt-2 p-t-90">
+        <div class="text-center mt-3 p-t-90">
           <a class="txt1 poppins fw-bold" [routerLink]="['/accounts/esqueceu-senha']">{{"SIGN-UP.FORGOT_PASSWORD" | translate}}
           </a>
         </div>
