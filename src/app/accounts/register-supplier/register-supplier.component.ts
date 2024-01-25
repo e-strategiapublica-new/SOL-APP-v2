@@ -36,6 +36,8 @@ export class RegisterSupplierComponent implements OnInit {
   regex = /\b(\d)\1+\b/;
   regexCNPJ = /^\d{3}\.\d{3}\.\d{3}-\d{2}$/;
 
+  storedLanguage : string | null
+
   mainCPFValid: boolean;
   mainCNPJValid: boolean;
 
@@ -117,6 +119,8 @@ export class RegisterSupplierComponent implements OnInit {
     this.categoryService.getCategoryWithoutAuth().subscribe(response => {
       this.categoriesAndSegments = response;      
     });
+
+    this.storedLanguage = localStorage.getItem('selectedLanguage');
   }  
 
   validCnpj() {
@@ -137,19 +141,25 @@ export class RegisterSupplierComponent implements OnInit {
     return null;
   }
 
+  cancelSubmit(){
+    this.isSubmit = false;
+    this.toastrService.error(this.translate.instant("TOASTRS.ERROR_CREATE_SUPPLIER"), "", { progressBar: true });
+    return;
+  }
+
   confirm() {
 
     this.isSubmit = true;
     if (this.formLegalRepresentative.valid) {
     }
     const documentType = this.form.controls["type"].value;
-    if (!documentType) return;
+    if (!documentType) return this.cancelSubmit();
 
     if (documentType === "cnpj") {
-      this.form.controls["mainCnpj"].addValidators([Validators.required, Validators.maxLength(14)]);
+      this.form.controls["mainCnpj"].addValidators([Validators.required]);
       this.form.controls["mainCpf"].clearValidators();
     } else {
-      this.form.controls["mainCpf"].addValidators([Validators.required, Validators.maxLength(11)]);
+      this.form.controls["mainCpf"].addValidators([Validators.required]);
       this.form.controls["mainCnpj"].clearValidators();
     }
 
@@ -158,29 +168,29 @@ export class RegisterSupplierComponent implements OnInit {
 
     if (this.form.invalid) {
       this.getErrosForm(this.form);
-      return;
+      return this.cancelSubmit();
     }
 
     if(!this.selectCategoriesAndSegments.length){
-      return;
+      return this.cancelSubmit();
     }
 
     if (this.formAddress.invalid || this.formLegalRepresentative.invalid || this.formLegalRepresentativeAddress.invalid){
       this.getErrosForm(this.formAddress);
       this.getErrosForm(this.formLegalRepresentative);
       this.getErrosForm(this.formLegalRepresentativeAddress);
-      return;
+      return this.cancelSubmit();
     }
 
     const document = this.form.controls["mainCnpj"]?.value
       ? this.form.controls["mainCnpj"]?.value
       : this.form.controls["mainCpf"]?.value;
 
-    if (!document) return;
+    if (!document) return this.cancelSubmit();
 
     const newSupplier: SupplierRegisterDto = {
       name: this.form.controls["name"].value,
-      cpf: document,
+      cpf: document.replace(/[^0-9]/g, ''),
       type: this.form.controls["type"].value === "cpf" ? "pessoa_fisica" : "pessoa_juridica",
       group_id: this.formCategoryAndSegments.controls["categories"].value,
       address: new AddressDto(),
@@ -202,7 +212,7 @@ export class RegisterSupplierComponent implements OnInit {
     newSupplier.legal_representative.name = this.formLegalRepresentative.controls["name"].value;
     newSupplier.legal_representative.nationality = this.formLegalRepresentative.controls["nationality"].value;
     newSupplier.legal_representative.maritalStatus = this.formLegalRepresentative.controls["maritalStatus"].value;
-    newSupplier.legal_representative.cpf = this.formLegalRepresentative.controls["cpf"].value;
+    newSupplier.legal_representative.cpf = this.formLegalRepresentative.controls["cpf"].value.replace(/[^0-9]/g, '');
 /*     newSupplier.legal_representative.rg = this.formLegalRepresentative.controls["rg"].value;
     newSupplier.legal_representative.document_origin = this.formLegalRepresentative.controls["document_origin"].value;
     newSupplier.legal_representative.validityData = this.formLegalRepresentative.controls["validityData"].value; */
@@ -240,7 +250,47 @@ export class RegisterSupplierComponent implements OnInit {
         
       },
       error: error => {
-        this.toastrService.success(this.translate.instant("TOASTRS.ERROR_CREATE_SUPPLIER"), "", { progressBar: true });
+        this.isSubmit = false;
+        let errorEmail = 'Esse email ja foi cadastrado!';
+        let errorPhone = 'Esse telefone ja foi cadastrado!';
+        let errorCPFCNPJ = 'Esse CPF/CNPJ ja foi cadastrado!';
+
+        switch(this.storedLanguage) {
+          case 'pt': 
+            errorEmail = 'Esse email ja foi cadastrado!';
+            errorPhone = 'Esse telefone ja foi cadastrado!';
+            errorCPFCNPJ = 'Esse CPF/CNPJ ja foi cadastrado!';
+            break;
+          case 'en':
+            errorEmail = 'This email has already been registered!';
+            errorPhone = 'This phone has already been registered!';
+            errorCPFCNPJ = 'This CPF/CNPJ has already been registered!';
+            break;
+          case 'fr':
+            errorEmail = 'Cet e-mail a déjà été enregistré !';
+            errorPhone = 'Ce téléphone a déjà été enregistré !';
+            errorCPFCNPJ = 'Ce CPF/CNPJ est déjà inscrit !';
+            break;
+          case 'es':
+            errorEmail = '¡Este correo electrónico ya ha sido registrado!';
+            errorPhone = '¡Este teléfono ya ha sido registrado!';
+            errorCPFCNPJ = '¡Este CPF/CNPJ ya ha sido registrado!';
+            break;
+        }
+
+        if (error.error.errors[0].includes('duplicate key')) {
+          if (error.error.errors[0].includes('email')) {
+            this.toastrService.error(errorEmail, '', { progressBar: true });
+          } else if (error.error.errors[0].includes('phone')) {
+            this.toastrService.error(errorPhone, '', { progressBar: true });
+          } else if (error.error.errors[0].includes('cpf')) {
+            this.toastrService.error(errorCPFCNPJ, '', { progressBar: true });
+          }
+        } else if (error.error.errors[0]) {
+          this.toastrService.error(error.error.errors[0], '', { progressBar: true });
+        } else {
+          this.toastrService.error(this.translate.instant("TOASTRS.ERROR_CREATE_SUPPLIER"), "", { progressBar: true });
+        }
       },
     });
   }
