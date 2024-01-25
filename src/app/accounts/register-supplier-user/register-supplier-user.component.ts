@@ -101,9 +101,11 @@ export class RegisterSupplierUserComponent implements OnInit {
   };
 
   checkValidCnpj() {
-    if(this.form.controls['document'].value.length > 11) {
+    if(this.form.controls['document'].value.replace(/[^0-9]/g, '').length > 11) {
       this.validCnpj = UserDataValidator.validarCNPJ(this.form.controls['document'].value)
-    }    
+    } else {
+      this.validCnpj = this.validarCPF(this.form.controls['document'].value)
+    }
   }
 
   onSubmit() {
@@ -111,6 +113,7 @@ export class RegisterSupplierUserComponent implements OnInit {
     this.isSubmit = true;
 
     if (this.form.status == 'INVALID' || (this.form.controls['document'].value?.length !== 11 && this.form.controls['document'].value?.length !== 14)) {
+      this.isSubmit = false;
       return;
     }
 
@@ -142,7 +145,7 @@ export class RegisterSupplierUserComponent implements OnInit {
 
       },
       error: (error) => {
-
+        this.isSubmit = false;
         let errorEmail = 'Esse email ja foi cadastrado!';
         let errorPhone = 'Esse telefone ja foi cadastrado!';
         let errorCPFCNPJ = 'Esse CPF/CNPJ ja foi cadastrado!';
