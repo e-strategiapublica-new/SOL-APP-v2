@@ -32,6 +32,7 @@
   color: #888787;
   background-color: #fefeff;
   border-color: #343a40;
+  width: auto;
 }
 .content-user{
   display: flex;
@@ -60,5 +61,10 @@
     margin-right: 0px;
     margin-bottom: 10px;
   }
+
+.screens button{
+  width: auto;
+  height: 55px;
+}
 
 }
