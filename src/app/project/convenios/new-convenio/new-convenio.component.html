@@ -10,8 +10,13 @@
       <div class="col-md-3">
         <label class="text-dark text-capitalize" for="numberInsurance"><strong>{{'AGREEMENTS.AGREEMENT_DATA.NUMBER' |
             translate}}</strong></label>
-        <input type="text" class="form-control br-10 py-4" formControlName="numberInsurance" id="numberInsurance"
-          placeholder="{{'AGREEMENTS.AGREEMENT_DATA.ENTER_NUMBER' | translate}}" [suffix]="'/' + year" mask="0000000">
+            <div class="d-flex align-items-center">
+              <input type="text" class="form-control br-10 py-4 mr-1 text-center" formControlName="partInsuranceNumber" id="partInsuranceNumber"
+              placeholder="000000" mask="0000000">
+              /
+              <input type="text" class="form-control br-10 py-4 ml-1 text-center" formControlName="partInsuranceYear" id="partInsuranceYear"
+              [placeholder]="year" mask="0000">
+            </div>
       </div>
       <div class="col-md-9">
         <label class="text-dark text-capitalize" for="object"><strong>{{'AGREEMENTS.OBJECT' |
@@ -98,7 +103,7 @@
           </div>
           <div class="col-md-4 mt-4 ">
             <button type="submit" class="btn bg-pattern text-light br-10 w-100 h50"
-              [disabled]="form.controls['numberInsurance'].value === '' || form.controls['object'].value === '' || form.controls['state'].value === '' || form.controls['city'].value === '' || form.controls['price'].value === '' || form.controls['datesub'].value === '' || form.controls['datemat'].value === '' || form.controls['situation'].value === '' || form.controls['association'].value === ''">
+              [disabled]="form.controls['partInsuranceNumber'].value === '' || form.controls['object'].value === '' || form.controls['state'].value === '' || form.controls['city'].value === '' || form.controls['price'].value === '' || form.controls['datesub'].value === '' || form.controls['datemat'].value === '' || form.controls['situation'].value === '' || form.controls['association'].value === ''">
               <strong>{{'AGREEMENTS.NEW_AGREEMENT.SAVE_BUTTON' | translate}}</strong>
             </button>
           </div>
