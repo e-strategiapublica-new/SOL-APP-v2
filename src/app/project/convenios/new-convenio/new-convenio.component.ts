@@ -23,6 +23,7 @@ import { ProjectsService } from "src/services/projects.service";
 export class NewConvenioComponent {
   form: FormGroup;
 
+  regexNumberAgreement: "^\d+(?:\/\d{1,9}){1}\/\d{4}$";
   statesList: string[] = states();
   citiesList: string[] = [];
   request: ConvenioRequestDto;
@@ -55,7 +56,8 @@ export class NewConvenioComponent {
     private projectsService: ProjectsService
   ) {
     this.form = this.formBuilder.group({
-      numberInsurance: [''],
+      partInsuranceNumber: [''],
+      partInsuranceYear: [this.year],
       object: ['', [Validators.required]],
       price: ['', [Validators.required]],
       state: ['', [Validators.required]],
@@ -129,7 +131,7 @@ export class NewConvenioComponent {
   onSubmit() {
 
     this.request = {
-      register_number: `${this.form.controls["numberInsurance"].value}/${this.year} `,
+      register_number: `${this.form.controls["partInsuranceNumber"].value}/${this.form.controls["partInsuranceYear"].value ?? this.year}`,
       register_object: this.form.controls["object"].value,
       states: this.form.controls["state"].value,
       city: this.form.controls["city"].value,
