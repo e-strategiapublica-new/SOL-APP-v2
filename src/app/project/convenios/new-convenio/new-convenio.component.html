@@ -7,7 +7,7 @@
   </div>
   <div class="col-md-9">
     <form [formGroup]="form" class="row" (ngSubmit)="onSubmit()">
-      <div class="col-md-3">
+      <div class="col-md-4">
         <label class="text-dark text-capitalize" for="numberInsurance"><strong>{{'AGREEMENTS.AGREEMENT_DATA.NUMBER' |
             translate}}</strong></label>
             <div class="d-flex align-items-center">
@@ -18,7 +18,7 @@
               [placeholder]="year" mask="0000">
             </div>
       </div>
-      <div class="col-md-9">
+      <div class="col-md-8">
         <label class="text-dark text-capitalize" for="object"><strong>{{'AGREEMENTS.OBJECT' |
             translate}}</strong></label>
         <input type="text" [maxlength]="50" class="form-control br-10 py-4" formControlName="object" id="object"
