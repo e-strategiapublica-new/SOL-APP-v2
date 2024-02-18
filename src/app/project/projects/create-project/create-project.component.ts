@@ -335,7 +335,7 @@ export class CreateProjectComponent implements OnInit {
       viewer_list: this.userSelectedList,
       reviewer_list: this.projectSecondReviewer
     }
-    dto.legalRepresentative.name = this.form.controls['name'].value;
+    dto.legalRepresentative.name = this.formLegalRepresentative.controls['name'].value;
     dto.legalRepresentative.nationality = this.formLegalRepresentative.controls["nationality"].value;
     dto.legalRepresentative.maritalStatus = this.formLegalRepresentative.controls["maritalStatus"].value;
     dto.legalRepresentative.cpf = this.formLegalRepresentative.controls["cpf"].value;

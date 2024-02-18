@@ -359,6 +359,7 @@
     "CREATE_SUPPLIER": "Créer un fournisseur",
     "SUPPLIER_DATA": "Données du fournisseur",
     "NAME": "Nom",
+    "EMAIL": "Email",
     "NAME_MANDATORY": "Le nom est obligatoire!",
     "NAME_CHARACTERS": "Le nom doit contenir au maximum 50 caractères!",
     "ZIP_CODE": "Code postal",

@@ -19,7 +19,7 @@
                 <label for="name"
                     class="font-archivo font-size-16 font-weight-medium text-secondary m-0"><b>{{'PROJECT.PROJECT_NAME'
                         | translate}}</b></label>
-                <input type="text" formControlName="name" style="text-indent:20px;" class="form-control" id="name"
+                <input type="text" formControlName="name"  class="form-control" id="name"
                     placeholder="{{'PROJECT.PROJECT_NAME' | translate}}">
 
                 <div *ngIf="form.controls['name'].errors?.['required'] && isSubmit" class="div-msg-error mt-2">
@@ -37,7 +37,7 @@
             <div class="col-sm-12 col-md-6 mt-3">
                 <label class="font-archivo font-size-16 font-weight-medium text-secondary m-0"
                     for="review"><b>{{'PROJECT.MANAGER_PROJECT' | translate}}</b></label>
-                <select formControlName="manager" style="text-indent:20px;" class="form-control" #review id="review"
+                <select formControlName="manager"  class="form-control" #review id="review"
                     (change)="selectedManager($event)">
                     <option *ngFor="let item of userListProject" [value]="item._id">{{item.name}}</option>
                 </select>
@@ -58,21 +58,21 @@
 
             <div class="row">
 
-                <div class="col-sm-12 col-md-5 mt-3">
+                <div class="col-sm-12 col-md-6 mt-3">
                     <label for="name"
                         class="font-archivo font-size-16 font-weight-medium text-secondary m-0"><b>{{'PROFILE.PROFILE_NAME'
                             | translate}}</b></label>
-                    <input type="text" formControlName="name" style="text-indent:20px;" [readOnly]="true"
-                        class="form-control" value="{{representativeName}}" id="name"
+                    <input type="text" formControlName="name" 
+                        class="form-control" id="name"
                         placeholder="{{'PROFILE.PROFILE_NAME' | translate}}">
 
                 </div>
 
-                <div class="col-sm-12 col-md-4 mt-3">
+                <div class="col-sm-12 col-md-6 mt-3">
                     <label for="nationality"
                         class="font-archivo font-size-16 font-weight-medium text-secondary m-0"><b>{{'ADMINISTRATION_ASSOCIATION_DATA.NACIONALITY'
                             | translate}}</b></label>
-                    <input type="text" formControlName="nationality" style="text-indent:20px;" class="form-control"
+                    <input type="text" formControlName="nationality"  class="form-control"
                         id="nationality" placeholder="{{'ADMINISTRATION_ASSOCIATION_DATA.NACIONALITY' | translate}}">
 
                     <div *ngIf="formLegalRepresentative.controls['nationality'].errors?.['required'] && isSubmit"
@@ -83,11 +83,11 @@
                     </div>
                 </div>
 
-                <div class="col-sm-12 col-md-3 mt-3">
+                <div class="col-sm-12 col-md-6 mt-3">
                     <label for="maritalStatus"
                         class="font-archivo font-size-16 font-weight-medium text-secondary m-0"><b>{{'ADMINISTRATION_ASSOCIATION_DATA.CIVIL_STATE'
                             | translate}}</b></label>
-                    <select type="text" formControlName="maritalStatus" style="text-indent:20px;" class="form-control"
+                    <select type="text" formControlName="maritalStatus"  class="form-control"
                         id="maritalStatus">
                         <option selected readonly disabled [value]="''">
                             {{'ADMINISTRATION_NEW_ASSOCIATION.SELECT' | translate}}...</option>
@@ -109,11 +109,11 @@
                     </div>
                 </div>
 
-                <div class="col-sm-12 col-md-3 mt-3">
+                <div class="col-sm-12 col-md-6 mt-3">
                     <label for="cpf" class="font-archivo font-size-16 font-weight-medium text-secondary m-0">
                         <b>{{ 'REGISTER_SUPPLIER.ID_NUMBER' | translate }}</b>
                     </label>
-                    <input type="text" formControlName="cpf" style="text-indent: 20px;" class="form-control"
+                    <input type="text" formControlName="cpf" class="form-control"
                         mask="000.000.000-00" id="cpf" placeholder="000.000.000-00">
 
                     <div *ngIf="formLegalRepresentative.controls['cpf'].errors?.['required'] && isSubmit"
@@ -152,7 +152,7 @@
                     <label for="document_origin"
                         class="font-archivo font-size-16 font-weight-medium text-secondary m-0"><b>Orgão
                             expedidor</b></label>
-                    <input type="text" formControlName="document_origin" style="text-indent:20px;" class="form-control"
+                    <input type="text" formControlName="document_origin"  class="form-control"
                         maxlength="6" id="document_origin" placeholder="ex.:SSP/RN">
 
                     <div *ngIf="formLegalRepresentative.controls['document_origin'].errors?.['required'] && isSubmit"
@@ -167,7 +167,7 @@
                     <label for="validityData"
                         class="font-archivo font-size-16 font-weight-medium text-secondary m-0"><b>{{'ADMINISTRATION_ASSOCIATION_DATA.VALIDITY'
                             | translate}}</b></label>
-                    <input type="date" formControlName="validityData" style="text-indent:20px;" max="{{maxDate()}}"
+                    <input type="date" formControlName="validityData"  max="{{maxDate()}}"
                         class="form-control" id="validityData">
 
                     <div *ngIf="formLegalRepresentative.controls['validityData'].errors?.['required'] && isSubmit"
@@ -194,7 +194,7 @@
                 <div class="col-sm-12 col-md-4 mt-3">
                     <label for="zipCode"
                         class="font-archivo font-size-16 font-weight-medium text-secondary m-0"><b>CEP</b></label>
-                    <input type="text" formControlName="zipCode" style="text-indent:20px;" class="form-control"
+                    <input type="text" formControlName="zipCode"  class="form-control"
                         mask="00.000-000" id="zipCode" placeholder="00.000-000"
                         (focusout)="searchLegalRepresentativeAddressByCep($event)">
 
@@ -216,7 +216,7 @@
                     <label for="publicPlace"
                         class="font-archivo font-size-16 font-weight-medium text-secondary m-0"><b>{{'ADMINISTRATION_ASSOCIATION_DATA.PUBLIC_PLACE'
                             | translate}}</b></label>
-                    <input type="text" formControlName="publicPlace" style="text-indent:20px;" class="form-control"
+                    <input type="text" formControlName="publicPlace"  class="form-control"
                         id="publicPlace" placeholder="{{'ADMINISTRATION_ASSOCIATION_DATA.PUBLIC_PLACE' | translate}}">
 
                     <div *ngIf="formLegalRepresentativeAddress.controls['publicPlace'].errors?.['required'] && isSubmit"
@@ -231,7 +231,7 @@
                     <label for="number"
                         class="font-archivo font-size-16 font-weight-medium text-secondary m-0"><b>{{'ADMINISTRATION_ASSOCIATION_DATA.STREET_NUMBER'
                             | translate}}</b></label>
-                    <input type="text" formControlName="number" style="text-indent:20px;" class="form-control"
+                    <input type="text" formControlName="number"  class="form-control"
                         id="number" placeholder="000" #addressnumberlegal>
 
                     <div *ngIf="formLegalRepresentativeAddress.controls['number'].errors?.['required'] && isSubmit"
@@ -245,7 +245,7 @@
                 <div class="col-sm-12 col-md-4 mt-3">
                     <label for="state" class="font-archivo font-size-16 font-weight-medium text-secondary m-0"><b>
                             {{'ADMINISTRATION_ASSOCIATION_DATA.STATE' | translate}}</b></label>
-                    <input type="text" formControlName="state" style="text-indent:20px;" class="form-control" id="state"
+                    <input type="text" formControlName="state"  class="form-control" id="state"
                         placeholder="{{'ADMINISTRATION_ASSOCIATION_DATA.STATE' | translate}}">
 
                     <div *ngIf="formLegalRepresentativeAddress.controls['state'].errors?.['required'] && isSubmit"
@@ -260,7 +260,7 @@
                     <label for="city"
                         class="font-archivo font-size-16 font-weight-medium text-secondary m-0"><b>{{'ADMINISTRATION_ASSOCIATION_DATA.LOCAL'
                             | translate}}</b></label>
-                    <input type="text" formControlName="city" style="text-indent:20px;" class="form-control" id="city"
+                    <input type="text" formControlName="city"  class="form-control" id="city"
                         placeholder="{{'ADMINISTRATION_ASSOCIATION_DATA.LOCAL' | translate}}">
 
                     <div *ngIf="formLegalRepresentativeAddress.controls['city'].errors?.['required'] && isSubmit"
@@ -275,7 +275,7 @@
                     <label for="neighborhood"
                         class="font-archivo font-size-16 font-weight-medium text-secondary m-0"><b>{{'ADMINISTRATION_ASSOCIATION_DATA.NEIGHBORHOOD'
                             | translate}}</b></label>
-                    <input type="text" formControlName="neighborhood" style="text-indent:20px;" class="form-control"
+                    <input type="text" formControlName="neighborhood"  class="form-control"
                         id="neighborhood" placeholder="{{'ADMINISTRATION_ASSOCIATION_DATA.NEIGHBORHOOD' | translate}}">
 
                     <div *ngIf="formLegalRepresentativeAddress.controls['neighborhood'].errors?.['required'] && isSubmit"
@@ -290,7 +290,7 @@
                     <label for="complement"
                         class="font-archivo font-size-16 font-weight-medium text-secondary m-0"><b>{{'ADMINISTRATION_ASSOCIATION_DATA.COMPLEMENTS'
                             | translate}}</b></label>
-                    <input type="text" formControlName="complement" style="text-indent:20px;" class="form-control"
+                    <input type="text" formControlName="complement"  class="form-control"
                         id="complement" placeholder="{{'ADMINISTRATION_ASSOCIATION_DATA.COMPLEMENTS' | translate}}">
                 </div>
 
@@ -298,7 +298,7 @@
                     <label for="referencePoint"
                         class="font-archivo font-size-16 font-weight-medium text-secondary m-0"><b>{{'ADMINISTRATION_ASSOCIATION_DATA.POINT'
                             | translate}}</b></label>
-                    <input type="text" formControlName="referencePoint" style="text-indent:20px;" class="form-control"
+                    <input type="text" formControlName="referencePoint"  class="form-control"
                         id="referencePoint" placeholder="{{'ADMINISTRATION_ASSOCIATION_DATA.POINT' | translate}}">
                 </div>
 
@@ -312,7 +312,7 @@
             <!-- <div *ngIf="form.controls['manager'].value !== ''" class="col-sm-10 col-md-6 mt-3">
                 <label class="font-archivo font-size-16 font-weight-medium text-secondary m-0"
                     for="review"><b>{{'PROJECT.AGREEMENT' | translate}}</b></label>
-                <select formControlName="agreements" style="text-indent:20px;" class="form-control" #review id="review">
+                <select formControlName="agreements"  class="form-control" #review id="review">
                     <option *ngFor="let item of agreementList" [value]="item._id">{{ item.register_object }}
                     </option>
                 </select>
@@ -336,7 +336,7 @@
             <div class="col-sm-10 col-md-6 mt-3">
                 <label class="font-archivo font-size-16 font-weight-medium text-secondary m-0"
                     for="review"><b>{{'PROJECT.PROJECT_VIEWER' | translate}}</b></label>
-                <select formControlName="reviewerList" style="text-indent:20px;" class="form-control" #review
+                <select formControlName="reviewerList"  class="form-control" #review
                     id="review" (change)="selectViewer($event)" [(ngModel)]='ngSelectViewer'>
                     <option value="1">{{'PROJECT.VIEWER_DEFAULT_SELECT' | translate}}</option>
                     <option *ngFor="let item of userViewerList" [value]="item._id">{{item.name}}</option>
@@ -363,7 +363,7 @@
             <div class="col-sm-10 col-md-6 mt-3">
                 <label class="font-archivo font-size-16 font-weight-medium text-secondary m-0"
                     for="review"><b>{{'ASSOCIATION_AGREEMENTS.REVIWER' | translate}}</b></label>
-                <select formControlName="reviewerList" style="text-indent:20px;" class="form-control" #review
+                <select formControlName="reviewerList"  class="form-control" #review
                     id="review" (change)="selectReViewer($event)" [(ngModel)]='ngSelectReViewer'>
                     <option value="1">{{'PROJECT.REVIEWER_DEFAULT_SELECT' | translate}}</option>
                     <option *ngFor="let item of projectReviewer" [value]="item._id">{{item.name}}</option>
