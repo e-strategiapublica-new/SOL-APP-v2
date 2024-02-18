@@ -8,9 +8,10 @@ import { SupplierService } from 'src/services/supplier.service';
 import { Router } from '@angular/router';
 import { DeleteUserComponent } from '../../delete-user/delete-user.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import FilterFuzzy from 'src/utils/filterFuzzy.util';
-import Fuse from 'fuse.js';
-
+interface Role {
+  value: string;
+  name: { [key: string]: string };
+}
 @Component({
   selector: 'app-project-manager',
   templateUrl: './project-manager.component.html',
@@ -23,6 +24,37 @@ export class ProjectManagerComponent {
   userList!: UserListResponseDto[];
   userFilterList!: UserListResponseDto[];
   form: FormGroup;
+  storedLanguage: string | null;
+
+  roleList: Role[] = [
+    {
+      value: 'visualizador_projetos',
+      name: {
+        'en': 'Project Viewer',
+        'pt': 'Visualizador de projetos',
+        'fr': 'Visualiseur de projets',
+        'es': 'Visualizador de proyectos'
+      }
+    },
+    {
+      value: 'revisor_projetos',
+      name: {
+        'en': 'Project Reviewer',
+        'pt': 'Revisor de projetos',
+        'fr': 'Relecteur de projets',
+        'es': 'Revisor de proyectos'
+      }
+    },
+    {
+      value: 'gerente_geral_projetos',
+      name: {
+        'en': 'General Project Manager',
+        'pt': 'Gestor de projetos geral',
+        'fr': 'Chef de projet général',
+        'es': 'Gerente de proyectos general'
+      }
+    },
+  ];
 
   constructor(
     private userService: UserService,
@@ -39,37 +71,38 @@ export class ProjectManagerComponent {
   }
 
   ngOnInit(): void {
-   
+
     const id = localStorage.getItem('id_user_manager');
-    if(id && id == '0'){
+    if (id && id == '0') {
       localStorage.removeItem('id_user_manager')
       this.userFilterList = this.userService.getUserManagerFilterList();
       this.userList = this.userService.getUserManagerList();
-    }else{
-      this.list()  
-    }   
-    
+    } else {
+      this.list()
+    }
+
     this.form.controls['search'].valueChanges.subscribe((text: string) => {
-      if (text) {        
-                  
+      if (text) {
+
         const name = this.userList.filter(obj => ((obj.name).toLowerCase()).includes(text.toLowerCase()));
         const documents = this.userList.filter(obj => ((obj.document).toLowerCase()).includes(text.toLowerCase()));
-        const email = this.userList.filter(obj => ((obj.email).toLowerCase()).includes(text.toLowerCase()));        
+        const email = this.userList.filter(obj => ((obj.email).toLowerCase()).includes(text.toLowerCase()));
 
-        const array = [...name, ...documents, ... email]
+        const array = [...name, ...documents, ...email]
         const dataArr = new Set(array)
-        const result = [...dataArr]; 
-                 
+        const result = [...dataArr];
+
         this.userFilterList = result
       }
-  
+
       else
         this.userFilterList = this.userList
     });
 
+    this.storedLanguage = localStorage.getItem('selectedLanguage');
   }
 
-  list(){
+  list() {
     this.userService.listByType(UserTypeEnum.project_manager).subscribe({
       next: (data) => {
         this.supplierService.supplierList().subscribe({
@@ -80,19 +113,19 @@ export class ProjectManagerComponent {
                   user.supplier = sup.name
                 }
               }
-            } 
+            }
             this.userList = data;
             this.userFilterList = data;
             this.userService.setUserManagerFilterList(data);
             this.userService.setUserManagerList(data);
             this.ngxSpinnerService.hide();
           },
-          
+
           error: (error) => {
             console.error(error.error.errors[0]);
           }
         });
-      
+
       },
       error: (err) => {
         console.error(err);
@@ -127,4 +160,14 @@ export class ProjectManagerComponent {
     this.router.navigate(['/pages/controle-project-manager/project-manager/' + id]);
   }
 
+  getNameOfRole(value: string): string | null {
+    // Determina o idioma com base em this.storedLanguage ou usa 'en' (Inglês) como padrão
+    const language = this.storedLanguage || 'en';
+
+    const role = this.roleList.find(role => role.value === value);
+    if (role && role.name[language]) {
+      return role.name[language];
+    }
+    return null;
+  }
 }
