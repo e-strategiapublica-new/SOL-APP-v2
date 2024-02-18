@@ -33,8 +33,8 @@
 
 					<div class="col-12 col-lg-4 p-2">
 						<h6 class="font-poppins f-size-14 text-secondary">{{ "ASSOCIATION_AGREEMENTS.STATUS" | translate }}</h6>
-						<h5 *ngIf="fornecedor?.block == true" class="f-size-16 text-danger">{{ "SUPPLIER_DATA_PAGE.BLOCKED" | translate }}</h5>
-						<h5 *ngIf="fornecedor?.block == false" class="f-size-16 text-success">{{ "SUPPLIER_DATA_PAGE.ACTIVE" | translate }}</h5>
+						<h5 *ngIf="fornecedor?.blocked == true" class="f-size-16 text-danger">{{ "SUPPLIER_DATA_PAGE.BLOCKED" | translate }}</h5>
+						<h5 *ngIf="fornecedor?.blocked == false" class="f-size-16 text-success">{{ "SUPPLIER_DATA_PAGE.ACTIVE" | translate }}</h5>
 					</div>
 
 					<div class="col-12 p-2 mt-5">

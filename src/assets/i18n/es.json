@@ -356,7 +356,7 @@
     "SEARCH_NAME_RELATORIO": "Buscar por informe o archivo"
   },
   "REGISTER_SUPPLIER": {
-    "ADD_NEW_SUPPLIER": "Agregar nuevo proveedor",
+    "ADD_NEW_SUPPLIER": "Agregar nuevo proveedor y usuario responsable",
     "CREATE_SUPPLIER": "Crear proveedor",
     "SUPPLIER_DATA": "Datos del proveedor",
     "NAME": "Nombre",
@@ -885,8 +885,9 @@
     "SUCCESS_DELETE_SUPPLIER": "Fornecedor excluído com sucesso!",
     "SUCCESS_DELETE_PROJECT": "¡Proyecto eliminado exitosamente!",
     "SUCCESS_CREATE_SUPPLIER": "Fornecedor criado com sucesso!",
+    "VERIFY_FIRST_ACCESS": "Realice su primer acceso!",
     "SUCCESS_CREATE_PROJECT": "¡Proyecto criado com sucesso!",
-    "ERROR_CREATE_SUPPLIER": "Erro ao cadastrar o fornecedor!",
+    "ERROR_CREATE_SUPPLIER": "Error al registrar el proveedor! Verifique los datos proporcionados.",
     "ERROR_CREATE_PROJECT": "¡Error al registrar el proyecto!",
     "BLOCK_SUPPLIER": "Fornecedor bloqueado com sucesso!",
     "DESBLOCK_SUPPLIER": "Fornecedor desbloqueado com sucesso!",

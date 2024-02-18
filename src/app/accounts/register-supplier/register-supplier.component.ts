@@ -2,7 +2,7 @@ import { LocalStorageKeysEnum } from 'src/enums/local-storage-keys.enum';
 import { UserService } from 'src/services/user.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
-import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from "@angular/forms";
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
 import { CepResponseDto } from "../../../dtos/address/cep-response.dto";
@@ -17,26 +17,28 @@ import { CategoryResponseDto } from "../../../dtos/category/category-response.dt
 import { TranslateService } from "@ngx-translate/core";
 import UserDataValidator from "src/utils/user-data-validator.utils";
 import { Location } from '@angular/common';
- 
+
 @Component({
   selector: 'app-register-supplier',
   templateUrl: './register-supplier.component.html',
   styleUrls: ['./register-supplier.component.scss']
 })
 export class RegisterSupplierComponent implements OnInit {
-  
+
   form!: FormGroup;
   formAddress!: FormGroup;
   formLegalRepresentative!: FormGroup;
   formLegalRepresentativeAddress!: FormGroup;
   formCategoryAndSegments!: FormGroup;
+  formLegalRepresentativeUserData!: FormGroup;
+
   isSubmit: boolean = false;
   categoriesAndSegments: CategoryResponseDto[] = [];
   selectCategoriesAndSegments: CategoryResponseDto[] = [];
   regex = /\b(\d)\1+\b/;
   regexCNPJ = /^\d{3}\.\d{3}\.\d{3}-\d{2}$/;
 
-  storedLanguage : string | null
+  storedLanguage: string | null
 
   mainCPFValid: boolean;
   mainCNPJValid: boolean;
@@ -51,9 +53,9 @@ export class RegisterSupplierComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private ngxSpinnerService: NgxSpinnerService,
     private router: Router,
     private toastrService: ToastrService,
+    private ngxSpinnerService: NgxSpinnerService,
     private userService: UserService,
     private translate: TranslateService,
     private cepService: CepService,
@@ -65,6 +67,8 @@ export class RegisterSupplierComponent implements OnInit {
   ) {
     this.form = this.formBuilder.group({
       name: ["", [Validators.required, Validators.maxLength(50)]],
+      nationality: [""],
+      maritalStatus: [""],
       mainCnpj: ["", [Validators.minLength(14)]],
       mainCpf: ["", [Validators.minLength(11)]],
       type: ["", [Validators.required]],
@@ -77,20 +81,15 @@ export class RegisterSupplierComponent implements OnInit {
       neighborhood: ["", [Validators.required]],
       city: ["", [Validators.required]],
       state: ["", [Validators.required]],
-      // latitude: ["", [Validators.required]],
-      // longitude: ["", [Validators.required]],
       complement: [""],
       referencePoint: [""],
     });
 
     this.formLegalRepresentative = this.formBuilder.group({
       name: ["", [Validators.required]],
-      nationality: ["", [Validators.required]],
-      maritalStatus: ["", [Validators.required]],
+      nationality: [""],
+      maritalStatus: [""],
       cpf: ["", [Validators.required, Validators.minLength(11)]],
- /*      rg: ['', [Validators.required, this.rgValidator()]],
-      document_origin: ["", [Validators.required, Validators.pattern(/^[A-Za-z/]+$/)]],
-      validityData: ["", [Validators.required, this.dateValidator]], */
     });
 
     this.formLegalRepresentativeAddress = this.formBuilder.group({
@@ -104,6 +103,12 @@ export class RegisterSupplierComponent implements OnInit {
       referencePoint: [""],
     });
 
+
+    this.formLegalRepresentativeUserData = this.formBuilder.group({
+      email: ['', [Validators.required, Validators.email]],
+      phone: ['', [Validators.required, Validators.minLength(10)]],
+    });
+
     this.formCategoryAndSegments = this.formBuilder.group({
       categories: [""],
     });
@@ -111,20 +116,20 @@ export class RegisterSupplierComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    
+
     const url = this.location.path(); // Obtenemos la URL completa
     const partes = url.split('/'); // Dividimos la URL en segmentos usando "/"
-    this.endpoint = partes.pop();    
+    this.endpoint = partes.pop();
 
     this.categoryService.getCategoryWithoutAuth().subscribe(response => {
-      this.categoriesAndSegments = response;      
+      this.categoriesAndSegments = response;
     });
 
     this.storedLanguage = localStorage.getItem('selectedLanguage');
-  }  
+  }
 
   validCnpj() {
-    this.mainCNPJValid =  UserDataValidator.validarCNPJ(this.form.controls["mainCnpj"].value)
+    this.mainCNPJValid = UserDataValidator.validarCNPJ(this.form.controls["mainCnpj"].value)
   }
   dateValidator(control: any): { [key: string]: any } | null {
     const selectedDate = new Date(control.value);
@@ -141,42 +146,64 @@ export class RegisterSupplierComponent implements OnInit {
     return null;
   }
 
-  cancelSubmit(){
+  cancelSubmit() {
     this.isSubmit = false;
     this.toastrService.error(this.translate.instant("TOASTRS.ERROR_CREATE_SUPPLIER"), "", { progressBar: true });
     return;
   }
 
   confirm() {
-
     this.isSubmit = true;
-    if (this.formLegalRepresentative.valid) {
-    }
+
     const documentType = this.form.controls["type"].value;
+    const formTypePersonSupplier = documentType === 'cpf';
+
     if (!documentType) return this.cancelSubmit();
 
     if (documentType === "cnpj") {
       this.form.controls["mainCnpj"].addValidators([Validators.required]);
       this.form.controls["mainCpf"].clearValidators();
+
+      this.formLegalRepresentative.controls["nationality"].addValidators([Validators.required]);
+      this.form.controls["nationality"].clearValidators();
+      this.formLegalRepresentative.controls["maritalStatus"].addValidators([Validators.required]);
+      this.form.controls["maritalStatus"].clearValidators();
+
     } else {
       this.form.controls["mainCpf"].addValidators([Validators.required]);
       this.form.controls["mainCnpj"].clearValidators();
+
+      this.form.controls["nationality"].addValidators([Validators.required]);
+      this.formLegalRepresentative.controls["nationality"].clearValidators();
+      this.form.controls["maritalStatus"].addValidators([Validators.required]);
+      this.formLegalRepresentative.controls["maritalStatus"].clearValidators();
     }
 
     this.form.controls["mainCpf"].updateValueAndValidity();
     this.form.controls["mainCnpj"].updateValueAndValidity();
+
+    this.form.controls["nationality"].updateValueAndValidity();
+    this.form.controls["nationality"].updateValueAndValidity();
+
+    this.formLegalRepresentative.controls["maritalStatus"].updateValueAndValidity();
+    this.formLegalRepresentative.controls["maritalStatus"].updateValueAndValidity();
 
     if (this.form.invalid) {
       this.getErrosForm(this.form);
       return this.cancelSubmit();
     }
 
-    if(!this.selectCategoriesAndSegments.length){
+    if (!this.selectCategoriesAndSegments.length) {
       return this.cancelSubmit();
     }
 
-    if (this.formAddress.invalid || this.formLegalRepresentative.invalid || this.formLegalRepresentativeAddress.invalid){
+    if (this.formAddress.invalid || this.formLegalRepresentativeUserData.invalid) {
       this.getErrosForm(this.formAddress);
+      this.getErrosForm(this.formLegalRepresentativeUserData);
+      return this.cancelSubmit();
+    }
+
+    if (!formTypePersonSupplier && (this.formLegalRepresentative.invalid || this.formLegalRepresentativeAddress.invalid)) {
       this.getErrosForm(this.formLegalRepresentative);
       this.getErrosForm(this.formLegalRepresentativeAddress);
       return this.cancelSubmit();
@@ -200,8 +227,6 @@ export class RegisterSupplierComponent implements OnInit {
 
     newSupplier.address.city = this.formAddress.controls["city"].value;
     newSupplier.address.complement = this.formAddress.controls["complement"].value;
-    // newSupplier.address.latitude = this.formAddress.controls["latitude"].value;
-    // newSupplier.address.longitude = this.formAddress.controls["longitude"].value;
     newSupplier.address.neighborhood = this.formAddress.controls["neighborhood"].value;
     newSupplier.address.number = this.formAddress.controls["number"].value ?? 'S/N';
     newSupplier.address.publicPlace = this.formAddress.controls["publicPlace"].value;
@@ -209,33 +234,41 @@ export class RegisterSupplierComponent implements OnInit {
     newSupplier.address.state = this.formAddress.controls["state"].value;
     newSupplier.address.zipCode = this.formAddress.controls["zipCode"].value;
 
-    newSupplier.legal_representative.name = this.formLegalRepresentative.controls["name"].value;
-    newSupplier.legal_representative.nationality = this.formLegalRepresentative.controls["nationality"].value;
-    newSupplier.legal_representative.maritalStatus = this.formLegalRepresentative.controls["maritalStatus"].value;
-    newSupplier.legal_representative.cpf = this.formLegalRepresentative.controls["cpf"].value.replace(/[^0-9]/g, '');
-/*     newSupplier.legal_representative.rg = this.formLegalRepresentative.controls["rg"].value;
-    newSupplier.legal_representative.document_origin = this.formLegalRepresentative.controls["document_origin"].value;
-    newSupplier.legal_representative.validityData = this.formLegalRepresentative.controls["validityData"].value; */
+    if (formTypePersonSupplier) {
+      newSupplier.legal_representative.name = this.form.controls["name"].value;
+      newSupplier.legal_representative.nationality = this.form.controls["nationality"].value;
+      newSupplier.legal_representative.maritalStatus = this.form.controls["maritalStatus"].value;
+      newSupplier.legal_representative.cpf = this.form.controls["mainCpf"].value.replace(/[^0-9]/g, '');
 
-    newSupplier.legal_representative.address = new AddressDto();
-    newSupplier.legal_representative.address.complement =
-      this.formLegalRepresentativeAddress.controls["complement"].value;
-    newSupplier.legal_representative.address.city = this.formLegalRepresentativeAddress.controls["city"].value;
-    newSupplier.legal_representative.address.neighborhood =
-      this.formLegalRepresentativeAddress.controls["neighborhood"].value;
-    newSupplier.legal_representative.address.number = this.formLegalRepresentativeAddress.controls["number"].value ?? 'S/N';
-    newSupplier.legal_representative.address.publicPlace =
-      this.formLegalRepresentativeAddress.controls["publicPlace"].value;
-    newSupplier.legal_representative.address.referencePoint =
-      this.formLegalRepresentativeAddress.controls["referencePoint"].value;
-    newSupplier.legal_representative.address.state = this.formLegalRepresentativeAddress.controls["state"].value;
-    newSupplier.legal_representative.address.zipCode = this.formLegalRepresentativeAddress.controls["zipCode"].value;
+      newSupplier.legal_representative.address = newSupplier.address;
+    } else {
+      newSupplier.legal_representative.name = this.formLegalRepresentative.controls["name"].value;
+      newSupplier.legal_representative.nationality = this.formLegalRepresentative.controls["nationality"].value;
+      newSupplier.legal_representative.maritalStatus = this.formLegalRepresentative.controls["maritalStatus"].value;
+      newSupplier.legal_representative.cpf = this.formLegalRepresentative.controls["cpf"].value.replace(/[^0-9]/g, '');
 
+      newSupplier.legal_representative.address = new AddressDto();
+      newSupplier.legal_representative.address.complement =
+        this.formLegalRepresentativeAddress.controls["complement"].value;
+      newSupplier.legal_representative.address.city = this.formLegalRepresentativeAddress.controls["city"].value;
+      newSupplier.legal_representative.address.neighborhood =
+        this.formLegalRepresentativeAddress.controls["neighborhood"].value;
+      newSupplier.legal_representative.address.number = this.formLegalRepresentativeAddress.controls["number"].value ?? 'S/N';
+      newSupplier.legal_representative.address.publicPlace =
+        this.formLegalRepresentativeAddress.controls["publicPlace"].value;
+      newSupplier.legal_representative.address.referencePoint =
+        this.formLegalRepresentativeAddress.controls["referencePoint"].value;
+      newSupplier.legal_representative.address.state = this.formLegalRepresentativeAddress.controls["state"].value;
+      newSupplier.legal_representative.address.zipCode = this.formLegalRepresentativeAddress.controls["zipCode"].value;
+    }
+
+    newSupplier.legal_representative.email = this.formLegalRepresentativeUserData.controls["email"].value;
+    newSupplier.legal_representative.phone = this.formLegalRepresentativeUserData.controls["phone"].value;
 
     this.supplierService.registerWithoutAuth(newSupplier).subscribe({
       next: async success => {
-        
-        await this.toastrService.success(this.translate.instant("TOASTRS.SUCCESS_CREATE_SUPPLIER"), "", {
+
+        await this.toastrService.success(`${this.translate.instant("TOASTRS.SUCCESS_CREATE_SUPPLIER")} ${this.translate.instant("TOASTRS.VERIFY_FIRST_ACCESS")}`, "", {
           progressBar: true,
         });
 
@@ -245,9 +278,12 @@ export class RegisterSupplierComponent implements OnInit {
         this.formAddress.reset();
         this.formLegalRepresentative.reset();
         this.formLegalRepresentativeAddress.reset();
-        this.formCategoryAndSegments.reset();        
+        this.formLegalRepresentativeUserData.reset();
+        this.formCategoryAndSegments.reset();
         this.selectCategoriesAndSegments.splice(0, this.selectCategoriesAndSegments.length);
-        
+
+        this.router.navigate(['/accounts/primeiro-acesso']);
+
       },
       error: error => {
         this.isSubmit = false;
@@ -255,8 +291,8 @@ export class RegisterSupplierComponent implements OnInit {
         let errorPhone = 'Esse telefone ja foi cadastrado!';
         let errorCPFCNPJ = 'Esse CPF/CNPJ ja foi cadastrado!';
 
-        switch(this.storedLanguage) {
-          case 'pt': 
+        switch (this.storedLanguage) {
+          case 'pt':
             errorEmail = 'Esse email ja foi cadastrado!';
             errorPhone = 'Esse telefone ja foi cadastrado!';
             errorCPFCNPJ = 'Esse CPF/CNPJ ja foi cadastrado!';
@@ -295,17 +331,17 @@ export class RegisterSupplierComponent implements OnInit {
     });
   }
 
-  handleCategories() {    
+  handleCategories() {
     if (this.formCategoryAndSegments.controls["categories"].value) {
       const selected = this.categoriesAndSegments.find(
         a => a._id?.toString() === this.formCategoryAndSegments.controls["categories"].value
       );
 
-      const repeated = this.selectCategoriesAndSegments.filter(obj => obj.category_name == selected.category_name && obj.segment == selected.segment );
-      if(!repeated.length){
-        this.selectCategoriesAndSegments.push(selected!);  
+      const repeated = this.selectCategoriesAndSegments.filter(obj => obj.category_name == selected.category_name && obj.segment == selected.segment);
+      if (!repeated.length) {
+        this.selectCategoriesAndSegments.push(selected!);
       }
-            
+
     }
   }
 
@@ -458,20 +494,20 @@ export class RegisterSupplierComponent implements OnInit {
     });
   }
 
-  onSupplier(): void{    
-    if(this.endpoint != "register-supplier"){
+  onSupplier(): void {
+    if (this.endpoint != "register-supplier") {
       this.btnSupplier = true;
       this.btnSupplierUser = false;
       this.router.navigate(['/accounts/register-supplier']);
-    }    
+    }
   }
 
-  onSupplierUser(): void{
-    if(this.endpoint != "register-supplier-user"){
-      this.btnSupplierUser = true;
-      this.btnSupplier = false;
-      this.router.navigate(['/accounts/register-supplier-user']);
-    }    
-  }
+  // onSupplierUser(): void{
+  //   if(this.endpoint != "register-supplier-user"){
+  //     this.btnSupplierUser = true;
+  //     this.btnSupplier = false;
+  //     this.router.navigate(['/accounts/register-supplier-user']);
+  //   }    
+  // }
 
 }
