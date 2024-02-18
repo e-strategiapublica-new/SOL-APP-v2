@@ -15,23 +15,21 @@
 
 	<div class="row mt-3">
 		<div class="col-12">
-			<div class="col-md-12 col-lg-12 col-xl-10">
-				<div class="row p-3 user-data-border">
+			<div class="row p-3 user-data-border">
 
-					<div class="col-12 col-lg-4 p-2">
-						<h6 class="font-poppins f-size-14 text-secondary">{{'PROJECT.PROJECT_NAME' | translate}}</h6>
-						<h5 class="f-size-16">{{projects?.name}}</h5>
-					</div>
-					<div class="col-12 col-lg-4 p-2">
-						<h6 class="font-poppins f-size-14 text-secondary">{{'PROJECT.MANAGER_PROJECT' | translate}}</h6>
-						<h5 class="f-size-16">{{projects?.project_manager.name}}</h5>
-					</div>
-<!-- 					<div class="col-12 col-lg-4 p-2">
+				<div class="col-12 col-lg-8 p-2">
+					<h6 class="font-poppins f-size-14 text-secondary">{{'PROJECT.PROJECT_NAME' | translate}}</h6>
+					<h5 class="f-size-16">{{projects?.name}}</h5>
+				</div>
+				<div class="col-12 col-lg-4 p-2">
+					<h6 class="font-poppins f-size-14 text-secondary">{{'PROJECT.MANAGER_PROJECT' | translate}}</h6>
+					<h5 class="f-size-16">{{projects?.project_manager.name}}</h5>
+				</div>
+				<!-- 					<div class="col-12 col-lg-4 p-2">
 						<h6 class="font-poppins f-size-14 text-secondary">{{'PROJECT.AGREEMENT' | translate}}</h6>
 						<h5 *ngFor="let item of convenios;" class="f-size-16">{{item?.register_number}} -
 							{{item?.register_object}}</h5>
 					</div> -->
-				</div>
 			</div>
 		</div>
 	</div>
@@ -96,21 +94,32 @@
 		</div>
 
 	</div>
-	
+
 	<div class="row mt-5 p-3 user-data-border">
 
 		<div class="col-12 p-3">
 			<h5><b>{{ "PROJECT.PROJECT_VIEWER" | translate }}</b></h5>
 			<hr>
 		</div>
-		<div class="col-12 col-lg-4 p-2 text-capitalize">
+		<!-- <div class="col-12 col-lg-6 p-2 text-capitalize">
 			<h6 class="font-poppins f-size-14 text-secondary">{{ "REGISTER_SUPPLIER.NAME" | translate }}</h6>
 			<h5 class="f-size-16">{{projects?.project_manager.name}}</h5>
 		</div>
-		<div class="col-12 col-lg-4 p-2 text-capitalize">
-			<h6 class="font-poppins f-size-14 text-secondary">{{ "REGISTER_SUPPLIER.NAME" | translate }}</h6>
+		<div class="col-12 col-lg-6 p-2 text-capitalize">
+			<h6 class="font-poppins f-size-14 text-secondary">{{ "REGISTER_SUPPLIER.EMAIL" | translate }}</h6>
 			<h5 class="f-size-16">{{projects?.project_manager.email}}</h5>
-		</div>
+		</div> -->
+		<ng-container *ngFor="let viewer of projects?.viewer_list">
+
+			<div class="col-12 col-lg-6 p-2 text-capitalize">
+				<h6 class="font-poppins f-size-14 text-secondary">{{ "REGISTER_SUPPLIER.NAME" | translate }}</h6>
+				<h5 class="f-size-16">{{viewer.name}}</h5>
+			</div>
+			<div class="col-12 col-lg-6 p-2 text-capitalize">
+				<h6 class="font-poppins f-size-14 text-secondary">{{ "REGISTER_SUPPLIER.EMAIL" | translate }}</h6>
+				<h5 class="f-size-16">{{viewer.email}}</h5>
+			</div>
+		</ng-container>
 	</div>
 	<div class="row mt-5 p-3 user-data-border">
 
@@ -118,12 +127,15 @@
 			<h5><b>{{ "PROJECT.PROJECT_REVIEWER" | translate }}</b></h5>
 			<hr>
 		</div>
-		<div class="col-12 col-lg-4 p-2 text-capitalize">
-			<h6 class="font-poppins f-size-14 text-secondary">{{ "REGISTER_SUPPLIER.NAME" | translate }}</h6>
-			<h5 class="f-size-16">{{projects?.reviewer_list?.[0].name}}</h5>
-		</div>
-		<div class="col-12 col-lg-4 p-2 text-capitalize">
-			<h6 class="font-poppins f-size-14 text-secondary">{{ "REGISTER_SUPPLIER.NAME" | translate }}</h6>
-			<h5 class="f-size-16">{{projects?.reviewer_list?.[0].email}}</h5>
-		</div>
+		<ng-container *ngFor="let reviewer of projects?.reviewer_list">
+
+			<div class="col-12 col-lg-6 p-2 text-capitalize">
+				<h6 class="font-poppins f-size-14 text-secondary">{{ "REGISTER_SUPPLIER.NAME" | translate }}</h6>
+				<h5 class="f-size-16">{{reviewer.name}}</h5>
+			</div>
+			<div class="col-12 col-lg-6 p-2 text-capitalize">
+				<h6 class="font-poppins f-size-14 text-secondary">{{ "REGISTER_SUPPLIER.EMAIL" | translate }}</h6>
+				<h5 class="f-size-16">{{reviewer.email}}</h5>
+			</div>
+		</ng-container>
 	</div>

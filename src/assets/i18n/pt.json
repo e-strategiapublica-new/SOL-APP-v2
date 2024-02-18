@@ -360,6 +360,7 @@
     "CREATE_SUPPLIER": "Criar Fornecedor",
     "SUPPLIER_DATA": "Dados do fornecedor",
     "NAME": "Nome",
+    "EMAIL": "Email",
     "NAME_MANDATORY": " Nome é obrigatório!",
     "NAME_CHARACTERS": "Nome deve conter no máximo 50 caracteres!",
     "ZIP_CODE": "CEP",

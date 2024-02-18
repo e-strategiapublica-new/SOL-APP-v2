@@ -360,6 +360,7 @@
     "CREATE_SUPPLIER": "Create supplier",
     "SUPPLIER_DATA": "Supplier data",
     "NAME": "Name",
+    "EMAIL": "Email",
     "NAME_MANDATORY": "Name is required!",
     "NAME_CHARACTERS": "Name must contain a maximum of 50 characters!",
     "ZIP_CODE": "ZIP Code",
