@@ -10,4 +10,6 @@ export class LegalRepresentativeDto{
     document_origin: string;
     validityData: Date; */
     address: AddressDto;
+    phone?: string;
+    email?: string;
 }

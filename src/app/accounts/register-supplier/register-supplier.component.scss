@@ -6,9 +6,6 @@
   align-items: center;
   justify-content: center;
 }
-.selectPerson{
-  width: 200px;
-}
 .screens{
   display: flex;
   margin-top: 28px;
@@ -33,9 +30,6 @@
   background-color: #fefeff;
   border-color: #343a40;
 }
-.arrow{
-  margin-left: 104px;
-}
 
 
 /*---------------------------------------------------------------------
@@ -46,7 +40,8 @@
 @media(max-width: 768px){
 
   .wrap-first-access100{
-    width: 96%;
+    width: 100%;
+    padding: 25px;
   }
   .screens{
     display: block;
