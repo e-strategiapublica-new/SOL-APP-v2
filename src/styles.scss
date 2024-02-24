@@ -161,14 +161,6 @@ input:focus {
   color: var(--color-fourth);
 }
 
-.br-tabele {
-  border-radius: 10px 0px 0px 0px;
-}
-
-.br-tabele2 {
-  border-radius: 0px 10px 0px 0px;
-}
-
 .table-striped tbody tr:nth-of-type(odd) {
   background: #fdfdfd;
 }
@@ -501,13 +493,6 @@ button[disabled] {
   cursor: pointer;
 }
 
-.br-tabele {
-  border-radius: 10px 0px 0px 0px;
-}
-
-.br-tabele2 {
-  border-radius: 0px 10px 0px 0px;
-}
 
 .h50 {
   height: 50px;
@@ -742,9 +727,9 @@ button[disabled] {
   align-items: center;
   padding: 15px;
 
-  background: linear-gradient(303deg, #5EA7DE, #215B85);
+  background: linear-gradient(303deg, #143f5e, #3271a2);
   background-size: 180% 180%;
-  animation: gradient-animation 9s ease infinite;
+  animation: gradient-animation 4s ease infinite;
 
   @keyframes gradient-animation {
     0% {

@@ -162,7 +162,7 @@ export class ProjectManagerComponent {
 
   getNameOfRole(value: string): string | null {
     // Determina o idioma com base em this.storedLanguage ou usa 'en' (Inglês) como padrão
-    const language = this.storedLanguage || 'en';
+    const language = localStorage.getItem('selectedLanguage') || 'pt';
 
     const role = this.roleList.find(role => role.value === value);
     if (role && role.name[language]) {

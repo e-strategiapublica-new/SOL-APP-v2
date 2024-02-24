@@ -31,7 +31,7 @@
                 <th class="bg-pattern text-light" scope="col">{{'AGREEMENTS.PROOFREADER' | translate}}</th>
                 <th class="bg-pattern text-light" scope="col" *ngIf="authbase.getAuthenticatedUser().type !== 'administrador'">{{'AGREEMENTS.ACTIONS' | translate}}</th>
                 <th class="bg-pattern text-light" scope="col"></th>
-                <th class="br-tabele2 bg-pattern text-light" scope="col"></th>
+                <th class=" bg-pattern text-light" scope="col"></th>
               </tr>
             <tbody>
               <tr class="border-right border-left"
@@ -52,7 +52,7 @@
                     </div>
                   </div>
                 </td>
-                <td class="table_icon" *ngIf="authbase.getAuthenticatedUser().type === 'project_manager' && user.id === item.project?.project_manager || user.id === item.manager._id">
+                <td class="table_icon" *ngIf="authbase.getAuthenticatedUser().type === 'project_manager' && user.id === item.project?.project_manager || user.id === item.manager?._id">
                   <button class="btn btn-danger" (click)="delete(item)">
                     <i class="fa fa-trash-o" aria-hidden="true"></i>
                   </button>
