@@ -84,9 +84,8 @@ export class DashboardComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {    
 
-    this.ngxSpinnerService.show();
-
     if (this.authService.getAuthenticatedUser().type == 'fornecedor') {
+      this.ngxSpinnerService.show();
       this._associationBidService.listForSupplier().subscribe({
         next: (data: any[]) => {
           this.licitacoesList = data.filter((bid: any) => bid.status === 'returned' ||  bid.status === 'awaiting')
@@ -104,6 +103,7 @@ export class DashboardComponent implements AfterViewInit {
     }
 
     if (this.authService.getAuthenticatedUser().type == 'administrador' && this.authService.getAuthenticatedUser().roles == 'geral') {
+      this.ngxSpinnerService.show();
 
       this.map = L.map('map').setView([-23.6820635, -46.924961], 8);
 
@@ -129,13 +129,16 @@ export class DashboardComponent implements AfterViewInit {
     }
 
     if (this.authService.getAuthenticatedUser().type == 'administrador' && this.authService.getAuthenticatedUser().roles == 'revisor') {
+      this.ngxSpinnerService.show();
       this.userId = this.authbase.getAuthenticatedUser().id;
       this.conveniosService.getConvenio().subscribe({
         next: data => {
           this.convenios = data.filter((item: any) => item.reviewer?._id === this.userId).length;
+          this.ngxSpinnerService.hide();
         },
         error: error => {
           console.error(error)
+          this.ngxSpinnerService.hide();
         }
       })
 
@@ -220,7 +223,7 @@ export class DashboardComponent implements AfterViewInit {
     }
 
     if (this.authService.getAuthenticatedUser().type == 'associacao') {
-      // this.ngxSpinnerService.show();
+      this.ngxSpinnerService.show();
       this._associationBidService.listByAssociation().subscribe({
         next: data => {
 
